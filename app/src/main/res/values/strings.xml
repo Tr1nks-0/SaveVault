@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name" translatable="false">Safe Vault</string>
+    <string name="login_enter_u_passw">Enter You password</string>
+    <string name="login_passw_hint">Password</string>
+    <string name="login_ok">OK</string>
+    <string name="login_show_passw">Show password</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+</resources>
