@@ -6,53 +6,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.tr1nks.safevault.activities.LoginActivity">
-    <LinearLayout
-            android:orientation="vertical"
+    <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/login_margin_vertical"
-            android:layout_marginLeft="@dimen/login_margin_horisontal"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="@dimen/login_margin_horisontal"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="@dimen/login_margin_vertical"
-            app:layout_constraintVertical_bias="0.401" app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginStart="@dimen/login_margin_horisontal" android:layout_marginEnd="@dimen/login_margin_horisontal">
-        <TextView
-                android:text="@string/login_enter_u_passw"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0">
+        <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
+                android:inputType="textPassword"
+                android:id="@+id/passwordEditText"
+                android:hint="@string/login_passw_hint"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/login_margin_horisontal"
+                android:layout_marginRight="@dimen/login_margin_horisontal"
+        />
+        <TextView
+                android:text="@string/login_enter_u_passw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
                 android:labelFor="@+id/passwordEditText"
-                android:textSize="@dimen/login_text_view_text_size"/>
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:ems="10"
-                    android:id="@+id/passwordEditText"
-                    android:hint="@string/login_passw_hint"/>
-            <Button
-                    android:text="@string/login_ok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/okButton"
-                    android:layout_alignEnd="@id/passwordEditText"
-                    android:layout_below="@id/passwordEditText"
-                    android:onClick="okButtonHandler"/>
-            <CheckBox
-                    android:text="@string/login_show_passw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/showPasswCheckBox"
-                    android:textSize="@dimen/login_checkbox_text_size"
-                    android:layout_alignStart="@id/passwordEditText"
-                    android:layout_below="@id/passwordEditText"/>
-        </RelativeLayout>
-    </LinearLayout>
+                android:textSize="@dimen/login_text_view_text_size"
+                android:layout_alignStart="@+id/passwordEditText"
+                android:layout_above="@+id/passwordEditText"/>
+        <Button
+                android:text="@string/login_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/okButton"
+                android:layout_alignEnd="@id/passwordEditText"
+                android:layout_below="@id/passwordEditText"
+                android:onClick="okButtonHandler"/>
+        <CheckBox
+                android:text="@string/login_show_passw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/showPasswCheckBox"
+                android:textSize="@dimen/login_checkbox_text_size"
+                android:layout_alignStart="@id/passwordEditText"
+                android:layout_below="@id/passwordEditText"/>
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
