@@ -30,7 +30,7 @@
                 android:text="@string/login_enter_u_passw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView6"
+                android:id="@+id/textView"
                 android:labelFor="@+id/passwordEditText"
                 android:textSize="@dimen/login_text_view_text_size"
                 android:layout_alignStart="@+id/passwordEditText"
