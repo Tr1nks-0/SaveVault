@@ -27,31 +27,32 @@
                 android:id="@+id/textView"
                 android:labelFor="@+id/passwordEditText"
                 android:textSize="@dimen/login_text_view_text_size"/>
-        <LinearLayout
-                android:orientation="horizontal"
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/passwordEditText"
-                    android:layout_weight="0.39"
                     android:hint="@string/login_passw_hint"/>
             <Button
                     android:text="@string/login_ok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/okButton"
-                    android:layout_weight="0.21"
+                    android:layout_alignEnd="@id/passwordEditText"
+                    android:layout_below="@id/passwordEditText"
                     android:onClick="okButtonHandler"/>
-        </LinearLayout>
-        <CheckBox
-                android:text="@string/login_show_passw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/showPasswCheckBox"
-                android:textSize="@dimen/login_checkbox_text_size"/>
+            <CheckBox
+                    android:text="@string/login_show_passw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/showPasswCheckBox"
+                    android:textSize="@dimen/login_checkbox_text_size"
+                    android:layout_alignStart="@id/passwordEditText"
+                    android:layout_below="@id/passwordEditText"/>
+        </RelativeLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
