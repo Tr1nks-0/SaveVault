@@ -36,7 +36,7 @@ public class Encoder {
         }
     }
 
-    public static byte[] preparePassw(byte[] password) {
+    public static byte[] preparePassw(byte[] password) {//todo replace with more efficient
         byte[] out = new byte[32];
         int j = 0;
         for (int i = 0; i < out.length; i++) {

@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.util.Encoder;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -56,18 +54,23 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 
     public void okButtonHandler(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        EditText editText = ((EditText) findViewById(R.id.passwordEditText));
-        String pasw = editText.getText().toString();
-        String inpData = "Test input data for encode";
-        byte[] e = Encoder.encode(Encoder.preparePassw(pasw.getBytes()), inpData.getBytes());
-        byte[] d = Encoder.decode(Encoder.preparePassw(pasw.getBytes()), e);
-        String dec = new String(d);
-        Log.d("DEBUG",dec);
-//        intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
+        if (testPassword(((EditText) findViewById(R.id.passwordEditText)).getText().toString())) {
+            Intent intent = new Intent(this, MainActivity.class);
+            //        intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
 //        intent.putExtra("lastname", lastName.getText().toString());  // по ключу мы будем получать значение с Intent
-        //todo password check
-        // todo if password - decode data
-        startActivity(intent);
+            startActivity(intent);
+        } else {
+//            todo mess that wrong passw
+        }
+    }
+
+    private boolean testPassword(String password) {
+        //        EditText editText = ((EditText) findViewById(R.id.passwordEditText));
+//        String pasw = editText.getText().toString();
+//        String inpData = "Test input data for encode";
+//        byte[] e = Encoder.encode(Encoder.preparePassw(pasw.getBytes()), inpData.getBytes());
+//        byte[] d = Encoder.decode(Encoder.preparePassw(pasw.getBytes()), e);
+//        String dec = new String(d);
+        return true;
     }
 }

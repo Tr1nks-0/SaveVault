@@ -4,4 +4,6 @@
     <dimen name="login_margin_horisontal">5dp</dimen>
     <dimen name="main_margin_vertical">10dp</dimen>
     <dimen name="main_margin_horisontal">10dp</dimen>
+    <dimen name="login_text_view_text_size">20sp</dimen>
+    <dimen name="login_checkbox_text_size">15sp</dimen>
 </resources>

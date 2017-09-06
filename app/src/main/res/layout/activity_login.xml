@@ -26,12 +26,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:labelFor="@+id/passwordEditText"
-        />
+                android:textSize="@dimen/login_text_view_text_size"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        >
+                android:layout_height="wrap_content">
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -39,8 +38,7 @@
                     android:ems="10"
                     android:id="@+id/passwordEditText"
                     android:layout_weight="0.39"
-                    android:hint="@string/login_passw_hint"
-            />
+                    android:hint="@string/login_passw_hint"/>
             <Button
                     android:text="@string/login_ok"
                     android:layout_width="wrap_content"
@@ -54,6 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/showPasswCheckBox"
-        />
+                android:textSize="@dimen/login_checkbox_text_size"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
