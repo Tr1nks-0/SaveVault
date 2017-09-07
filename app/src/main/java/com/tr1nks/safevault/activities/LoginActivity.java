@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import com.tr1nks.safevault.R;
+import com.tr1nks.safevault.util.DBUtil;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,6 +60,12 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             //        intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
 //        intent.putExtra("lastname", lastName.getText().toString());  // по ключу мы будем получать значение с Intent
+//            if(!new File(FileUtil.CHECK_FILE_NAME).exists()){
+//                return;
+//            }
+//            FileUtil.getCheckFileBytes(this);
+
+            DBUtil.test(this);
             startActivity(intent);
         } else {
 //            todo mess that wrong passw
