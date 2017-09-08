@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
     }
-
 //    /**
 //     * показать спрятать пароль обработчик checkbox
 //     *
@@ -57,24 +56,32 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 
     public void okButtonHandler(View view) {
+//        byte[] s = DBUtil.CHECK_PASSW_STR.getBytes();
+//        byte[] o = Encoder.encode(Encoder.preparePassw("root".getBytes()), s);
+//        int i1 = s.length;
+//        int i2 = o.length;
+//        Log.d("ENCODED:", Arrays.toString(o));
         DBUtil dbUtil = DBUtil.getInstance(this);
-        boolean b=dbUtil.dbExists(this);
         if (dbUtil.dbExists(this)) {
-            if (testPassword(((EditText) findViewById(R.id.passwordEditText)).getText().toString(), dbUtil)) {
-                Intent intent = new Intent(this, MainActivity.class);
-                //        intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
-//        intent.putExtra("lastname", lastName.getText().toString());  // по ключу мы будем получать значение с Intent
-                startActivity(intent);
-            } else {
+            String pasw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+            if (null != pasw && !"".equals(pasw)) {
+                if (testPassword(pasw, dbUtil)) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    // intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
+                    // intent.putExtra("lastname", lastName.getText().toString());  // по ключу мы будем получать значение с Intent
+                    startActivity(intent);
+                } else {
 //            todo mess that wrong passw
+                }
+            } else {
+                //todo message - empty passw
             }
         } else {
-            //todo create password
+            //todo create db
         }
     }
 
     private boolean testPassword(String password, DBUtil dbUtil) {
-        byte d[]=dbUtil.getCheckData();
         byte b[] = Encoder.decode(Encoder.preparePassw(password.getBytes()), dbUtil.getCheckData());
         //        EditText editText = ((EditText) findViewById(R.id.passwordEditText));
 //        String pasw = editText.getText().toString();

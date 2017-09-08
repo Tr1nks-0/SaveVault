@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteStatement;
 public class DBUtil extends SQLiteOpenHelper {
     private static DBUtil instance = null;
     private static final String DATABASE_NAME = "sv.db";
+    public static final String CHECK_PASSW_STR = "check_password_string";
     private static final int DATABASE_VERSION = 1;
     private static final String CHECK_TABLE_NAME = "chck";
     private static final String DATA_TABLE_NAME = "data";
@@ -35,30 +36,17 @@ public class DBUtil extends SQLiteOpenHelper {
     private static final String GET_DATA_BY_ID_SQL = "SELECT data FROM " + DATA_TABLE_NAME + " WHERE id = ?";
     private SQLiteStatement GET_DATA_BY_ID_PS;
 
+    // -33, 29, -85, 100, 87, -59, 46, -116, 54, 127, -86, -57, -33, -58, 39, -81, 91, -30, 22, 57, 49, -31, 120, -90, -58, -7, -84, 75, -28, -44, -7, -121
 
     public byte[] getCheckData() {
-//        return GET_CHECK_DATA_PS.simpleQueryForString().getBytes();
-        /*Cursor c = db.rawQuery("query",null);
-int id[] = new int[c.getCount()];
-int i = 0;
-if (c.getCount() > 0)
-{
-    c.moveToFirst();
-    do {
-        id[i] = c.getInt(c.getColumnIndex("field_name"));
-        i++;
-    } while (c.moveToNext());
-    c.close();
-}*/
-//        this.getReadableDatabase().execSQL("insert INTO chck(val) VALUES ('first test str'),('second test str')");
-        Cursor c = this.getReadableDatabase().rawQuery("select val from " + CHECK_TABLE_NAME, null);
-        boolean bf2 = c.moveToFirst();
-        String q = c.getColumnName(0);
-        int index = c.getColumnIndex(q);
-        int is = c.getType(0);
-        String b = c.getString(index);
-        c.close();
-        return b.getBytes();
+        Cursor cursor = this.getReadableDatabase().rawQuery(GET_CHECK_DATA_SQL, null);
+        String str;
+        if (null != cursor && cursor.moveToFirst()) {
+            str = cursor.getString(cursor.getColumnIndex("val"));
+            cursor.close();
+            return str.getBytes();
+        }
+        return null;
     }
 
     public DBUtil(Context context) {
@@ -74,7 +62,7 @@ if (c.getCount() > 0)
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table `" + CHECK_TABLE_NAME + "`( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, val TEXT )");
+        sqLiteDatabase.execSQL("create table " + CHECK_TABLE_NAME + " ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, val TEXT )");
         sqLiteDatabase.execSQL("create table " + DATA_TABLE_NAME + " ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT, title_img_name TEXT, data BLOB )");
         sqLiteDatabase.execSQL("create unique index data_id_uindex on data (id)");
     }
