@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import com.tr1nks.safevault.R;
+import com.tr1nks.safevault.activities.fragments.MessageDialogFragment;
 import com.tr1nks.safevault.util.DBUtil;
 import com.tr1nks.safevault.util.Encoder;
 
@@ -68,16 +69,18 @@ public class LoginActivity extends AppCompatActivity {
                 byte[] paswBytes = Encoder.preparePassw(pasw.getBytes());
                 if (testPassword(paswBytes, dbUtil)) {
                     Intent intent = new Intent(this, MainActivity.class);
-                    intent.putExtra("password", paswBytes); 
+                    intent.putExtra("password", paswBytes);
                     startActivity(intent);
                 } else {
-//            todo mess that wrong passw
+                    MessageDialogFragment dialog = new MessageDialogFragment();
+                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog"); //fixme
                 }
             } else {
-                //todo message - empty passw
+                MessageDialogFragment dialog = new MessageDialogFragment();
+                dialog.show(getFragmentManager(), "Empty_Passw_Dialog"); //fixme
             }
         } else {
-            //todo create db
+            //todo create db ask
         }
     }
 
