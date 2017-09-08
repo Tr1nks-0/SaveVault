@@ -65,10 +65,10 @@ public class LoginActivity extends AppCompatActivity {
         if (dbUtil.dbExists(this)) {
             String pasw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
             if (null != pasw && !"".equals(pasw)) {
-                if (testPassword(pasw, dbUtil)) {
+                byte[] paswBytes = Encoder.preparePassw(pasw.getBytes());
+                if (testPassword(paswBytes, dbUtil)) {
                     Intent intent = new Intent(this, MainActivity.class);
-                    // intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
-                    // intent.putExtra("lastname", lastName.getText().toString());  // по ключу мы будем получать значение с Intent
+                    intent.putExtra("password", paswBytes); 
                     startActivity(intent);
                 } else {
 //            todo mess that wrong passw
@@ -81,8 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean testPassword(String password, DBUtil dbUtil) {
-        byte b[] = Encoder.decode(Encoder.preparePassw(password.getBytes()), dbUtil.getCheckData());
+    private boolean testPassword(byte[] password, DBUtil dbUtil) {
+        byte b[] = Encoder.decode(password, dbUtil.getCheckData());
         //        EditText editText = ((EditText) findViewById(R.id.passwordEditText));
 //        String pasw = editText.getText().toString();
 //        String inpData = "Test input data for encode";

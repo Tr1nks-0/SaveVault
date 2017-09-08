@@ -15,5 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void addButtonHandler(View view) {
 //        Log.d("DEBUG", "DEBUG");
+        getIntent().getByteArrayExtra("password");
     }
 }
