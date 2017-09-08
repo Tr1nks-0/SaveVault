@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean testPassword(String password, DBUtil dbUtil) {
+        byte d[]=dbUtil.getCheckData();
         byte b[] = Encoder.decode(Encoder.preparePassw(password.getBytes()), dbUtil.getCheckData());
         //        EditText editText = ((EditText) findViewById(R.id.passwordEditText));
 //        String pasw = editText.getText().toString();
