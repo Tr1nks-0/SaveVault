@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.util.DBUtil;
+import com.tr1nks.safevault.util.Encoder;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -56,23 +57,24 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 
     public void okButtonHandler(View view) {
-        if (testPassword(((EditText) findViewById(R.id.passwordEditText)).getText().toString())) {
-            Intent intent = new Intent(this, MainActivity.class);
-            //        intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
+        DBUtil dbUtil = DBUtil.getInstance(this);
+        boolean b=dbUtil.dbExists(this);
+        if (dbUtil.dbExists(this)) {
+            if (testPassword(((EditText) findViewById(R.id.passwordEditText)).getText().toString(), dbUtil)) {
+                Intent intent = new Intent(this, MainActivity.class);
+                //        intent.putExtra("name", name.getText().toString()); // указываем первым параметром ключ, а второе значение
 //        intent.putExtra("lastname", lastName.getText().toString());  // по ключу мы будем получать значение с Intent
-//            if(!new File(FileUtil.CHECK_FILE_NAME).exists()){
-//                return;
-//            }
-//            FileUtil.getCheckFileBytes(this);
-
-            DBUtil.test(this);
-            startActivity(intent);
-        } else {
+                startActivity(intent);
+            } else {
 //            todo mess that wrong passw
+            }
+        } else {
+            //todo create password
         }
     }
 
-    private boolean testPassword(String password) {
+    private boolean testPassword(String password, DBUtil dbUtil) {
+        byte b[] = Encoder.decode(Encoder.preparePassw(password.getBytes()), dbUtil.getCheckData());
         //        EditText editText = ((EditText) findViewById(R.id.passwordEditText));
 //        String pasw = editText.getText().toString();
 //        String inpData = "Test input data for encode";
