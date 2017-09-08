@@ -1,11 +1,10 @@
 package com.tr1nks.safevault.entities;
 
-import android.media.Image;
-
-public abstract class Record  {
+public abstract class Record {
     private String id;
     private String title;
-    private Image titleImg;
+    private String titleImgName;
+    private byte[] data;
 
 
     public String getTitle() {
@@ -24,11 +23,19 @@ public abstract class Record  {
         this.id = id;
     }
 
-    public Image getTitleImg() {
-        return titleImg;
+    public String getTitleImgName() {
+        return titleImgName;
     }
 
-    public void setTitleImg(Image titleImg) {
-        this.titleImg = titleImg;
+    public void setTitleImgName(String titleImgName) {
+        this.titleImgName = titleImgName;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }
