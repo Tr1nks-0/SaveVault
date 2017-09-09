@@ -72,12 +72,12 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("password", paswBytes);
                     startActivity(intent);
                 } else {
-                    MessageDialogFragment dialog = new MessageDialogFragment();
-                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog"); //fixme
+                    MessageDialogFragment dialog = MessageDialogFragment.createMessageDialogFragment("Введите пароль", "Поле с паролем пусто, введите пароль");
+                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog");
                 }
             } else {
-                MessageDialogFragment dialog = new MessageDialogFragment();
-                dialog.show(getFragmentManager(), "Empty_Passw_Dialog"); //fixme
+                MessageDialogFragment dialog = MessageDialogFragment.createMessageDialogFragment("Неверный пароль", "Пароль неверен, проверьте правильность и повторите ввод");
+                dialog.show(getFragmentManager(), "Empty_Passw_Dialog");
             }
         } else {
             //todo create db ask

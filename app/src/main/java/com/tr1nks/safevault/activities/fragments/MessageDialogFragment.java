@@ -10,12 +10,24 @@ public class MessageDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         return builder
-                .setTitle("Диалоговое окно")
+                .setTitle(getArguments().getString("title"))
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setMessage("Для закрытия окна нажмите ОК")
+                .setMessage(getArguments().getString("message"))
                 .setPositiveButton("OK", null)
-                .setNegativeButton("Отмена", null)
+//                .setNegativeButton("Отмена", null)
                 .create();
+    }
+
+    public MessageDialogFragment() {
+    }
+
+    public static MessageDialogFragment createMessageDialogFragment(String title, String message) {
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putString("message", message);
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setArguments(args);
+        return dialog;
     }
 
     /*
