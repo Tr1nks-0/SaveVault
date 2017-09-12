@@ -1,32 +1,24 @@
-package com.tr1nks.safevault.activities.fragments;
+package com.tr1nks.safevault.activities.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 
-public class MessageDialogFragment extends DialogFragment {
+public class MessageDialogFragment extends AbstrDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        return builder
-                .setTitle(getArguments().getString("title"))
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setMessage(getArguments().getString("message"))
-                .setPositiveButton("OK", null)
-//                .setNegativeButton("Отмена", null)
-                .create();
+        AlertDialog.Builder builder = super.onCreateDialogAbstr(getArguments());
+        builder.setPositiveButton("OK", null);
+        return builder.create();
     }
 
     public MessageDialogFragment() {
     }
 
-    public static MessageDialogFragment createMessageDialogFragment(String title, String message) {
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        args.putString("message", message);
+    public static MessageDialogFragment createMessageDialogFragment(String ... args) {
+        Bundle bundle = createArguments(args);
         MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setArguments(args);
+        dialog.setArguments(bundle);
         return dialog;
     }
 
