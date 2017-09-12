@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+/**
+ * работа с бд
+ */
 public class DBUtil extends SQLiteOpenHelper {
     private static DBUtil instance = null;
     private static final String DATABASE_NAME = "sv.db";
@@ -38,6 +41,11 @@ public class DBUtil extends SQLiteOpenHelper {
 
     // -33, 29, -85, 100, 87, -59, 46, -116, 54, 127, -86, -57, -33, -58, 39, -81, 91, -30, 22, 57, 49, -31, 120, -90, -58, -7, -84, 75, -28, -44, -7, -121
 
+    /**
+     * получить данные проверки пароля
+     *
+     * @return вернет последовательность для проверки пароля
+     */
     public byte[] getCheckData() {
         Cursor cursor = this.getReadableDatabase().rawQuery(GET_CHECK_DATA_SQL, null);
         String str;
@@ -49,6 +57,11 @@ public class DBUtil extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * constructor
+     *
+     * @param context context
+     */
     public DBUtil(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.IF_TABLE_EXISTS_PS = this.getReadableDatabase().compileStatement(IF_TABLE_EXISTS_SQL);
@@ -60,6 +73,12 @@ public class DBUtil extends SQLiteOpenHelper {
 //        this.GET_DATA_BY_ID_PS = this.getReadableDatabase().compileStatement(GET_DATA_BY_ID_SQL);
     }
 
+    /**
+     * Выполняется при создании новой БД
+     * {@inheritDoc}
+     *
+     * @param sqLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + CHECK_TABLE_NAME + " ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, val TEXT )");
@@ -67,10 +86,24 @@ public class DBUtil extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("create unique index data_id_uindex on data (id)");
     }
 
+    /**
+     * Выполняется при изменении БД
+     * {@inheritDoc}
+     *
+     * @param sqLiteDatabase
+     * @param i
+     * @param i1
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
+    /**
+     * Проверяет существует ли БД
+     *
+     * @param context context
+     * @return true если существует
+     */
     public boolean dbExists(Context context) {
         if (context.getDatabasePath(DATABASE_NAME).exists()) {
             IF_TABLE_EXISTS_PS.bindString(1, CHECK_TABLE_NAME);
@@ -80,6 +113,12 @@ public class DBUtil extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * get Instance for singleton
+     *
+     * @param context context
+     * @return DBUtil
+     */
     public static DBUtil getInstance(Context context) {
         if (instance == null) {
             instance = new DBUtil(context);

@@ -10,6 +10,13 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
     public static final String CREATE_PASSWORD_DIALOG_NAME = "Create_password_dialog";
     private static final String CREATE_PASSW_DIALOG_LAYOUT_FILENAME = "enter_passw_dialog";
 
+    /**
+     * при создании dialog
+     * {@inheritDoc}
+     *
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = super.onCreateDialogAbstr(getArguments());
@@ -40,8 +47,23 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
         };
     }
 
+    /**
+     * создать диалог
+     *
+     * @param args аргументы для создания диалога ({@link AbstrDialog#ARGS_TAGS})
+     * @return диалог
+     */
     public static CreatePasswordDialogFragment createMessageDialogFragment(String... args) {
-        Bundle bundle = createArguments(args);
+        return createMessageDialogFragment(createArguments(args));
+    }
+
+    /**
+     * создать диалог
+     *
+     * @param bundle аргументы для создания диалога
+     * @return диалог
+     */
+    public static CreatePasswordDialogFragment createMessageDialogFragment(Bundle bundle) {
         CreatePasswordDialogFragment dialog = new CreatePasswordDialogFragment();
         dialog.setArguments(bundle);
         return dialog;

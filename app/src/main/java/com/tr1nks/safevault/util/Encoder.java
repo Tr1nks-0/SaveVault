@@ -10,18 +10,45 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Класс-шифровальщик
+ * шифрование - расшифровывание последовательностей байт или строк
+ */
 public class Encoder {
     private static final String AES = "AES";
     private static final String AES_CBC_PKCS5_PADDING = "AES/CBC/PKCS5Padding";
 
+    /**
+     * расшифровать
+     *
+     * @param password пароль для расшифровки
+     * @param data     данные для расшифровки
+     * @return расшифрованные данные
+     */
     public static byte[] decode(byte[] password, byte[] data) {
         return code(password, data, Cipher.DECRYPT_MODE);
     }
 
+    /**
+     * зашифровать
+     *
+     * @param password пароль для зашифровки
+     * @param data     данные для зашифровки
+     * @return зашифрованные данные
+     */
     public static byte[] encode(byte[] password, byte[] data) {
         return code(password, data, Cipher.ENCRYPT_MODE);
     }
 
+    /**
+     * шифровать
+     * производит шифрование или расшифровку
+     *
+     * @param password пароль для шифровки
+     * @param data     данные для шифровки
+     * @param mode     режим (шифровать расшифровывать) значения содержаться в {@link Cipher}
+     * @return обработанные в соотв с режимом данные
+     */
     private static byte[] code(byte[] password, byte[] data, int mode) {
         try {
             //        SecretKeySpec secretKeySpec = new SecretKeySpec(password,0,password.length, AES);
@@ -36,6 +63,13 @@ public class Encoder {
         }
     }
 
+    /**
+     * подготовить пароль для шифрования
+     * дополняет пароль до длинны 256 бит (32 byte * byte.size)
+     *
+     * @param password пароль
+     * @return подготовленная последовательность
+     */
     public static byte[] preparePassw(byte[] password) {//todo replace with more efficient
         byte[] out = new byte[32];
         int j = 0;

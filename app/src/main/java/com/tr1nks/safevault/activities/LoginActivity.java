@@ -9,21 +9,40 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.activities.fragments.MessageDialogFragment;
+import com.tr1nks.safevault.activities.dialogs.CreatePasswordDialogFragment;
+import com.tr1nks.safevault.activities.dialogs.MessageDialogFragment;
 import com.tr1nks.safevault.util.DBUtil;
 import com.tr1nks.safevault.util.Encoder;
 
+/**
+ * стартовое окно приложения, авторизация пользователя, проверка наличия базы в системе, вызов создания базы
+ */
 public class LoginActivity extends AppCompatActivity {
-
+    /**
+     * {@inheritDoc}
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ((EditText) findViewById(R.id.passwordEditText)).setText("");
+//        ((EditText) findViewById(R.id.passwordEditText)).setText("");
 //        ((CheckBox) findViewById(R.id.showPasswCheckBox)).setOnCheckedChangeListener(this::showPasswOnCheckedChangeListener);
         ((CheckBox) findViewById(R.id.showPasswCheckBox)).setOnCheckedChangeListener(showPasswOnCheckedChangeListener());
+//debug
+        MessageDialogFragment dialog = MessageDialogFragment.createMessageDialogFragment("title", "message");
+        CreatePasswordDialogFragment dialog2 = CreatePasswordDialogFragment.createMessageDialogFragment("title 2", "message 2");
+//        CreatePasswordDialogFragment dialog = CreatePasswordDialogFragment.createMessageDialogFragment("TEST", "TEST TEST TEST");
+        dialog.show(getFragmentManager(), "Test_Dialog");
+        dialog2.show(getFragmentManager(), "Test_Dialog");
     }
 
+    /**
+     * создание handler для CheckBox показать пароль
+     *
+     * @return handler для CheckBox показать пароль
+     */
     private CompoundButton.OnCheckedChangeListener showPasswOnCheckedChangeListener() {
         return new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -56,6 +75,11 @@ public class LoginActivity extends AppCompatActivity {
 //            editText.setSelection(pos);
 //        }
 
+    /**
+     * hfndler для кнопки ok
+     *
+     * @param view current view
+     */
     public void okButtonHandler(View view) {
 //        byte[] s = DBUtil.CHECK_PASSW_STR.getBytes();
 //        byte[] o = Encoder.encode(Encoder.preparePassw("root".getBytes()), s);
@@ -72,18 +96,25 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("password", paswBytes);
                     startActivity(intent);
                 } else {
-                    MessageDialogFragment dialog = MessageDialogFragment.createMessageDialogFragment("Введите пароль", "Поле с паролем пусто, введите пароль");
-                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog");
+//                    MessageDialogFragment dialog = MessageDialogFragment.createMessageDialogFragment("Введите пароль", "Поле с паролем пусто, введите пароль");
+//                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog");
                 }
             } else {
-                MessageDialogFragment dialog = MessageDialogFragment.createMessageDialogFragment("Неверный пароль", "Пароль неверен, проверьте правильность и повторите ввод");
-                dialog.show(getFragmentManager(), "Empty_Passw_Dialog");
+//                MessageDialogFragment dialog = MessageDialogFragment.createMessageDialogFragment("Неверный пароль", "Пароль неверен, проверьте правильность и повторите ввод");
+//                dialog.show(getFragmentManager(), "Empty_Passw_Dialog");
             }
         } else {
             //todo create db ask
         }
     }
 
+    /**
+     * проверить пароль на правильность
+     *
+     * @param password пароль
+     * @param dbUtil   утилита работы с бд
+     * @return true если пароль верный
+     */
     private boolean testPassword(byte[] password, DBUtil dbUtil) {
         byte b[] = Encoder.decode(password, dbUtil.getCheckData());
         //        EditText editText = ((EditText) findViewById(R.id.passwordEditText));

@@ -5,4 +5,8 @@
     <string name="login_ok">OK</string>
     <string name="login_show_passw">Show password</string>
     <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="enter_passw_dialog_enter_u_passw">Enter You password</string>
+    <string name="enter_passw_dialog_passw_hint">Password</string>
+    <string name="enter_passw_dialog_confirm_u_passw">Confirm You password</string>
+    <string name="enter_passw_dialog_confirm_passw_hint">Password</string>
 </resources>

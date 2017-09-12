@@ -4,7 +4,17 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 
+/**
+ * dialog сообщения-оповещения
+ */
 public class MessageDialogFragment extends AbstrDialog {
+    /**
+     * при создании dialog
+     * {@inheritDoc}
+     *
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = super.onCreateDialogAbstr(getArguments());
@@ -12,40 +22,22 @@ public class MessageDialogFragment extends AbstrDialog {
         return builder.create();
     }
 
-    public MessageDialogFragment() {
+    /**
+     * создать диалог
+     * @param args аргументы для создания диалога ({@link AbstrDialog#ARGS_TAGS})
+     * @return диалог
+     */
+    public static MessageDialogFragment createMessageDialogFragment(String... args) {
+        return createMessageDialogFragment(createArguments(args));
     }
-
-    public static MessageDialogFragment createMessageDialogFragment(String ... args) {
-        Bundle bundle = createArguments(args);
+    /**
+     * создать диалог
+     * @param bundle аргументы для создания диалога
+     * @return диалог
+     */
+    public static MessageDialogFragment createMessageDialogFragment(Bundle bundle) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setArguments(bundle);
         return dialog;
     }
-
-    /*
-    <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Hello Android 7"/>
-</LinearLayout>
-
-
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-    AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-    return builder
-            .setTitle("Диалоговое окно")
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setView(R.layout.dialog)
-            .setPositiveButton("OK", null)
-            .setNegativeButton("Отмена", null)
-            .create();
-}
-     */
 }

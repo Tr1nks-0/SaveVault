@@ -4,4 +4,8 @@
     <string name="login_ok">OK</string>
     <string name="login_show_passw">Показывать пароль</string>
     <string name="login_passw_hint">Пароль</string>
+    <string name="enter_passw_dialog_confirm_passw_hint">Пароль</string>
+    <string name="enter_passw_dialog_confirm_u_passw">Подтвердите пароль</string>
+    <string name="enter_passw_dialog_enter_u_passw">Введите пароль</string>
+    <string name="enter_passw_dialog_passw_hint">Пароль</string>
 </resources>

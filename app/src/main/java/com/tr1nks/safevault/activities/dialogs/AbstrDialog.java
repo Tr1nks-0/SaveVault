@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 
+/**
+ * диалог сообщение
+ */
 public abstract class AbstrDialog extends DialogFragment {
     protected static final String DRAWABLE_DEF_TYPE = "drawable";
     protected static final String LAYOUT_DEF_TYPE = "layout";
@@ -18,6 +21,12 @@ public abstract class AbstrDialog extends DialogFragment {
             ICON_TAG
     };
 
+    /**
+     * метод начальной инициализации, вызывать первым в методе  onCreateDialog()
+     *
+     * @param savedInstanceState State
+     * @return dialog builder
+     */
     public AlertDialog.Builder onCreateDialogAbstr(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getArguments().getString(TITLE_TAG) != null ? getArguments().getString(TITLE_TAG) : TITLE_TAG);
@@ -33,7 +42,12 @@ public abstract class AbstrDialog extends DialogFragment {
         return builder;
     }
 
-
+    /**
+     * создать аргументы создания диалога
+     *
+     * @param args значения аргументов, должны идти в порядке : {@link AbstrDialog#ARGS_TAGS}
+     * @return аргументы для создания диалога
+     */
     public static Bundle createArguments(String... args) {
         Bundle bundle = new Bundle();
         for (int i = 0; i < (args.length < ARGS_TAGS.length ? args.length : ARGS_TAGS.length); i++) {
