@@ -41,14 +41,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/LabelTextView"
-            android:labelFor="@+id/enterPasswEditText"
+            android:labelFor="@+id/dialogEnterPasswEditText"
     />
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/enterPasswEditText"
+            android:id="@+id/dialogEnterPasswEditText"
             android:hint="@string/enter_passw_dialog_passw_hint"
     />
     <TextView
@@ -56,14 +56,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
-            android:labelFor="@+id/confirmPasswEditText"
+            android:labelFor="@+id/dialogConfirmPasswEditText"
     />
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/confirmPasswEditText"
+            android:id="@+id/dialogConfirmPasswEditText"
             android:hint="@string/enter_passw_dialog_confirm_passw_hint"
     />
 </LinearLayout>

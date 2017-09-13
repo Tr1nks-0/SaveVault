@@ -14,6 +14,8 @@
     <string name="dialogs_no">No</string>
     <string name="dialogs_ok">OK</string>
 
-    <string name="dialogs_ask_create_db_title">Crete new DataBase?</string>
+    <string name="dialogs_ask_create_db_title">Create new DataBase?</string>
     <string name="dialogs_ask_create_db_message">The database files were not found, do You want to create a new database?</string>
+    <string name="dialogs_create_passw_create_db_pasw_title">Set Password</string>
+    <string name="dialogs_create_passw_create_db_pasw_message">Please set password for you DB</string>
 </resources>

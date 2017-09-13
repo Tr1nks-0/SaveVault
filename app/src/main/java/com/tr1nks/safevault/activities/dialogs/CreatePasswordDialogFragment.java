@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.EditText;
 import com.tr1nks.safevault.R;
 
 public class CreatePasswordDialogFragment extends AbstrDialog {
@@ -14,7 +15,7 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
     private static final String CREATE_PASSW_DIALOG_LAYOUT_FILENAME = "enter_passw_dialog";
 
     public interface CreatePasswordDialogListener {
-        public void onCreatePasswordDialogPositiveClick(DialogFragment dialog);
+        public void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw);
 
         public void onCreatePasswordDialogNegativeClick(DialogFragment dialog);
     }
@@ -37,7 +38,12 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
         builder.setPositiveButton(R.string.dialogs_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this);
+                if (((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().equals(((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText())) {
+                    listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
+                } else {
+                    //todo password do not match
+                }
+
             }
         });
         Dialog dialog = builder.create();

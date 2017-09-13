@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
 //        }
 
     /**
-     * hfndler для кнопки ok
+     * handler для кнопки ok
      *
      * @param view current view
      */
@@ -92,25 +92,29 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
 //        int i1 = s.length;
 //        int i2 = o.length;
 //        Log.d("ENCODED:", Arrays.toString(o));
-        DBUtil dbUtil = DBUtil.getInstance(this);
-        if (dbUtil.dbExists(this)) {
-            String pasw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
-            if (null != pasw && !"".equals(pasw)) {
-                byte[] paswBytes = Encoder.preparePassw(pasw.getBytes());
-                if (testPassword(paswBytes, dbUtil)) {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.putExtra("password", paswBytes);
-                    startActivity(intent);
-                } else {
+        if (dbFileExistsCheck()) {
+            DBUtil dbUtil = DBUtil.getInstance(this);
+            if (dbUtil.dbExists(this)) {
+                String pasw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+                if (null != pasw && !"".equals(pasw)) {
+                    byte[] paswBytes = Encoder.preparePassw(pasw.getBytes());
+                    if (testPassword(paswBytes, dbUtil)) {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.putExtra("password", paswBytes);
+                        startActivity(intent);
+                    } else {
 //                    MessageDialogFragment dialog = MessageDialogFragment.createCreatePasswordDialogFragment("Введите пароль", "Поле с паролем пусто, введите пароль");
 //                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog");
-                }
-            } else {
+                    }
+                } else {
 //                MessageDialogFragment dialog = MessageDialogFragment.createCreatePasswordDialogFragment("Неверный пароль", "Пароль неверен, проверьте правильность и повторите ввод");
 //                dialog.show(getFragmentManager(), "Empty_Passw_Dialog");
+                }
+            } else {
+                //todo create db ask
             }
         } else {
-            //todo create db ask
+            askCreateDb();
         }
     }
 
@@ -144,17 +148,18 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
     @Override
     public void onAskDialogPositiveClick(DialogFragment dialog) {
         DBUtil.createDb(this);
-        CreatePasswordDialogFragment createPasswDialog=CreatePasswordDialogFragment.createCreatePasswordDialogFragment()
+        CreatePasswordDialogFragment createPasswDialog = CreatePasswordDialogFragment.createCreatePasswordDialogFragment(getString(R.string.dialogs_create_passw_create_db_pasw_title), getString(R.string.dialogs_create_passw_create_db_pasw_message));
+        createPasswDialog.show(getFragmentManager(), CreatePasswordDialogFragment.CREATE_PASSWORD_DIALOG_NAME);
     }
 
     @Override
     public void onAskDialogNegativeClick(DialogFragment dialog) {
-        Log.d("W", "");
+//        Log.d("W", "");
         //todo  don't create new db
     }
 
     @Override
-    public void onCreatePasswordDialogPositiveClick(DialogFragment dialog) {
+    public void onCreatePasswordDialogPositiveClick(DialogFragment dialog,String passw) {
         Log.d("W", "");
     }
 
