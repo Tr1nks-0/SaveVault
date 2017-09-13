@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -93,26 +92,26 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
 //        int i2 = o.length;
 //        Log.d("ENCODED:", Arrays.toString(o));
         if (dbFileExistsCheck()) {
-            DBUtil dbUtil = DBUtil.getInstance(this);
-            if (dbUtil.dbExists(this)) {
-                String pasw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
-                if (null != pasw && !"".equals(pasw)) {
-                    byte[] paswBytes = Encoder.preparePassw(pasw.getBytes());
-                    if (testPassword(paswBytes, dbUtil)) {
-                        Intent intent = new Intent(this, MainActivity.class);
-                        intent.putExtra("password", paswBytes);
-                        startActivity(intent);
-                    } else {
-//                    MessageDialogFragment dialog = MessageDialogFragment.createCreatePasswordDialogFragment("Введите пароль", "Поле с паролем пусто, введите пароль");
-//                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog");
-                    }
-                } else {
-//                MessageDialogFragment dialog = MessageDialogFragment.createCreatePasswordDialogFragment("Неверный пароль", "Пароль неверен, проверьте правильность и повторите ввод");
-//                dialog.show(getFragmentManager(), "Empty_Passw_Dialog");
-                }
-            } else {
-                //todo create db ask
-            }
+//            DBUtil dbUtil = DBUtil.getInstance(this);
+//            if (dbUtil.dbExists(this)) {
+//                String pasw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+//                if (null != pasw && !"".equals(pasw)) {
+//                    byte[] paswBytes = Encoder.preparePassw(pasw.getBytes());
+//                    if (testPassword(paswBytes, dbUtil)) {
+//                        Intent intent = new Intent(this, MainActivity.class);
+//                        intent.putExtra("password", paswBytes);
+//                        startActivity(intent);
+//                    } else {
+////                    MessageDialogFragment dialog = MessageDialogFragment.createCreatePasswordDialogFragment("Введите пароль", "Поле с паролем пусто, введите пароль");
+////                    dialog.show(getFragmentManager(), "Wrong_Passw_Dialog");
+//                    }
+//                } else {
+////                MessageDialogFragment dialog = MessageDialogFragment.createCreatePasswordDialogFragment("Неверный пароль", "Пароль неверен, проверьте правильность и повторите ввод");
+////                dialog.show(getFragmentManager(), "Empty_Passw_Dialog");
+//                }
+//            } else {
+//                //todo create db ask
+//            }
         } else {
             askCreateDb();
         }
@@ -136,9 +135,6 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
         return true;
     }
 
-    private boolean dbFileExistsCheck() {
-        return getDatabasePath(DBUtil.DATABASE_NAME).exists();
-    }
 
     private void askCreateDb() {
         AskDialogFragment askDialog = AskDialogFragment.createAskDialogFragment(getString(R.string.dialogs_ask_create_db_title), getString(R.string.dialogs_ask_create_db_message), String.valueOf(android.R.drawable.ic_dialog_alert));
@@ -159,12 +155,22 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
     }
 
     @Override
-    public void onCreatePasswordDialogPositiveClick(DialogFragment dialog,String passw) {
-        Log.d("W", "");
+    public void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw) {
+        DBUtil.setCheckData(Encoder.encode(Encoder.preparePassw(passw.getBytes()), DBUtil.CHECK_PASSW_STR.getBytes()));
     }
 
     @Override
     public void onCreatePasswordDialogNegativeClick(DialogFragment dialog) {
-        Log.d("W", "");
+//        Log.d("W", "");
+    }
+
+    public boolean dbFileExistsCheck() {
+        return getDatabasePath(DBUtil.DATABASE_NAME).exists();
+    }
+
+    private void openMainActivity(byte[] passwBytes) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("password", passwBytes);
+        startActivity(intent);
     }
 }
