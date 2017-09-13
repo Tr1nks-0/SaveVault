@@ -12,4 +12,8 @@
     <dimen name="dialog_text_view_text_size">20sp</dimen>
     <dimen name="dialog_edit_text_text_size">20sp</dimen>
     <dimen name="dialog_checkbox_text_size">15sp</dimen>
+
+    <dimen name="field_text_view_text_size">20sp</dimen>
+    <dimen name="field_edit_text_text_size">20sp</dimen>
+    <dimen name="field_checkbox_text_size">15sp</dimen>
 </resources>
