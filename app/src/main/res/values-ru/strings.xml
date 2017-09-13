@@ -17,4 +17,5 @@
     <string name="dialogs_create_passw_create_db_passw_title">Задайте пароль</string>
     <string name="dialogs_message_wrong_passw_message">Введенный вами пароль неверен! Повторите ввод</string>
     <string name="dialogs_message_wrong_passw_title">Неверный пароль!</string>
+    <string name="toasts_message_passws_mismatch_message">Веденные пароли не совпадают</string>
 </resources>

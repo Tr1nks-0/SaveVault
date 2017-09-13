@@ -7,7 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.tr1nks.safevault.R;
 
 public class CreatePasswordDialogFragment extends AbstrDialog {
@@ -35,47 +38,38 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(getResources().getIdentifier(CREATE_PASSW_DIALOG_LAYOUT_FILENAME, LAYOUT_DEF_TYPE, getActivity().getPackageName()), null));
-        builder.setPositiveButton(R.string.dialogs_yes, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.dialogs_yes, null);
+        final Dialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                CharSequence cs1 = ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText();
-                CharSequence cs2 = ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText();
-                boolean b = cs1.equals(cs2);
-                if (((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString().equals(((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText().toString())) {
-                    listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
-                } else {
-                    //todo password do not match
-                }
-
+            public void onShow(DialogInterface d) {
+                Button b = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String s1 = ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString();
+                        String s2 = ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText().toString();
+                        if (s1.equals(s2)) {
+                            listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
+                        } else {
+                            ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).setText("");
+                            ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).setText("");
+                            Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.toasts_message_passws_mismatch_message), Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                    }
+                });
             }
         });
-        Dialog dialog = builder.create();
-
         return dialog;
     }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.listener = (CreatePasswordDialogListener) context;
     }
-//    private DialogInterface.OnClickListener positiveOnClickListener() {
-//        return new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                //todo
-//            }
-//        };
-//    }
-//
-//    private DialogInterface.OnClickListener negativeOnClickListener() {
-//        return new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                CreatePasswordDialogFragment.this.getDialog().cancel();
-//            }
-//        };
-//    }
 
     /**
      * создать диалог
