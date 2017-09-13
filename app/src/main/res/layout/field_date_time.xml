@@ -29,13 +29,25 @@
                 android:contentDescription="@string/fields_cont_descr_del_img_button"/>
     </LinearLayout>
 
-    <EditText
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/textEditText"
-            android:textSize="@dimen/field_edit_text_text_size"
-            android:hint="@string/fields_text_hint"
-            />
+            >
 
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="datetime"
+                android:id="@+id/textEditText"
+                android:textSize="@dimen/field_edit_text_text_size"
+                android:hint="@string/fields_text_hint"
+                />
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_delete"
+                android:id="@+id/selectDateTimeImageButton"
+                android:contentDescription="@string/fields_cont_descr_del_img_button"/>
+    </LinearLayout>
 </LinearLayout>

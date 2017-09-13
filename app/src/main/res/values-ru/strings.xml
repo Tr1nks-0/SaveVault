@@ -21,4 +21,6 @@
     <string name="dialogs_show_passw">Показывать пароль</string>
     <string name="fields_cont_descr_del_img_button">Кнопка Удалить с изображением</string>
     <string name="fields_text_hint">Ваш текст</string>
+    <string name="fields_multiline_text_hint">Ваш многострочный текст</string>
+    <string name="fields_number_hint">Ваш номер</string>
 </resources>

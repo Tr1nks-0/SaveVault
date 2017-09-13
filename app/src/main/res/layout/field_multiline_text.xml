@@ -13,10 +13,10 @@
             >
 
         <TextView
-                android:labelFor="@+id/textEditText"
+                android:labelFor="@+id/multilineEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/titleForTextEditText"
+                android:id="@+id/titleForMultilineEditText"
                 android:layout_weight="1"
                 android:textSize="@dimen/field_text_view_text_size"
                 />
@@ -29,13 +29,13 @@
                 android:contentDescription="@string/fields_cont_descr_del_img_button"/>
     </LinearLayout>
 
+
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/textEditText"
+            android:inputType="textMultiLine"
             android:textSize="@dimen/field_edit_text_text_size"
-            android:hint="@string/fields_text_hint"
+            android:hint="@string/fields_multiline_text_hint"
+            android:id="@+id/multilineEditText"
             />
-
 </LinearLayout>
