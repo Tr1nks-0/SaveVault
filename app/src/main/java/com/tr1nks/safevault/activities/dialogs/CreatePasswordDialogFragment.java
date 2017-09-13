@@ -6,11 +6,10 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import com.tr1nks.safevault.R;
 
 public class CreatePasswordDialogFragment extends AbstrDialog {
@@ -43,13 +42,35 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface d) {
+                CheckBox c = getDialog().findViewById(R.id.dialogShowPasswCheckBox);
+                c.setOnCheckedChangeListener(
+                        new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                EditText editText1 = getDialog().findViewById(R.id.dialogEnterPasswEditText);
+                                EditText editText2 = getDialog().findViewById(R.id.dialogConfirmPasswEditText);
+                                TextView textView = getDialog().findViewById(R.id.dialog_checkbox_text_size_TextView);
+                                int pos = editText1.getSelectionEnd();
+                                if (b) {
+                                    editText1.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                                    editText2.setVisibility(View.INVISIBLE);
+                                    textView.setVisibility(View.INVISIBLE);
+                                } else {
+                                    editText1.setInputType(129);
+                                    editText2.setVisibility(View.VISIBLE);
+                                    textView.setVisibility(View.VISIBLE);
+                                }
+                                editText1.setSelection(pos);
+                            }
+                        });
                 Button b = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String s1 = ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString();
                         String s2 = ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText().toString();
-                        if (s1.equals(s2)) {
+                        CheckBox checkBox = getDialog().findViewById(R.id.dialogShowPasswCheckBox);
+                        if (s1.equals(s2) || checkBox.isChecked()) {
                             listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
                             dialog.dismiss();
                         } else {

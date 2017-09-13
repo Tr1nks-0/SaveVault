@@ -18,4 +18,5 @@
     <string name="dialogs_message_wrong_passw_message">Введенный вами пароль неверен! Повторите ввод</string>
     <string name="dialogs_message_wrong_passw_title">Неверный пароль!</string>
     <string name="toasts_message_passws_mismatch_message">Веденные пароли не совпадают</string>
+    <string name="dialogs_show_passw">Показывать пароль</string>
 </resources>

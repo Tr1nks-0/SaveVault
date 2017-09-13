@@ -56,7 +56,7 @@
             />
 
     <CheckBox
-            android:text="CheckBox"
+            android:text="@string/dialogs_show_passw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dialogShowPasswCheckBox"
@@ -67,7 +67,7 @@
             android:text="@string/enter_passw_dialog_confirm_u_passw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:id="@+id/dialog_checkbox_text_size_TextView"
             android:labelFor="@+id/dialogConfirmPasswEditText"
             android:textSize="@dimen/dialog_text_view_text_size"
             />
