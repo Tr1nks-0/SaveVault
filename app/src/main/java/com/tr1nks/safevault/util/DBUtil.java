@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteStatement;
  */
 public class DBUtil extends SQLiteOpenHelper {
     private static DBUtil instance = null;
-    private static final String DATABASE_NAME = "sv.db";
+    public static final String DATABASE_NAME = "sv.db";
     public static final String CHECK_PASSW_STR = "check_password_string";
     private static final int DATABASE_VERSION = 1;
     private static final String CHECK_TABLE_NAME = "chck";
@@ -111,6 +111,10 @@ public class DBUtil extends SQLiteOpenHelper {
         } else {
             return false;
         }
+    }
+
+    public static void createDb(Context context) {
+
     }
 
     /**

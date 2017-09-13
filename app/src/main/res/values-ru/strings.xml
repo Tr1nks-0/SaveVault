@@ -8,4 +8,9 @@
     <string name="enter_passw_dialog_confirm_u_passw">Подтвердите пароль</string>
     <string name="enter_passw_dialog_enter_u_passw">Введите пароль</string>
     <string name="enter_passw_dialog_passw_hint">Пароль</string>
+    <string name="dialogs_no">Нет</string>
+    <string name="dialogs_ok">ОК</string>
+    <string name="dialogs_yes">Да</string>
+    <string name="dialogs_ask_create_db_message">Файлы базы данных не были найдены, Вы хотите создать новую базу данных ?</string>
+    <string name="dialogs_ask_create_db_title">Создать новую Базу Данных?</string>
 </resources>

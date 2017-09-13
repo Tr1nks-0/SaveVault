@@ -9,4 +9,11 @@
     <string name="enter_passw_dialog_passw_hint">Password</string>
     <string name="enter_passw_dialog_confirm_u_passw">Confirm You password</string>
     <string name="enter_passw_dialog_confirm_passw_hint">Password</string>
+
+    <string name="dialogs_yes">Yes</string>
+    <string name="dialogs_no">No</string>
+    <string name="dialogs_ok">OK</string>
+
+    <string name="dialogs_ask_create_db_title">Crete new DataBase?</string>
+    <string name="dialogs_ask_create_db_message">The database files were not found, do You want to create a new database?</string>
 </resources>

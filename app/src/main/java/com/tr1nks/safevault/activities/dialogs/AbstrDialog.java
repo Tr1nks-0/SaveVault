@@ -21,6 +21,7 @@ public abstract class AbstrDialog extends DialogFragment {
             ICON_TAG
     };
 
+
     /**
      * метод начальной инициализации, вызывать первым в методе  onCreateDialog()
      *
@@ -36,9 +37,6 @@ public abstract class AbstrDialog extends DialogFragment {
         if (getArguments().getString(ICON_TAG) != null) {
             builder.setIcon(getResources().getIdentifier(getArguments().getString(ICON_TAG), DRAWABLE_DEF_TYPE, getActivity().getPackageName()));
         }
-//        if (getArguments().getString(POSITIVE_BUTTON_TAG) != null) {
-//            builder.setPositiveButton(getArguments().getString(POSITIVE_BUTTON_TAG), null);
-//        }
         return builder;
     }
 

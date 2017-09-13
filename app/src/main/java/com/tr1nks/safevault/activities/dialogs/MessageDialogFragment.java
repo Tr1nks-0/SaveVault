@@ -8,6 +8,7 @@ import android.os.Bundle;
  * dialog сообщения-оповещения
  */
 public class MessageDialogFragment extends AbstrDialog {
+    public static final String MESSAGE_DIALOG_NAME = "Message_dialog";
     /**
      * при создании dialog
      * {@inheritDoc}
