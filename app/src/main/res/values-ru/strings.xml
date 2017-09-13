@@ -13,6 +13,8 @@
     <string name="dialogs_yes">Да</string>
     <string name="dialogs_ask_create_db_message">Файлы базы данных не были найдены, Вы хотите создать новую базу данных ?</string>
     <string name="dialogs_ask_create_db_title">Создать новую Базу Данных?</string>
-    <string name="dialogs_create_passw_create_db_pasw_message">Пожалуйста задайте пароль к вашей БД</string>
-    <string name="dialogs_create_passw_create_db_pasw_title">Задайте пароль</string>
+    <string name="dialogs_create_passw_create_db_passw_message">Пожалуйста задайте пароль к вашей БД</string>
+    <string name="dialogs_create_passw_create_db_passw_title">Задайте пароль</string>
+    <string name="dialogs_message_wrong_passw_message">Введенный вами пароль неверен! Повторите ввод</string>
+    <string name="dialogs_message_wrong_passw_title">Неверный пароль!</string>
 </resources>

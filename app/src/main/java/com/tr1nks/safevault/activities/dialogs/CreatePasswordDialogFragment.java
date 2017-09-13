@@ -15,12 +15,12 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
     private static final String CREATE_PASSW_DIALOG_LAYOUT_FILENAME = "enter_passw_dialog";
 
     public interface CreatePasswordDialogListener {
-        public void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw);
+        void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw);
 
-        public void onCreatePasswordDialogNegativeClick(DialogFragment dialog);
+        void onCreatePasswordDialogNegativeClick(DialogFragment dialog);
     }
 
-    CreatePasswordDialogListener listener;
+    private CreatePasswordDialogListener listener;
 
     /**
      * при создании dialog
@@ -38,7 +38,10 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
         builder.setPositiveButton(R.string.dialogs_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().equals(((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText())) {
+                CharSequence cs1 = ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText();
+                CharSequence cs2 = ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText();
+                boolean b = cs1.equals(cs2);
+                if (((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString().equals(((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText().toString())) {
                     listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
                 } else {
                     //todo password do not match

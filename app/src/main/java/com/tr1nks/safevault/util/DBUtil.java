@@ -25,7 +25,7 @@ public class DBUtil {
         }
     }
 
-    public byte[] getCheckData() {
+    public static byte[] getCheckData() {
         return worker.getCheckData();
     }
 
@@ -53,6 +53,7 @@ public class DBUtil {
 
         DBWorker(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
+//            getReadableDatabase().execSQL("SELECT 1 FROM chck");
         }
 
         @Override
