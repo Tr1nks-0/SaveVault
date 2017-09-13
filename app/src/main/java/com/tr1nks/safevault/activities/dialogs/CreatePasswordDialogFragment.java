@@ -18,8 +18,6 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
 
     public interface CreatePasswordDialogListener {
         void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw);
-
-        void onCreatePasswordDialogNegativeClick(DialogFragment dialog);
     }
 
     private CreatePasswordDialogListener listener;

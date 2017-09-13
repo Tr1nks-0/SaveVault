@@ -29,15 +29,7 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        ((EditText) findViewById(R.id.passwordEditText)).setText("");
-//        ((CheckBox) findViewById(R.id.showPasswCheckBox)).setOnCheckedChangeListener(this::showPasswOnCheckedChangeListener);
         ((CheckBox) findViewById(R.id.showPasswCheckBox)).setOnCheckedChangeListener(showPasswOnCheckedChangeListener());
-//debug
-//        MessageDialogFragment dialog = MessageDialogFragment.createCreatePasswordDialogFragment("title", "message");
-//        CreatePasswordDialogFragment dialog2 = CreatePasswordDialogFragment.createCreatePasswordDialogFragment("title 2", "message 2");
-//        CreatePasswordDialogFragment dialog = CreatePasswordDialogFragment.createCreatePasswordDialogFragment("TEST", "TEST TEST TEST");
-//        dialog.show(getFragmentManager(), "Test_Dialog");
-//        dialog2.show(getFragmentManager(), "Test_Dialog");
         if (!dbFileExistsCheck()) {
             askCreateDb();
         }
@@ -64,22 +56,6 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
             }
         };
     }
-//    /**
-//     * показать спрятать пароль обработчик checkbox
-//     *
-//     * @param compoundButton checkbox
-//     * @param b              checkbox is checked
-//     */
-//        private void showPasswOnCheckedChangeListener(CompoundButton compoundButton, boolean b) {
-//            EditText editText = ((EditText) findViewById(R.id.passwordEditText));
-//            int pos = editText.getSelectionEnd();
-//            if (b) {
-//                editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//            } else {
-//                editText.setInputType(129);
-//            }
-//            editText.setSelection(pos);
-//        }
 
     /**
      * handler для кнопки ok
@@ -117,11 +93,19 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
         return true;
     }
 
+    /**
+     * Запрашивает о необходимости создания БД
+     */
     private void askCreateDb() {
         AskDialogFragment askDialog = AskDialogFragment.createAskDialogFragment(getString(R.string.dialogs_ask_create_db_title), getString(R.string.dialogs_ask_create_db_message), String.valueOf(android.R.drawable.ic_dialog_alert));
         askDialog.show(getFragmentManager(), AskDialogFragment.ASK_DIALOG_NAME);
     }
 
+    /**
+     * обработчик положительного ответа о создании базы
+     *
+     * @param dialog даилог
+     */
     @Override
     public void onAskDialogPositiveClick(DialogFragment dialog) {
         DBUtil.createDb(this);
@@ -129,12 +113,23 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
         createPasswDialog.show(getFragmentManager(), CreatePasswordDialogFragment.CREATE_PASSWORD_DIALOG_NAME);
     }
 
+    /**
+     * обработчик отрицательного ответа о создании базы
+     *
+     * @param dialog даилог
+     */
     @Override
     public void onAskDialogNegativeClick(DialogFragment dialog) {
 //        Log.d("W", "");
         //todo  don't create new db
     }
 
+    /**
+     * обработчик ввода пароля для новой бд
+     *
+     * @param dialog диалог
+     * @param passw  пароль
+     */
     @Override
     public void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw) {
         byte[] passwBytes = Encoder.preparePassw(passw.getBytes());
@@ -142,15 +137,20 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
         openMainActivity(passwBytes);
     }
 
-    @Override
-    public void onCreatePasswordDialogNegativeClick(DialogFragment dialog) {
-//        Log.d("W", "");
-    }
-
+    /**
+     * проверяет на существование файлов бд
+     *
+     * @return true если существуют
+     */
     private boolean dbFileExistsCheck() {
         return getDatabasePath(DBUtil.DATABASE_NAME).exists();
     }
 
+    /**
+     * открыть Main Activity
+     *
+     * @param passwBytes подготовленный пароль
+     */
     private void openMainActivity(byte[] passwBytes) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("password", passwBytes);

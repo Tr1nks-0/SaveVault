@@ -1,5 +1,7 @@
 package com.tr1nks.safevault.entities;
 
+import java.util.ArrayList;
+
 /**
  * запись таблицы данные
  */
@@ -7,7 +9,7 @@ public class Record {
     private String id;
     private String title;
     private String titleImgName;
-    private byte[] data;
+    private ArrayList<Field> data;
 
     /**
      * получить заголовок
@@ -68,7 +70,7 @@ public class Record {
      *
      * @return данные записи
      */
-    public byte[] getData() {
+    public ArrayList<Field> getData() {
         return data;
     }
 
@@ -77,7 +79,7 @@ public class Record {
      *
      * @param data данные записи
      */
-    public void setData(byte[] data) {
+    public void setData(ArrayList<Field> data) {
         this.data = data;
     }
 }
