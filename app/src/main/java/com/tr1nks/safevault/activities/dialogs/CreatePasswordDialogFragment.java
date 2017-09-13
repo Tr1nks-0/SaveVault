@@ -51,6 +51,7 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
                         String s2 = ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText().toString();
                         if (s1.equals(s2)) {
                             listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
+                            dialog.dismiss();
                         } else {
                             ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).setText("");
                             ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).setText("");

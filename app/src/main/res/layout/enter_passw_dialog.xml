@@ -42,7 +42,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/LabelTextView"
             android:labelFor="@+id/dialogEnterPasswEditText"
-    />
+            android:textSize="@dimen/dialog_text_view_text_size"
+            />
+
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,14 +52,26 @@
             android:ems="10"
             android:id="@+id/dialogEnterPasswEditText"
             android:hint="@string/enter_passw_dialog_passw_hint"
-    />
+            android:textSize="@dimen/dialog_edit_text_text_size"
+            />
+
+    <CheckBox
+            android:text="CheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialogShowPasswCheckBox"
+            android:textSize="@dimen/dialog_checkbox_text_size"
+            />
+
     <TextView
             android:text="@string/enter_passw_dialog_confirm_u_passw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             android:labelFor="@+id/dialogConfirmPasswEditText"
-    />
+            android:textSize="@dimen/dialog_text_view_text_size"
+            />
+
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,5 +79,6 @@
             android:ems="10"
             android:id="@+id/dialogConfirmPasswEditText"
             android:hint="@string/enter_passw_dialog_confirm_passw_hint"
-    />
+            android:textSize="@dimen/dialog_edit_text_text_size"
+            />
 </LinearLayout>

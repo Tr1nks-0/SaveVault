@@ -137,7 +137,9 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
 
     @Override
     public void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw) {
-        DBUtil.setCheckData(Encoder.encode(Encoder.preparePassw(passw.getBytes()), DBUtil.CHECK_PASSW_STR.getBytes()));
+        byte[] passwBytes = Encoder.preparePassw(passw.getBytes());
+        DBUtil.setCheckData(Encoder.encode(passwBytes, DBUtil.CHECK_PASSW_STR.getBytes()));
+        openMainActivity(passwBytes);
     }
 
     @Override

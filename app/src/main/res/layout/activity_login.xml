@@ -25,6 +25,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="@dimen/login_margin_horisontal"
                 android:layout_marginRight="@dimen/login_margin_horisontal"
+                android:textSize="@dimen/login_edit_text_text_size"
         />
         <TextView
                 android:text="@string/login_enter_u_passw"
