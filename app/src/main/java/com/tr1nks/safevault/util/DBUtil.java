@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.tr1nks.safevault.entities.MainRow;
+
+import java.util.ArrayList;
 
 /**
  * работа с бд
@@ -33,6 +36,10 @@ public class DBUtil {
         worker.setCheckData(checkData);
     }
 
+    public static ArrayList<MainRow> getTitles() {
+        return worker.getTitles();
+    }
+
 //    public static boolean dbFileExistsCheck() {
 //        return getDatabasePath(DBUtil.DATABASE_NAME).exists();
 //    }//todo
@@ -42,7 +49,7 @@ public class DBUtil {
         private static final String DROP_CHECK_TABLE_SQL = "DROP TABLE IF EXISTS chck";
         private static final String CREATE_CHECK_TABLE_SQL = "CREATE TABLE chck (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, val BLOB)";
         private static final String DROP_DATA_TABLE_SQL = "DROP TABLE IF EXISTS data";
-        private static final String CREATE_DATA_TABLE_SQL = "CREATE TABLE data (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT, img TEXT, data BLOB)";
+        private static final String CREATE_DATA_TABLE_SQL = "CREATE TABLE data (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB, img BLOB, data BLOB)";
         //chck table
         private static final String INSERT_CHECK_DATA_SQL = "insert INTO chck(val) VALUES (?)";
         private static final String SELECT_CHECK_DATA_SQL = "SELECT val from chck LIMIT 1";
@@ -70,17 +77,31 @@ public class DBUtil {
         }
 
         byte[] getCheckData() {
-            Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_CHECK_DATA_SQL, null);
-            if (null != cursor && cursor.moveToFirst()) {
-                byte [] arr = cursor.getBlob(cursor.getColumnIndex("val"));
-                cursor.close();
-                return arr;
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_CHECK_DATA_SQL, null)) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    return cursor.getBlob(cursor.getColumnIndex("val"));
+                }
             }
             return null;
         }
 
         void setCheckData(byte[] checkData) {
             this.getWritableDatabase().execSQL(INSERT_CHECK_DATA_SQL, new Object[]{checkData});
+        }
+
+        public ArrayList<MainRow> getTitles() {
+//            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 1".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "img name 1".getBytes())});//debug
+//            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 2".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "img name 2".getBytes())});//debug
+            ArrayList<MainRow> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TITLES_SQL, null)) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    cursor.moveToPrevious();
+                    while (cursor.moveToNext()) {
+                        arr.add(new MainRow(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("img"))));
+                    }
+                }
+            }
+            return arr;
         }
     }
 }

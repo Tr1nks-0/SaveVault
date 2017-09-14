@@ -32,7 +32,6 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = super.onCreateDialogAbstr(getArguments());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(getResources().getIdentifier(CREATE_PASSW_DIALOG_LAYOUT_FILENAME, LAYOUT_DEF_TYPE, getActivity().getPackageName()), null));
         builder.setPositiveButton(R.string.dialogs_yes, null);

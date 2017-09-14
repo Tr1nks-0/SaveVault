@@ -21,4 +21,6 @@
 
     <dimen name="record_margin_vertical">10dp</dimen>
     <dimen name="record_margin_horisontal">10dp</dimen>
+
+    <dimen name="main_row_text_view_text_size">20sp</dimen>
 </resources>

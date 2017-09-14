@@ -8,13 +8,17 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_weight="1"/>
-    <EditText
+            android:id="@+id/titleImageView"
+            android:layout_weight="1"
+
+            />
+
+    <TextView
+            android:textSize="@dimen/main_row_text_view_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editText"
-            android:layout_weight="2"/>
+            android:id="@+id/titleTextView"
+            android:layout_weight="3"
+            />
+
 </LinearLayout>
