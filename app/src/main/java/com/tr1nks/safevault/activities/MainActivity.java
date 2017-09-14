@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         layout.removeAllViews();
         for (MainRow row : rows) {
             layout.addView(createMainRowLayout(row));
+//            layout.addView();
+            getLayoutInflater().inflate(R.layout.horisontal_line, layout);
         }
     }
 

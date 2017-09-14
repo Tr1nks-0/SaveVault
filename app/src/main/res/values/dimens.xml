@@ -23,4 +23,6 @@
     <dimen name="record_margin_horisontal">10dp</dimen>
 
     <dimen name="main_row_text_view_text_size">20sp</dimen>
+
+    <dimen name="horisontal_line_height">2dp</dimen>
 </resources>
