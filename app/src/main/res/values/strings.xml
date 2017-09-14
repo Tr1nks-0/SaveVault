@@ -28,8 +28,14 @@
     <string name="toasts_message_passws_mismatch_message">The entered passwords mismatch</string>
 
     <string name="fields_cont_descr_del_img_button">Delete image button</string>
+    <string name="fields_cont_descr_datetime_brows_button">Datetime image button</string>
 
     <string name="fields_text_hint">Your text here</string>
     <string name="fields_multiline_text_hint">Your multiline text here</string>
     <string name="fields_number_hint">Your number here</string>
+    <string name="fields_datetime_hint">Your date here</string>
+
+    <string name="record_record_title_hint">Record title</string>
+    <string name="record_icon_iconbutton">Record icon button</string>
+    <string name="record_add_field_button_text">Add field</string>
 </resources>

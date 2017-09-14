@@ -13,10 +13,10 @@
             >
 
         <TextView
-                android:labelFor="@+id/textEditText"
+                android:labelFor="@+id/datetimeEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/titleForTextEditText"
+                android:id="@+id/titleForDatetimeEditText"
                 android:layout_weight="1"
                 android:textSize="@dimen/field_text_view_text_size"
                 />
@@ -36,18 +36,20 @@
             >
 
         <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="datetime"
-                android:id="@+id/textEditText"
-                android:textSize="@dimen/field_edit_text_text_size"
-                android:hint="@string/fields_text_hint"
+                android:id="@+id/datetimeEditText"
+                android:textSize="@dimen/field_datetime_text_size"
+                android:hint="@string/fields_datetime_hint"
+                android:layout_weight="1"
                 />
+
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_delete"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar"
                 android:id="@+id/selectDateTimeImageButton"
-                android:contentDescription="@string/fields_cont_descr_del_img_button"/>
+                android:contentDescription="@string/fields_cont_descr_datetime_brows_button"/>
     </LinearLayout>
 </LinearLayout>

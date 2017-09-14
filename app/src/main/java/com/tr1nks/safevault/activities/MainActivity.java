@@ -1,5 +1,6 @@
 package com.tr1nks.safevault.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
      * @param view current view
      */
     public void addButtonHandler(View view) {
-//        Log.d("DEBUG", "DEBUG");
         getIntent().getByteArrayExtra("password");
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.putExtra("password", getIntent().getByteArrayExtra("password"));
+        startActivity(intent);
     }
 }

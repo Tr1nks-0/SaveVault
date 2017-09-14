@@ -72,9 +72,9 @@ public class DBUtil {
         byte[] getCheckData() {
             Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_CHECK_DATA_SQL, null);
             if (null != cursor && cursor.moveToFirst()) {
-                String str = cursor.getString(cursor.getColumnIndex("val"));
+                byte [] arr = cursor.getBlob(cursor.getColumnIndex("val"));
                 cursor.close();
-                return str.getBytes();
+                return arr;
             }
             return null;
         }

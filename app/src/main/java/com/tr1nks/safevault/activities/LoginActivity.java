@@ -16,6 +16,8 @@ import com.tr1nks.safevault.activities.dialogs.MessageDialogFragment;
 import com.tr1nks.safevault.util.DBUtil;
 import com.tr1nks.safevault.util.Encoder;
 
+import java.util.Arrays;
+
 /**
  * стартовое окно приложения, авторизация пользователя, проверка наличия базы в системе, вызов создания базы
  */
@@ -83,14 +85,10 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
      * @return true если пароль верный
      */
     private boolean testPassword(byte[] password) {
+        DBUtil.initWorker(this);
         byte b[] = Encoder.decode(Encoder.preparePassw(password), DBUtil.getCheckData());
-        //        EditText editText = ((EditText) findViewById(R.id.passwordEditText));
-//        String pasw = editText.getText().toString();
-//        String inpData = "Test input data for encode";
-//        byte[] e = Encoder.encode(Encoder.preparePassw(pasw.getBytes()), inpData.getBytes());
-//        byte[] d = Encoder.decode(Encoder.preparePassw(pasw.getBytes()), e);
-//        String dec = new String(d);
-        return true;
+      boolean bw =null !=b && Arrays.equals(b, DBUtil.CHECK_PASSW_STR.getBytes());
+        return null !=b && Arrays.equals(b, DBUtil.CHECK_PASSW_STR.getBytes());
     }
 
     /**
