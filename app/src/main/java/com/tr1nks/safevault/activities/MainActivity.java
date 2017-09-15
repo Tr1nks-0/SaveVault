@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ArrayList<RowMainMenu> rows = DBUtil.getTitles();
+//        ArrayList<RowMainMenu> rows = DBUtil.getTitleBytes();
 //        refillRecordLinearLayout(rows);
     }
 

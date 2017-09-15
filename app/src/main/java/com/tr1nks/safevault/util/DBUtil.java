@@ -4,7 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.tr1nks.safevault.entities.Title;
+import com.tr1nks.safevault.entities.PasswordBytes;
+import com.tr1nks.safevault.entities.TextBytes;
+import com.tr1nks.safevault.entities.TitleBytes;
+import com.tr1nks.safevault.entities.UserIconBytes;
+import com.tr1nks.safevault.entities.old.ImageBytes;
 
 import java.util.ArrayList;
 
@@ -36,8 +40,24 @@ public class DBUtil {
         worker.setCheckData(checkData);
     }
 
-    public static ArrayList<Title> getTitles() {
-        return worker.getTitles();
+    public static ArrayList<TitleBytes> getTitleBytes() {
+        return worker.getTitleBytes();
+    }
+
+    public static ArrayList<TextBytes> getTextBytesByIds(ArrayList<Integer> textIds) {
+        return worker.getTextBytesByIds(textIds);
+    }
+
+    public static ArrayList<PasswordBytes> getPasswordBytesByIds(ArrayList<Integer> passwordIds) {
+        return worker.getPasswordBytesByIds(passwordIds);
+    }
+
+    public static ArrayList<ImageBytes> getImageBytesByIds(ArrayList<Integer> imageIds) {
+        return worker.getImageBytesByIds(imageIds);
+    }
+
+    public static ArrayList<UserIconBytes> getUserIconsBytesByIds(ArrayList<Integer> userIconIds) {
+        return worker.getUserIconsBytesByIds(userIconIds);
     }
 
 //    public static boolean dbFileExistsCheck() {
@@ -54,17 +74,30 @@ public class DBUtil {
                 "DROP TABLE IF EXISTS images",
                 "DROP TABLE IF EXISTS user_icons",
                 "CREATE TABLE pass_check (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, val BLOB)",
-                "CREATE TABLE titles (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title BLOB NOT NULL,icon BLOB NOT NULL,meta BLOB NOT NULL)",
-                "CREATE TABLE texts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title_id BLOB NOT NULL CONSTRAINT texts_titles_id_fk REFERENCES titles (id),title BLOB NOT NULL,data BLOB)",
-                "CREATE TABLE passwords (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title_id BLOB NOT NULL CONSTRAINT passwords_titles_id_fk REFERENCES titles (id),title BLOB NOT NULL,data BLOB)",
-                "CREATE TABLE images (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title_id BLOB NOT NULL CONSTRAINT images_titles_id_fk REFERENCES titles (id),title BLOB NOT NULL,data BLOB)",
-                "CREATE TABLE user_icons ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,title_id BLOB NOT NULL CONSTRAINT user_icons_titles_id_fk REFERENCES titles (id), data BLOB NOT NULL)"
+                "CREATE TABLE texts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB)",
+                "CREATE TABLE passwords (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB)",
+                "CREATE TABLE images (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB)",
+                "CREATE TABLE user_icons (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, data BLOB NOT NULL)",
+                "CREATE TABLE titles (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, icon BLOB NOT NULL, meta BLOB NOT NULL, text_ids BLOB, password_ids BLOB, image_ids BLOB, icon_ids BLOB)"
         };
 
-        //chck table
+        //pass_check table
         private static final String INSERT_CHECK_DATA_SQL = "insert INTO pass_check(val) VALUES (?)";
         private static final String SELECT_CHECK_DATA_SQL = "SELECT val from pass_check LIMIT 1";
-        //data table
+        //titles table
+        private static final String SELECT_TITLES_SQL = "SELECT id,title,icon,meta,text_ids,password_ids,image_ids,icon_ids FROM titles";
+        //texts table
+        private static final String SELECT_TEXTS_BY_ID_SQL = "SELECT id,title,data FROM texts WHERE id in (?)";
+
+        //passwords table
+        private static final String SELECT_PASSWORDS_BY_ID_SQL = "SELECT id,title,data FROM passwords WHERE id in (?)";
+
+        //images table
+        private static final String SELECT_IMAGES_BY_ID_SQL = "SELECT id,title,data FROM images WHERE id in (?)";
+
+        //user_icons table
+        private static final String SELECT_USER_ICONS_BY_ID_SQL = "SELECT id,data FROM user_icons WHERE id in (?)";
+
 
         DBWorker(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -96,21 +129,81 @@ public class DBUtil {
             this.getWritableDatabase().execSQL(INSERT_CHECK_DATA_SQL, new Object[]{checkData});
         }
 
-        public ArrayList<Title> getTitles() {
-            return null;
+        ArrayList<TitleBytes> getTitleBytes() {
+            ArrayList<TitleBytes> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TITLES_SQL, null)) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    cursor.moveToPrevious();
+                    while (cursor.moveToNext()) {
+                        arr.add(new TitleBytes(
+                                cursor.getInt(cursor.getColumnIndex("id")),
+                                cursor.getBlob(cursor.getColumnIndex("title")),
+                                cursor.getBlob(cursor.getColumnIndex("icon")),
+                                cursor.getBlob(cursor.getColumnIndex("meta")),
+                                cursor.getBlob(cursor.getColumnIndex("text_ids")),
+                                cursor.getBlob(cursor.getColumnIndex("password_ids")),
+                                cursor.getBlob(cursor.getColumnIndex("image_ids")),
+                                cursor.getBlob(cursor.getColumnIndex("icon_ids"))));
+                    }
+                }
+            }
+            return arr;
         }
 
-//        public ArrayList<RowMainMenu> getTitles() {
-//            ArrayList<RowMainMenu> arr = new ArrayList<>();
-//            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TITLES_SQL, null)) {
-//                if (null != cursor && cursor.moveToFirst()) {
-//                    cursor.moveToPrevious();
-//                    while (cursor.moveToNext()) {
-//                        arr.add(new RowMainMenu(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("img"))));
-//                    }
-//                }
-//            }
-//            return arr;
-//        }
+        ArrayList<TextBytes> getTextBytesByIds(ArrayList<Integer> textIds) {
+            ArrayList<TextBytes> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TEXTS_BY_ID_SQL, prepareIds(textIds))) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    cursor.moveToPrevious();
+                    while (cursor.moveToNext()) {
+                        arr.add(new TextBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                    }
+                }
+            }
+            return arr;
+        }
+
+        ArrayList<PasswordBytes> getPasswordBytesByIds(ArrayList<Integer> passwordIds) {
+            ArrayList<PasswordBytes> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_PASSWORDS_BY_ID_SQL, prepareIds(passwordIds))) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    cursor.moveToPrevious();
+                    while (cursor.moveToNext()) {
+                        arr.add(new PasswordBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                    }
+                }
+            }
+            return arr;
+        }
+
+        ArrayList<ImageBytes> getImageBytesByIds(ArrayList<Integer> imageIds) {
+            ArrayList<ImageBytes> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_IMAGES_BY_ID_SQL, prepareIds(imageIds))) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    cursor.moveToPrevious();
+                    while (cursor.moveToNext()) {
+                        arr.add(new ImageBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                    }
+                }
+            }
+            return arr;
+        }
+
+        ArrayList<UserIconBytes> getUserIconsBytesByIds(ArrayList<Integer> userIconIds) {
+            ArrayList<UserIconBytes> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_USER_ICONS_BY_ID_SQL, prepareIds(userIconIds))) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    cursor.moveToPrevious();
+                    while (cursor.moveToNext()) {
+                        arr.add(new UserIconBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                    }
+                }
+            }
+            return arr;
+        }
+
+        private String[] prepareIds(ArrayList<Integer> textIds) {
+            return new String[]{textIds.toString().replace("[", "").replace("]", "")};
+        }
     }
 }
