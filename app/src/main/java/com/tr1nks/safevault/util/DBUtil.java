@@ -4,7 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.tr1nks.safevault.entities.MainRow;
+import com.tr1nks.safevault.entities.RowMainMenu;
+import com.tr1nks.safevault.entities.RowMainMenu;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class DBUtil {
         worker.setCheckData(checkData);
     }
 
-    public static ArrayList<MainRow> getTitles() {
+    public static ArrayList<RowMainMenu> getTitles() {
         return worker.getTitles();
     }
 
@@ -89,15 +90,15 @@ public class DBUtil {
             this.getWritableDatabase().execSQL(INSERT_CHECK_DATA_SQL, new Object[]{checkData});
         }
 
-        public ArrayList<MainRow> getTitles() {
+        public ArrayList<RowMainMenu> getTitles() {
 //            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 1".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "img name 1".getBytes())});//debug
 //            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 2".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "img name 2".getBytes())});//debug
-            ArrayList<MainRow> arr = new ArrayList<>();
+            ArrayList<RowMainMenu> arr = new ArrayList<>();
             try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TITLES_SQL, null)) {
                 if (null != cursor && cursor.moveToFirst()) {
                     cursor.moveToPrevious();
                     while (cursor.moveToNext()) {
-                        arr.add(new MainRow(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("img"))));
+                        arr.add(new RowMainMenu(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("img"))));
                     }
                 }
             }

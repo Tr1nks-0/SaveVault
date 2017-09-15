@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.fragments.RecordRowFragment;
-import com.tr1nks.safevault.entities.MainRow;
+import com.tr1nks.safevault.entities.RowMainMenu;
 import com.tr1nks.safevault.util.DBUtil;
 
 import java.util.ArrayList;
@@ -25,21 +25,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<MainRow> rows = DBUtil.getTitles();
+        ArrayList<RowMainMenu> rows = DBUtil.getTitles();
         refillRecordLinearLayout(rows);
     }
 
-    private void refillRecordLinearLayout(ArrayList<MainRow> rows) {
+    private void refillRecordLinearLayout(ArrayList<RowMainMenu> rows) {
         LinearLayout layout = (LinearLayout) findViewById(R.id.mainLinearLayout);
         layout.removeAllViews();
-        for (MainRow row : rows) {
+        for (RowMainMenu row : rows) {
 //            layout.addView(createMainRowLayout(row));
             createRecordRowFragment(row);
             getLayoutInflater().inflate(R.layout.horisontal_line, layout);
         }
     }
 
-    private void createRecordRowFragment(MainRow row) {
+    private void createRecordRowFragment(RowMainMenu row) {
 //        NextFragment nextFrag= new NextFragment();
 //        getActivity().getSupportFragmentManager().beginTransaction()
 //                .replace(R.id.Layout_container, nextFrag,"findThisFragment")
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         RecordRowFragment fragment = new RecordRowFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("row",row);
+        bundle.putByteArray("password",getIntent().getByteArrayExtra("password"));
         fragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-//    private View createMainRowLayout(final MainRow row) {
+//    private View createMainRowLayout(final RowMainMenu row) {
 //        View view = getLayoutInflater().inflate(R.layout.main_row, null);
 //        TextView titleTextView = view.findViewById(R.id.titleTextView);
 //        titleTextView.setText(new String(Encoder.decode(getIntent().getByteArrayExtra("password"), row.getTitle())));
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 //        return view;
 //    }
 
-    private void openRecord(MainRow row) {
+    private void openRecord(RowMainMenu row) {
         getIntent().getByteArrayExtra("password");
         Intent intent = new Intent(this, RecordActivity.class);
         intent.putExtra("password", getIntent().getByteArrayExtra("password"));

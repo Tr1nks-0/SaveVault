@@ -3,32 +3,32 @@ package com.tr1nks.safevault.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MainRow implements Parcelable {
+public class RowMainMenu implements Parcelable {
     private int id;
     private byte[] title;
     private byte[] titleImgName;
 
-    public MainRow(int id, byte[] title, byte[] img) {
+    public RowMainMenu(int id, byte[] title, byte[] img) {
         this.id = id;
         this.title = title;
         this.titleImgName = img;
     }
 
-    protected MainRow(Parcel in) {
+    protected RowMainMenu(Parcel in) {
         id = in.readInt();
         title = in.createByteArray();
         titleImgName = in.createByteArray();
     }
 
-    public static final Creator<MainRow> CREATOR = new Creator<MainRow>() {
+    public static final Creator<RowMainMenu> CREATOR = new Creator<RowMainMenu>() {
         @Override
-        public MainRow createFromParcel(Parcel in) {
-            return new MainRow(in);
+        public RowMainMenu createFromParcel(Parcel in) {
+            return new RowMainMenu(in);
         }
 
         @Override
-        public MainRow[] newArray(int size) {
-            return new MainRow[size];
+        public RowMainMenu[] newArray(int size) {
+            return new RowMainMenu[size];
         }
     };
 
