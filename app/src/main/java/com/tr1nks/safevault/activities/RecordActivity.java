@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.entities.Record;
-import com.tr1nks.safevault.entities.RowMainMenu;
+import com.tr1nks.safevault.entities.old.Record;
+import com.tr1nks.safevault.entities.old.RowMainMenu;
 import com.tr1nks.safevault.util.Encoder;
 
 public class RecordActivity extends AppCompatActivity {

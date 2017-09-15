@@ -1,6 +1,6 @@
-package com.tr1nks.safevault.entities;
+package com.tr1nks.safevault.entities.old;
 
-import com.tr1nks.safevault.entities.fields.Field;
+import com.tr1nks.safevault.entities.old.fields.Field;
 
 import java.util.ArrayList;
 

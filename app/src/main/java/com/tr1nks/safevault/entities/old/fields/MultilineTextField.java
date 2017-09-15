@@ -1,4 +1,4 @@
-package com.tr1nks.safevault.entities.fields;
+package com.tr1nks.safevault.entities.old.fields;
 
 import android.content.Context;
 import android.view.View;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.RecordActivity;
-import com.tr1nks.safevault.entities.RowMainMenu;
+import com.tr1nks.safevault.entities.old.RowMainMenu;
 import com.tr1nks.safevault.util.Encoder;
 
 /**

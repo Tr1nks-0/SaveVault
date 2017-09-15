@@ -1,4 +1,4 @@
-package com.tr1nks.safevault.entities;
+package com.tr1nks.safevault.entities.old;
 
 import android.os.Parcel;
 import android.os.Parcelable;

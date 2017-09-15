@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.fragments.RecordRowFragment;
-import com.tr1nks.safevault.entities.RowMainMenu;
-import com.tr1nks.safevault.util.DBUtil;
+import com.tr1nks.safevault.entities.old.RowMainMenu;
 
 import java.util.ArrayList;
 
@@ -25,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<RowMainMenu> rows = DBUtil.getTitles();
-        refillRecordLinearLayout(rows);
+//        ArrayList<RowMainMenu> rows = DBUtil.getTitles();
+//        refillRecordLinearLayout(rows);
     }
 
     private void refillRecordLinearLayout(ArrayList<RowMainMenu> rows) {
