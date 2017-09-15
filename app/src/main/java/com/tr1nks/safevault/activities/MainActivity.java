@@ -36,14 +36,11 @@ public class MainActivity extends AppCompatActivity {
         layout.removeAllViews();
         for (MainRow row : rows) {
             layout.addView(createMainRowLayout(row));
-//            layout.addView();
             getLayoutInflater().inflate(R.layout.horisontal_line, layout);
         }
     }
 
     private View createMainRowLayout(final MainRow row) {
-//        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
-//        View view = getLayoutInflater().inflate(R.layout.main_row, linearLayout);
         View view = getLayoutInflater().inflate(R.layout.main_row, null);
         TextView titleTextView = view.findViewById(R.id.titleTextView);
         titleTextView.setText(new String(Encoder.decode(getIntent().getByteArrayExtra("password"), row.getTitle())));
@@ -64,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("id", row.getId());
         intent.putExtra("title", row.getTitle());
         intent.putExtra("title_img", row.getTitleImgName());
+        intent.putExtra("mode", "edit");
         startActivity(intent);
     }
 
@@ -76,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         getIntent().getByteArrayExtra("password");
         Intent intent = new Intent(this, RecordActivity.class);
         intent.putExtra("password", getIntent().getByteArrayExtra("password"));
+        intent.putExtra("mode", "new");
         startActivity(intent);
     }
 }

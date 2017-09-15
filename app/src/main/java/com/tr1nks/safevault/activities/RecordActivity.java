@@ -12,6 +12,10 @@ public class RecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-
+        if(getIntent().getStringExtra("mode").equals("new")){
+            // todo new record
+        }else {
+            //todo open exist record
+        }
     }
 }
