@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         RecordRowFragment fragment = new RecordRowFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("row",row);
-        bundle.putByteArray("password",getIntent().getByteArrayExtra("password"));
+        bundle.putParcelable("row", row);
+        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
         fragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view current view
      */
-    public void addButtonHandler(View view) {
+    public void addRecordButtonHandler(View view) {
         getIntent().getByteArrayExtra("password");
         Intent intent = new Intent(this, RecordActivity.class);
         intent.putExtra("password", getIntent().getByteArrayExtra("password"));

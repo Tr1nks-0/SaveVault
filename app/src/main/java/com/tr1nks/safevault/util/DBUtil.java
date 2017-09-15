@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.tr1nks.safevault.entities.RowMainMenu;
-import com.tr1nks.safevault.entities.RowMainMenu;
 
 import java.util.ArrayList;
 
@@ -91,8 +90,8 @@ public class DBUtil {
         }
 
         public ArrayList<RowMainMenu> getTitles() {
-//            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 1".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "img name 1".getBytes())});//debug
-//            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 2".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "img name 2".getBytes())});//debug
+//            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 1".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "ic_launcher".getBytes())});//debug
+//            getWritableDatabase().execSQL("INSERT INTO data(title, img, data) VALUES (?,?,null)", new Object[]{Encoder.encode(Encoder.preparePassw("root".getBytes()), "title 2".getBytes()), Encoder.encode(Encoder.preparePassw("root".getBytes()), "ic_launcher".getBytes())});//debug
             ArrayList<RowMainMenu> arr = new ArrayList<>();
             try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TITLES_SQL, null)) {
                 if (null != cursor && cursor.moveToFirst()) {

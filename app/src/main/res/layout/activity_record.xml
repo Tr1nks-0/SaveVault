@@ -56,7 +56,9 @@
                     android:text="@string/record_add_field_button_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/addFieldButton"/>
+                    android:id="@+id/addFieldButton"
+                    android:onClick="addFieldButtonHandler"
+                    />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
