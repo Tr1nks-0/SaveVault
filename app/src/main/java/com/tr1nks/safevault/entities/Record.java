@@ -1,5 +1,7 @@
 package com.tr1nks.safevault.entities;
 
+import com.tr1nks.safevault.entities.fields.Field;
+
 import java.util.ArrayList;
 
 /**
