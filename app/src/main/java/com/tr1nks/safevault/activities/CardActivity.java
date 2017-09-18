@@ -2,12 +2,19 @@ package com.tr1nks.safevault.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
+import com.tr1nks.safevault.activities.fragments.fields.EditTextFieldFragment;
+import com.tr1nks.safevault.activities.fragments.fields.Field;
 import com.tr1nks.safevault.entities.Card;
 
+/**
+ * карточка
+ */
 public class CardActivity extends AppCompatActivity {
     //    private Record record;
     private Card card;
@@ -24,48 +31,83 @@ public class CardActivity extends AppCompatActivity {
             card = new Card();
         } else {
             newCard = false;
-//            RowMainMenu rowMainMenu = b.getParcelable("row");
-//            ((EditText) this.findViewById(R.id.recordTitleEditText)).setText(new String(Encoder.decode(b.getByteArray("password"), rowMainMenu.getTitle())));
         }
     }
 
     public void addFieldButtonHandler(View view) {
+        PopupMenu popup = new PopupMenu(CardActivity.this, findViewById(R.id.addFieldButton));
+        popup.getMenuInflater().inflate(R.menu.menu_field_type, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                addNewField(menuItem.getItemId());
+                return true;
+            }
+        });
+        popup.show();
+    }
 
-//        CardTitleFragment fragment = new CardTitleFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("titleBytes", tb);
-//        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
-//        fragment.setArguments(bundle);
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.selectCardLinearLayout, fragment, String.valueOf(tb.getId()))
-//                .addToBackStack(null)
-//                .commit();
+    private void addNewField(int fieldTypeId) {
+        /*CardTitleFragment fragment = new CardTitleFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("titleBytes", tb);
+        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
+        fragment.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.selectCardLinearLayout, fragment, String.valueOf(tb.getId()))
+                .addToBackStack(null)
+                .commit();*/
+        Field field = null;
+        switch (fieldTypeId) {
+            case R.id.textFieldMenuItem: {
+                field = new EditTextFieldFragment();
+                break;
+            }
+            case R.id.numberFieldMenuItem: {
+                field = new EditTextFieldFragment();
+                ((EditText)field.getActivity().findViewById(R.id.textEditText)).setInputType();
+                break;
+            }
+            case R.id.loginFieldMenuItem: {
+                break;
+            }
+            case R.id.passwordFieldMenuItem: {
+                break;
+            }
+            case R.id.multilineTextFieldMenuItem: {
+                break;
+            }
+            case R.id.dateFieldMenuItem: {
+                break;
+            }
+            case R.id.urlFieldMenuItem: {
+                break;
+            }
+            case R.id.emailFieldMenuItem: {
+                break;
+            }
+            case R.id.pinFieldMenuItem: {
+                break;
+            }
+            default:
+                break;
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+//                .add(R.id.recordContainLinearLayout, field, "String.valueOf(tb.getId())")
+                .add(R.id.recordContainLinearLayout, field)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (this.card.getTitleBytes() == null) {
+//            this.card.setTitleBytes(new TitleBytes(Encoder.encode(getIntent().getByteArrayExtra("password"), "NO TITLE".getBytes(),)));
+        }
         card.save(newCard);
-        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
     }
-
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        Toast.makeText(getApplicationContext(), "onStop", Toast.LENGTH_LONG).show();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_LONG).show();
-//    }
-
-    //    @Override
-//    public void onBackPressed() {
-//        Toast.makeText(getApplicationContext(), "Thanks for using application!!", Toast.LENGTH_LONG).show();
-//        finish();
-//        return;
-//    }
 }

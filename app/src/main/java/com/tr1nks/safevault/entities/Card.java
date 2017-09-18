@@ -13,6 +13,10 @@ public class Card {
     private ArrayList<UserIconBytes> userIconBytes;
 
 
+    public TitleBytes getTitleBytes() {
+        return titleBytes;
+    }
+
     public ArrayList<TextBytes> getTextBytes(byte[] password) {
         if (null == textBytes) {
             textBytes = DBUtil.getTextBytesByIds(titleBytes.getTextIds(password));
@@ -43,9 +47,13 @@ public class Card {
 
     public void save(boolean newCard) {
         if (newCard) {
-DBUtil.insertTitleBytes(this.titleBytes);
+            DBUtil.insertTitleBytes(this.titleBytes);
         } else {
 
         }
+    }
+
+    public void setTitleBytes(TitleBytes titleBytes) {
+        this.titleBytes = titleBytes;
     }
 }

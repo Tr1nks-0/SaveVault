@@ -18,7 +18,11 @@ public class TitleBytes implements Parcelable {
     private byte[] userIcon_ids;
 
     public TitleBytes(int id, byte[] title, byte[] icon, byte[] meta, byte[] text_ids, byte[] password_ids, byte[] image_ids, byte[] userIcon_ids) {
+        this(title, icon, meta, text_ids, password_ids, image_ids, userIcon_ids);
         this.id = id;
+    }
+
+    public TitleBytes(byte[] title, byte[] icon, byte[] meta, byte[] text_ids, byte[] password_ids, byte[] image_ids, byte[] userIcon_ids) {
         this.title = title;
         this.icon = icon;
         this.meta = meta;

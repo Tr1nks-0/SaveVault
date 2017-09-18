@@ -26,7 +26,6 @@
     <string name="dialogs_message_wrong_passw_message">The password You entered is incorrect! Please try again</string>
     <string name="dialogs_show_passw">Show password</string>
 
-    <string name="dialogs_ask_field_type_title">Select the type of field</string>
 
     <string name="toasts_message_passws_mismatch_message">The entered passwords mismatch</string>
 
