@@ -14,7 +14,7 @@ import com.tr1nks.safevault.R;
 
 public class CreatePasswordDialogFragment extends AbstrDialog {
     public static final String CREATE_PASSWORD_DIALOG_NAME = "Create_password_dialog";
-    private static final String CREATE_PASSW_DIALOG_LAYOUT_FILENAME = "enter_passw_dialog";
+    private static final String CREATE_PASSW_DIALOG_LAYOUT_FILENAME = "dialog_enter_passw";
 
     public interface CreatePasswordDialogListener {
         void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw);

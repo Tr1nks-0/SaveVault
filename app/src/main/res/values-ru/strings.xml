@@ -28,4 +28,14 @@
     <string name="record_add_field_button_text">Добавить поле</string>
     <string name="record_icon_iconbutton">Иконка записи</string>
     <string name="record_record_title_hint">Название записи</string>
+    <string name="dialogs_ask_field_type_title">"Выберите тип поля "</string>
+    <string name="menu_field_type_date">Дата</string>
+    <string name="menu_field_type_email">Email</string>
+    <string name="menu_field_type_login">Логин</string>
+    <string name="menu_field_type_multiline_text">Многострочный текст</string>
+    <string name="menu_field_type_number">Номер</string>
+    <string name="menu_field_type_password">Пароль</string>
+    <string name="menu_field_type_pin">Пин</string>
+    <string name="menu_field_type_text">Текст</string>
+    <string name="menu_field_type_url">Url адрес</string>
 </resources>

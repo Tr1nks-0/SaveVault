@@ -62,7 +62,6 @@ public class Encoder {
             return null;
         }
     }
-
     /**
      * подготовить пароль для шифрования
      * дополняет пароль до длинны 256 бит (32 byte * byte.size)

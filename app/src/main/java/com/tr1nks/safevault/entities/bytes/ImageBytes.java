@@ -1,4 +1,4 @@
-package com.tr1nks.safevault.entities.old;
+package com.tr1nks.safevault.entities.bytes;
 
 public class ImageBytes {
     private int id;

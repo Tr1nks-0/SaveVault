@@ -4,7 +4,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              tools:context="com.tr1nks.safevault.activities.fragments.RecordRowFragment"
+              tools:context="com.tr1nks.safevault.activities.fragments.CardTitleFragment"
         >
 
     <ImageView

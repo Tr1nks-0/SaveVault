@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <!--<TextView-->
+            <!--android:text="@string/enter_passw_dialog_enter_u_passw"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/LabelTextView"-->
+            <!--android:labelFor="@+id/dialogEnterPasswEditText"-->
+            <!--android:textSize="@dimen/dialog_text_view_text_size"-->
+            <!--/>-->
+
+    <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:ems="10"-->
+            <!--android:id="@+id/dialogEnterPasswEditText"-->
+            <!--android:hint="@string/enter_passw_dialog_passw_hint"-->
+            <!--android:textSize="@dimen/dialog_edit_text_text_size"-->
+            <!--/>-->
+
+    <!--<CheckBox-->
+            <!--android:text="@string/dialogs_show_passw"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/dialogShowPasswCheckBox"-->
+            <!--android:textSize="@dimen/dialog_checkbox_text_size"-->
+            <!--/>-->
+
+    <!--<TextView-->
+            <!--android:text="@string/enter_passw_dialog_confirm_u_passw"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/dialog_checkbox_text_size_TextView"-->
+            <!--android:labelFor="@+id/dialogConfirmPasswEditText"-->
+            <!--android:textSize="@dimen/dialog_text_view_text_size"-->
+            <!--/>-->
+
+    <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:ems="10"-->
+            <!--android:id="@+id/dialogConfirmPasswEditText"-->
+            <!--android:hint="@string/enter_passw_dialog_confirm_passw_hint"-->
+            <!--android:textSize="@dimen/dialog_edit_text_text_size"-->
+            <!--/>-->
+    <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@mipmap/ic_launcher"-->
+            <!--android:id="@+id/imageView"/>-->
+
+    <Button
+            android:text="Button"
+            android:drawableStart="@mipmap/ic_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"/>
+</LinearLayout>

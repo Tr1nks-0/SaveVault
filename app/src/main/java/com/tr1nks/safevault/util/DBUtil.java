@@ -4,11 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.tr1nks.safevault.entities.PasswordBytes;
-import com.tr1nks.safevault.entities.TextBytes;
-import com.tr1nks.safevault.entities.TitleBytes;
-import com.tr1nks.safevault.entities.UserIconBytes;
-import com.tr1nks.safevault.entities.old.ImageBytes;
+import com.tr1nks.safevault.entities.bytes.PasswordBytes;
+import com.tr1nks.safevault.entities.bytes.TextBytes;
+import com.tr1nks.safevault.entities.bytes.TitleBytes;
+import com.tr1nks.safevault.entities.bytes.UserIconBytes;
+import com.tr1nks.safevault.entities.bytes.ImageBytes;
 
 import java.util.ArrayList;
 
@@ -60,6 +60,11 @@ public class DBUtil {
         return worker.getUserIconsBytesByIds(userIconIds);
     }
 
+    public static void insertTitleBytes(TitleBytes titleBytes) {
+        worker.insertTitleBytes(titleBytes);
+    }
+
+
 //    public static boolean dbFileExistsCheck() {
 //        return getDatabasePath(DBUtil.DATABASE_NAME).exists();
 //    }//todo
@@ -84,8 +89,11 @@ public class DBUtil {
         //pass_check table
         private static final String INSERT_CHECK_DATA_SQL = "insert INTO pass_check(val) VALUES (?)";
         private static final String SELECT_CHECK_DATA_SQL = "SELECT val from pass_check LIMIT 1";
+
         //titles table
         private static final String SELECT_TITLES_SQL = "SELECT id,title,icon,meta,text_ids,password_ids,image_ids,icon_ids FROM titles";
+        private static final String INSERT_TITLES_SQL = "INSERT INTO titles (title, icon, meta, text_ids, password_ids, image_ids, icon_ids) VALUES (?,?,?,?,?,?,?)";
+
         //texts table
         private static final String SELECT_TEXTS_BY_ID_SQL = "SELECT id,title,data FROM texts WHERE id in (?)";
 
@@ -130,6 +138,8 @@ public class DBUtil {
         }
 
         ArrayList<TitleBytes> getTitleBytes() {
+//            getWritableDatabase().execSQL("DELETE FROM titles WHERE id >0");
+//            getWritableDatabase().execSQL("INSERT INTO titles (title, icon, meta, text_ids, password_ids, image_ids, icon_ids) VALUES ('" + Encoder.encode(Encoder.preparePassw("q".getBytes()), "title 1".getBytes()).toString() + "','"+ Encoder.encode(Encoder.preparePassw("q".getBytes()), "icon1".getBytes()).toString() + "','" + Encoder.encode(Encoder.preparePassw("q".getBytes()), "meta 1".getBytes()).toString() + "',null,null,null,null)");
             ArrayList<TitleBytes> arr = new ArrayList<>();
             try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TITLES_SQL, null)) {
                 if (null != cursor && cursor.moveToFirst()) {
@@ -204,6 +214,10 @@ public class DBUtil {
 
         private String[] prepareIds(ArrayList<Integer> textIds) {
             return new String[]{textIds.toString().replace("[", "").replace("]", "")};
+        }
+
+        public void insertTitleBytes(TitleBytes titleBytes) {
+            getWritableDatabase().execSQL(INSERT_TITLES_SQL, titleBytes.toInsertArr());
         }
     }
 }
