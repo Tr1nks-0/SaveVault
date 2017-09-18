@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_login);
-        ((CheckBox) findViewById(R.id.showPasswCheckBox)).setOnCheckedChangeListener(showPasswOnCheckedChangeListener());
+        ((CheckBox) findViewById(R.id.showPasswordCheckBox)).setOnCheckedChangeListener(showPasswOnCheckedChangeListener());
         if (!dbFileExistsCheck()) {
             askCreateDb();
         }

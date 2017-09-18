@@ -2,14 +2,16 @@ package com.tr1nks.safevault.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.fragments.fields.EditTextFieldFragment;
 import com.tr1nks.safevault.activities.fragments.fields.Field;
+import com.tr1nks.safevault.activities.fragments.fields.MultilineTextFieldFragment;
+import com.tr1nks.safevault.activities.fragments.fields.PasswordFieldFragment;
 import com.tr1nks.safevault.entities.Card;
 
 /**
@@ -48,57 +50,66 @@ public class CardActivity extends AppCompatActivity {
     }
 
     private void addNewField(int fieldTypeId) {
-        /*CardTitleFragment fragment = new CardTitleFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("titleBytes", tb);
-        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
-        fragment.setArguments(bundle);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.selectCardLinearLayout, fragment, String.valueOf(tb.getId()))
-                .addToBackStack(null)
-                .commit();*/
+
         Field field = null;
-        switch (fieldTypeId) {
-            case R.id.textFieldMenuItem: {
-                field = new EditTextFieldFragment();
-                break;
+        if (fieldTypeId == R.id.multilineTextFieldMenuItem) {
+            field = new MultilineTextFieldFragment();
+        } else if (fieldTypeId == R.id.passwordFieldMenuItem) {
+            field = new PasswordFieldFragment();
+            if (fieldTypeId == R.id.pinFieldMenuItem) {
+                ((EditTextFieldFragment) field).setEditTextType(129 | InputType.TYPE_CLASS_NUMBER);
             }
-            case R.id.numberFieldMenuItem: {
-                field = new EditTextFieldFragment();
-                ((EditText)field.getActivity().findViewById(R.id.textEditText)).setInputType();
-                break;
+        } else if (fieldTypeId == R.id.dateFieldMenuItem) {
+        } else {
+            field = new EditTextFieldFragment();
+            switch (fieldTypeId) {
+                case R.id.numberFieldMenuItem: {
+                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_CLASS_NUMBER);
+                }
+                case R.id.loginFieldMenuItem: {
+                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }
+                case R.id.urlFieldMenuItem: {
+                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_TEXT_VARIATION_URI);
+                }
+                case R.id.emailFieldMenuItem: {
+                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                }
+                default: {
+                    break;
+                }
             }
-            case R.id.loginFieldMenuItem: {
-                break;
-            }
-            case R.id.passwordFieldMenuItem: {
-                break;
-            }
-            case R.id.multilineTextFieldMenuItem: {
-                break;
-            }
-            case R.id.dateFieldMenuItem: {
-                break;
-            }
-            case R.id.urlFieldMenuItem: {
-                break;
-            }
-            case R.id.emailFieldMenuItem: {
-                break;
-            }
-            case R.id.pinFieldMenuItem: {
-                break;
-            }
-            default:
-                break;
         }
+
+        if (fieldTypeId == R.id.multilineTextFieldMenuItem)
+
+        {
+
+        } else if (fieldTypeId == R.id.dateFieldMenuItem)
+
+        {
+            //todo
+        } else
+
+        {
+
+        }
+
         getSupportFragmentManager()
-                .beginTransaction()
+                .
+
+                        beginTransaction()
 //                .add(R.id.recordContainLinearLayout, field, "String.valueOf(tb.getId())")
-                .add(R.id.recordContainLinearLayout, field)
-                .addToBackStack(null)
-                .commit();
+                .
+
+                        add(R.id.recordContainLinearLayout, field)
+                .
+
+                        addToBackStack(null)
+                .
+
+                        commit();
+
     }
 
     @Override

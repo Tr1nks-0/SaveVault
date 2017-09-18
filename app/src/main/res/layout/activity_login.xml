@@ -55,7 +55,7 @@
                 android:text="@string/login_show_passw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/showPasswCheckBox"
+                android:id="@+id/showPasswordCheckBox"
                 android:textSize="@dimen/login_checkbox_text_size"
                 android:layout_alignStart="@id/passwordEditText"
                 android:layout_below="@id/passwordEditText"/>
