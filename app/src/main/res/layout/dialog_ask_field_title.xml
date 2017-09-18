@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+            android:text="@string/enter_field_name_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_checkbox_text_size_TextView"
+            android:labelFor="@+id/dialogEnterFieldNameEditText"
+            android:textSize="@dimen/dialog_text_view_text_size"
+            />
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/dialogEnterFieldNameEditText"
+            android:hint="@string/enter_field_name_hunt"
+            android:textSize="@dimen/dialog_edit_text_text_size"
+            />
+</LinearLayout>

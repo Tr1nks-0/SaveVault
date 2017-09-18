@@ -1,13 +1,14 @@
 package com.tr1nks.safevault.activities;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
+import com.tr1nks.safevault.activities.dialogs.AskFieldNameDialogFragment;
 import com.tr1nks.safevault.activities.fragments.fields.EditTextFieldFragment;
 import com.tr1nks.safevault.activities.fragments.fields.Field;
 import com.tr1nks.safevault.activities.fragments.fields.MultilineTextFieldFragment;
@@ -17,7 +18,7 @@ import com.tr1nks.safevault.entities.Card;
 /**
  * карточка
  */
-public class CardActivity extends AppCompatActivity {
+public class CardActivity extends AppCompatActivity implements AskFieldNameDialogFragment.AskFieldNameDialogFragmentListener {
     //    private Record record;
     private Card card;
     private boolean newCard;
@@ -42,73 +43,50 @@ public class CardActivity extends AppCompatActivity {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                addNewField(menuItem.getItemId());
+                Bundle b = new Bundle();
+                b.putInt("type", menuItem.getItemId());
+                AskFieldNameDialogFragment dialogFragment = AskFieldNameDialogFragment.createAskFieldNameDialogFragment(b);
+                dialogFragment.show(getFragmentManager(), AskFieldNameDialogFragment.ASK_FIELD_TYPE_DIALOG_NAME);
                 return true;
             }
         });
         popup.show();
     }
 
-    private void addNewField(int fieldTypeId) {
+    @Override
+    public void onAskFieldNameDialogFragmentPositiveClick(DialogFragment dialog, String title, int type) {
+        addNewField(type, title);
+    }
 
+    private void addNewField(int fieldTypeId, String fieldTitle) {
         Field field = null;
-        if (fieldTypeId == R.id.multilineTextFieldMenuItem) {
-            field = new MultilineTextFieldFragment();
-        } else if (fieldTypeId == R.id.passwordFieldMenuItem) {
-            field = new PasswordFieldFragment();
-            if (fieldTypeId == R.id.pinFieldMenuItem) {
-                ((EditTextFieldFragment) field).setEditTextType(129 | InputType.TYPE_CLASS_NUMBER);
+        Bundle bundle = new Bundle();
+        bundle.putString("title", fieldTitle);
+        bundle.putInt("type", fieldTypeId);
+        switch (fieldTypeId) {
+            case R.id.multilineTextFieldMenuItem: {
+                field = new MultilineTextFieldFragment();
+                break;
             }
-        } else if (fieldTypeId == R.id.dateFieldMenuItem) {
-        } else {
-            field = new EditTextFieldFragment();
-            switch (fieldTypeId) {
-                case R.id.numberFieldMenuItem: {
-                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_CLASS_NUMBER);
-                }
-                case R.id.loginFieldMenuItem: {
-                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                }
-                case R.id.urlFieldMenuItem: {
-                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_TEXT_VARIATION_URI);
-                }
-                case R.id.emailFieldMenuItem: {
-                    ((EditTextFieldFragment) field).setEditTextType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                }
-                default: {
-                    break;
-                }
+            case R.id.passwordFieldMenuItem: {
+                field = new PasswordFieldFragment();
+                break;
+            }
+            case R.id.dateFieldMenuItem: {
+                //todo
+                break;
+            }
+            default: {
+                field = new EditTextFieldFragment();
+                break;
             }
         }
-
-        if (fieldTypeId == R.id.multilineTextFieldMenuItem)
-
-        {
-
-        } else if (fieldTypeId == R.id.dateFieldMenuItem)
-
-        {
-            //todo
-        } else
-
-        {
-
-        }
-
+        field.setArguments(bundle);
         getSupportFragmentManager()
-                .
-
-                        beginTransaction()
-//                .add(R.id.recordContainLinearLayout, field, "String.valueOf(tb.getId())")
-                .
-
-                        add(R.id.recordContainLinearLayout, field)
-                .
-
-                        addToBackStack(null)
-                .
-
-                        commit();
+                .beginTransaction()
+                .add(R.id.recordContainLinearLayout, field, field.getClass().getName() + "_" + fieldTitle)
+                .addToBackStack(null)
+                .commit();
 
     }
 
@@ -121,4 +99,6 @@ public class CardActivity extends AppCompatActivity {
         card.save(newCard);
 //        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
     }
+
+
 }

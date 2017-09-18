@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.tr1nks.safevault.R;
 
 /**
@@ -20,10 +21,9 @@ public class MultilineTextFieldFragment extends Field {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_edit_text_field, container, false);
+        View view = inflater.inflate(R.layout.fragment_multiline_text_field, container, false);
 //        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
-
+        ((TextView) view.findViewById(R.id.fragmentTitleForTextEditText)).setText(getArguments().getString("title"));
         return view;
     }
 }

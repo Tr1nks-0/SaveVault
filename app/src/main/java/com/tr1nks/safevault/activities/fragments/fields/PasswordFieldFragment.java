@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.tr1nks.safevault.R;
 
 /**
@@ -20,14 +21,12 @@ public class PasswordFieldFragment extends Field {
         // Required empty public constructor
     }
 
-    private int inputType = 129;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_password_field, container, false);
 //        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
-        final EditText editText = view.findViewById(R.id.fragmentEextEditText);
-        editText.setInputType(inputType);
+        final EditText editText = view.findViewById(R.id.fragmentPasswEditText);
         ((CheckBox) view.findViewById(R.id.fragmentShowPasswordCheckBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -40,11 +39,20 @@ public class PasswordFieldFragment extends Field {
                 editText.setSelection(pos);
             }
         });
+        int inpType = 129;
+        int inpTypeId = getArguments().getInt("type");
+        switch (inpTypeId) {
+            case R.id.passwordFieldMenuItem: {
+                inpType = 129 | InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        ((TextView) view.findViewById(R.id.fragmentTitleForPasswEditText)).setText(getArguments().getString("title"));
+        editText.setInputType(inpType);
         return view;
-    }
-
-    public void setEditTextType(int type) {
-        this.inputType = type;
     }
 
 }

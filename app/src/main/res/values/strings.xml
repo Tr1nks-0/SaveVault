@@ -50,4 +50,6 @@
     <string name="menu_field_type_url">Url address</string>
     <string name="menu_field_type_email">Email</string>
     <string name="menu_field_type_pin">Pin</string>
+    <string name="enter_field_name_title">Enter field name</string>
+    <string name="enter_field_name_hunt">Field name</string>
 </resources>

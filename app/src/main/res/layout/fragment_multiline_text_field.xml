@@ -18,7 +18,7 @@
                 android:labelFor="@+id/fragmentEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragmentTitleForTextEditText"
+                android:id="@+id/titleForMultilineText"
                 android:layout_weight="1"
                 android:textSize="@dimen/field_text_view_text_size"
                 />
@@ -35,10 +35,9 @@
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/fragmentEditText"
+            android:inputType="textMultiLine"
+            android:id="@+id/fragmentMultilineEditText"
             android:textSize="@dimen/field_edit_text_text_size"
             android:hint="@string/fields_text_hint"
             />
-
 </LinearLayout>

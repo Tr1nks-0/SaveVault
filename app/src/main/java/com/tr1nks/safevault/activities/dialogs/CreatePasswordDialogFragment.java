@@ -14,7 +14,6 @@ import com.tr1nks.safevault.R;
 
 public class CreatePasswordDialogFragment extends AbstrDialog {
     public static final String CREATE_PASSWORD_DIALOG_NAME = "Create_password_dialog";
-    private static final String CREATE_PASSW_DIALOG_LAYOUT_FILENAME = "dialog_enter_passw";
 
     public interface CreatePasswordDialogListener {
         void onCreatePasswordDialogPositiveClick(DialogFragment dialog, String passw);
@@ -33,8 +32,24 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = super.onCreateDialogAbstr(getArguments());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(getResources().getIdentifier(CREATE_PASSW_DIALOG_LAYOUT_FILENAME, LAYOUT_DEF_TYPE, getActivity().getPackageName()), null));
-        builder.setPositiveButton(R.string.dialogs_yes, null);
+        builder.setView(inflater.inflate(R.layout.dialog_enter_passw, null));
+        builder.setPositiveButton(R.string.dialogs_yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String s1 = ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString();
+                String s2 = ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText().toString();
+                CheckBox checkBox = getDialog().findViewById(R.id.dialogShowPasswCheckBox);
+                if (s1.equals(s2) || checkBox.isChecked()) {
+                    listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
+                    dismiss();
+                } else {
+                    ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).setText("");
+                    ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).setText("");
+                    Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.toasts_message_passws_mismatch_message), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
         final Dialog dialog = builder.create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -60,24 +75,6 @@ public class CreatePasswordDialogFragment extends AbstrDialog {
                                 editText1.setSelection(pos);
                             }
                         });
-                Button b = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String s1 = ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString();
-                        String s2 = ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).getText().toString();
-                        CheckBox checkBox = getDialog().findViewById(R.id.dialogShowPasswCheckBox);
-                        if (s1.equals(s2) || checkBox.isChecked()) {
-                            listener.onCreatePasswordDialogPositiveClick(CreatePasswordDialogFragment.this, ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).getText().toString());
-                            dialog.dismiss();
-                        } else {
-                            ((EditText) getDialog().findViewById(R.id.dialogEnterPasswEditText)).setText("");
-                            ((EditText) getDialog().findViewById(R.id.dialogConfirmPasswEditText)).setText("");
-                            Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.toasts_message_passws_mismatch_message), Toast.LENGTH_LONG);
-                            toast.show();
-                        }
-                    }
-                });
             }
         });
         return dialog;
