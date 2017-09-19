@@ -1,0 +1,58 @@
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context="com.tr1nks.safevault.activities.fragments.fields.DateFieldFragment"
+                >
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                <TextView
+                        android:labelFor="@+id/fragmentDateText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fragmentTitleForDateText"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/field_text_view_text_size"
+                        />
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@android:drawable/ic_delete"
+                        android:id="@+id/deleteFieldImageButton"
+                        android:contentDescription="@string/fields_cont_descr_del_img_button"
+                        />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="1">
+
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:id="@+id/fragmentDateText"
+                        android:textSize="@dimen/field_edit_text_text_size"
+                        android:hint="@string/fields_text_hint"
+                        android:layout_weight="1"/>
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+                        android:id="@+id/fragmentBrowseDateImageButton"
+                        />
+            </LinearLayout>
+
+        </LinearLayout>

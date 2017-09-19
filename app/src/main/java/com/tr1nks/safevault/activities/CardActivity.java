@@ -9,10 +9,7 @@ import android.view.WindowManager;
 import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.dialogs.AskFieldNameDialogFragment;
-import com.tr1nks.safevault.activities.fragments.fields.EditTextFieldFragment;
-import com.tr1nks.safevault.activities.fragments.fields.Field;
-import com.tr1nks.safevault.activities.fragments.fields.MultilineTextFieldFragment;
-import com.tr1nks.safevault.activities.fragments.fields.PasswordFieldFragment;
+import com.tr1nks.safevault.activities.fragments.fields.*;
 import com.tr1nks.safevault.entities.Card;
 
 /**
@@ -73,7 +70,7 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
                 break;
             }
             case R.id.dateFieldMenuItem: {
-                //todo
+                field=new DateFieldFragment();
                 break;
             }
             default: {
