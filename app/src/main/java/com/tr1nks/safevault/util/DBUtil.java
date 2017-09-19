@@ -64,6 +64,22 @@ public class DBUtil {
         worker.insertTitleBytes(titleBytes);
     }
 
+    public static int insertTextBytes(TextBytes textBytes) {
+        return worker.insertTextBytes(textBytes);
+    }
+
+    public static int insertPasswordBytes(PasswordBytes passwordBytes) {
+        return worker.insertPasswordBytes(passwordBytes);
+    }
+
+    public static int insertImageBytes(ImageBytes imageBytes) {
+        return worker.insertImageBytes(imageBytes);
+    }
+
+    public static int insertUserIconBytes(UserIconBytes userIconBytes) {
+        return worker.insertIconBytes(userIconBytes);
+    }
+
 
 //    public static boolean dbFileExistsCheck() {
 //        return getDatabasePath(DBUtil.DATABASE_NAME).exists();
@@ -93,18 +109,27 @@ public class DBUtil {
         //titles table
         private static final String SELECT_TITLES_SQL = "SELECT id,title,icon,meta,text_ids,password_ids,image_ids,icon_ids FROM titles";
         private static final String INSERT_TITLES_SQL = "INSERT INTO titles (title, icon, meta, text_ids, password_ids, image_ids, icon_ids) VALUES (?,?,?,?,?,?,?)";
+        private static final String SELECT_LAST_INSERT_ID_TITLES_SQL = "select last_insert_rowid() as id from titles";
 
         //texts table
         private static final String SELECT_TEXTS_BY_ID_SQL = "SELECT id,title,data FROM texts WHERE id in (?)";
+        private static final String INSERT_TEXTS_SQL = "INSERT INTO texts (title, data) VALUES (?,?)";
+        private static final String SELECT_LAST_INSERT_ID_TEXTS_SQL = "select last_insert_rowid() as id from texts";
 
         //passwords table
         private static final String SELECT_PASSWORDS_BY_ID_SQL = "SELECT id,title,data FROM passwords WHERE id in (?)";
+        private static final String INSERT_PASSWORDS_SQL = "INSERT INTO passwords (title, data) VALUES (?,?)";
+        private static final String SELECT_LAST_INSERT_ID_PASSWORDS_SQL = "select last_insert_rowid() as id from passwords";
 
         //images table
         private static final String SELECT_IMAGES_BY_ID_SQL = "SELECT id,title,data FROM images WHERE id in (?)";
+        private static final String INSERT_IMAGES_SQL = "INSERT INTO images (title, data) VALUES (?,?)";
+        private static final String SELECT_LAST_INSERT_ID_IMAGES_SQL = "select last_insert_rowid() as id from images";
 
         //user_icons table
         private static final String SELECT_USER_ICONS_BY_ID_SQL = "SELECT id,data FROM user_icons WHERE id in (?)";
+        private static final String INSERT_USER_ICONS = "INSERT INTO user_icons ( data) VALUES (?)";
+        private static final String SELECT_LAST_INSERT_ID_USER_ICONS_SQL = "select last_insert_rowid() as id from user_icons";
 
 
         DBWorker(Context context) {
@@ -216,8 +241,39 @@ public class DBUtil {
             return new String[]{textIds.toString().replace("[", "").replace("]", "")};
         }
 
-        public void insertTitleBytes(TitleBytes titleBytes) {
+        int insertTitleBytes(TitleBytes titleBytes) {
             getWritableDatabase().execSQL(INSERT_TITLES_SQL, titleBytes.toInsertArr());
+            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_TITLES_SQL, null)) {
+                return c.getInt(c.getColumnIndex("id"));
+            }
+        }
+
+        int insertTextBytes(TextBytes textBytes) {
+            getWritableDatabase().execSQL(INSERT_TEXTS_SQL, textBytes.toInsertArr());
+            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_TEXTS_SQL, null)) {
+                return c.getInt(c.getColumnIndex("id"));
+            }
+        }
+
+        int insertPasswordBytes(PasswordBytes passwordBytes) {
+            getWritableDatabase().execSQL(INSERT_PASSWORDS_SQL, passwordBytes.toInsertArr());
+            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_PASSWORDS_SQL, null)) {
+                return c.getInt(c.getColumnIndex("id"));
+            }
+        }
+
+        int insertImageBytes(ImageBytes imageBytes) {
+            getWritableDatabase().execSQL(INSERT_IMAGES_SQL, imageBytes.toInsertArr());
+            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_IMAGES_SQL, null)) {
+                return c.getInt(c.getColumnIndex("id"));
+            }
+        }
+
+        int insertIconBytes(UserIconBytes userIconBytes) {
+            getWritableDatabase().execSQL(INSERT_USER_ICONS, userIconBytes.toInsertArr());
+            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_USER_ICONS_SQL, null)) {
+                return c.getInt(c.getColumnIndex("id"));
+            }
         }
     }
 }

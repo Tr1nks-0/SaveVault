@@ -23,4 +23,5 @@ public abstract class Field extends Fragment {
             }
         });
     }
+    public abstract void onParentPauseAction();
 }

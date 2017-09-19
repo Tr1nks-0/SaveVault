@@ -55,5 +55,8 @@ public class PasswordFieldFragment extends Field {
         editText.setInputType(inpType);
         return view;
     }
+    @Override
+    public void onParentPauseAction() {
 
+    }
 }

@@ -42,7 +42,7 @@ public class DateFieldFragment extends Field {
                 DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                        dateEditText.setText(new StringBuilder().append(dayOfMonth+1).append("/").append(monthOfYear).append("/").append(year));
+                        dateEditText.setText(new StringBuilder().append(dayOfMonth).append("/").append(monthOfYear+1).append("/").append(year));
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
@@ -51,5 +51,10 @@ public class DateFieldFragment extends Field {
         ((TextView) view.findViewById(R.id.fragmentTitleForDateText)).setText(getArguments().getString("title"));
 //        editText.setInputType(inpType);
         return view;
+    }
+
+    @Override
+    public void onParentPauseAction() {
+
     }
 }

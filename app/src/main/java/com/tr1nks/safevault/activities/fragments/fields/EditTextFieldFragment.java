@@ -10,12 +10,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.tr1nks.safevault.R;
+import com.tr1nks.safevault.entities.bytes.TextBytes;
+import com.tr1nks.safevault.util.Encoder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class EditTextFieldFragment extends Field {
-
 
     public EditTextFieldFragment() {
         // Required empty public constructor
@@ -28,6 +29,8 @@ public class EditTextFieldFragment extends Field {
         super.addFieldDeleteButtonHandler(view.findViewById(R.id.deleteFieldImageButton));
         //        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
         int inpTypeId = getArguments().getInt("type");
+        final TextBytes tb = getArguments().getParcelable("textBytes");
+        tb.setTitle(Encoder.encode(getArguments().getByteArray("password"), getArguments().getString("title").getBytes()));
         int inpType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
         switch (inpTypeId) {
             case R.id.numberFieldMenuItem: {
@@ -51,8 +54,66 @@ public class EditTextFieldFragment extends Field {
             }
         }
         ((EditText) view.findViewById(R.id.fragmentEditText)).setInputType(inpType);
+//        //        ((EditText) view.findViewById(R.id.fragmentMultilineEditText)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
+////            @Override
+////            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+////                if (actionId == EditorInfo.IME_ACTION_DONE) {
+////                    // the user is done typing.
+////                    tb.setData(Encoder.encode(getArguments().getByteArray("password"), ((EditText) v).getText().toString().getBytes()));
+////                    return true; // consume.
+////                }
+////                return false; // pass on to other listeners.
+////            }
+////        });
+//        view.findViewById(R.id.fragmentMultilineEditText).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean hasFocus) {
+//                if (!hasFocus) {
+//                    tb.setData(Encoder.encode(getArguments().getByteArray("password"), ((EditText) view).getText().toString().getBytes()));
+//                }
+//            }
+//        });
+
+//        ((EditText) view.findViewById(R.id.fragmentEditText)).setOnKeyListener(
+//                new View.OnKeyListener() {
+//                    @Override
+//                    public boolean onKey(View view, int keyCode, KeyEvent event) {
+//                        if ((keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ENTER)) {
+//                            tb.setData(Encoder.encode(getArguments().getByteArray("password"), ((EditText) view).getText().toString().getBytes()));
+//                            return true;
+//                        } else {
+//                            return false;
+//                        }
+//                    }
+//                }
+//        );
+
+//        public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+//            if (keyCode == KeyEvent.KEYCODE_BACK &&
+//                    event.getAction() == KeyEvent.ACTION_UP) {
+//                // Do your thing here
+//                return false;
+//            }
+//            return super.dispatchKeyEvent(event);
+//        }
+
+//        ((EditText) view.findViewById(R.id.fragmentEditText)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                    // the user is done typing.
+//
+//                    return true; // consume.
+//                }
+//                return false; // pass on to other listeners.
+//            }
+//        });
+
         ((TextView) view.findViewById(R.id.fragmentTitleForTextEditText)).setText(getArguments().getString("title"));
         return view;
     }
+    @Override
+    public void onParentPauseAction() {
 
+    }
 }

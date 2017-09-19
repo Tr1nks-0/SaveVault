@@ -17,6 +17,10 @@ public class Card {
         return titleBytes;
     }
 
+    public void setTitleBytes(TitleBytes titleBytes) {
+        this.titleBytes = titleBytes;
+    }
+
     public ArrayList<TextBytes> getTextBytes(byte[] password) {
         if (null == textBytes) {
             textBytes = DBUtil.getTextBytesByIds(titleBytes.getTextIds(password));
@@ -47,13 +51,46 @@ public class Card {
 
     public void save(boolean newCard) {
         if (newCard) {
+            ArrayList<Integer> text_ids = new ArrayList<>();
+            ArrayList<Integer> password_ids = new ArrayList<>();
+            ArrayList<Integer> image_ids = new ArrayList<>();
+            ArrayList<Integer> userIcon_ids = new ArrayList<>();
+            if (null != textBytes && !textBytes.isEmpty()) {
+                for (TextBytes tb : textBytes) {
+                    tb.save();
+                    text_ids.add(tb.getId());
+                }
+            }
+            if (null != passwordBytes && !passwordBytes.isEmpty()) {
+                for (PasswordBytes pb : passwordBytes) {
+                    pb.save();
+                    password_ids.add(pb.getId());
+                }
+            }
+            if (null != imageBytes && !imageBytes.isEmpty()) {
+                for (ImageBytes ib : imageBytes) {
+                    ib.save();
+                    image_ids.add(ib.getId());
+                }
+            }
+            if (null != userIconBytes && !userIconBytes.isEmpty()) {
+                for (UserIconBytes ub : userIconBytes) {
+                    ub.save();
+                    userIcon_ids.add(ub.getId());
+                }
+            }
+            //todo add ids in title
             DBUtil.insertTitleBytes(this.titleBytes);
         } else {
 
         }
     }
 
-    public void setTitleBytes(TitleBytes titleBytes) {
-        this.titleBytes = titleBytes;
+    public void addTextBytes(TextBytes tb) {
+        if (null == this.textBytes) {
+            this.textBytes = new ArrayList<>();
+        }
+        this.textBytes.add(tb);
+//        this.titleBytes.
     }
 }
