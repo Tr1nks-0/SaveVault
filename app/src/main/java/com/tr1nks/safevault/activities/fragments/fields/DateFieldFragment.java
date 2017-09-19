@@ -9,6 +9,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.tr1nks.safevault.R;
+import com.tr1nks.safevault.entities.bytes.TextBytes;
+import com.tr1nks.safevault.util.Encoder;
+import com.tr1nks.safevault.util.UserPasswordManager;
 
 import java.util.Calendar;
 
@@ -22,7 +25,7 @@ public class DateFieldFragment extends Field {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_date_field, container, false);
         super.addFieldDeleteButtonHandler(view.findViewById(R.id.deleteFieldImageButton));
-        //        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
+        ((TextView) view.findViewById(R.id.fragmentTitleForDateText)).setText(new String(Encoder.decode(UserPasswordManager.getPassword(), ((TextBytes) bytes).getTitle())));
         final EditText dateEditText = view.findViewById(R.id.fragmentDateText);
 //        int inpType = 129;
 //        int inpTypeId = getArguments().getInt("type");
@@ -48,7 +51,6 @@ public class DateFieldFragment extends Field {
                 dialog.show();
             }
         });
-        ((TextView) view.findViewById(R.id.fragmentTitleForDateText)).setText(getArguments().getString("title"));
 //        editText.setInputType(inpType);
         return view;
     }

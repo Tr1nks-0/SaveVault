@@ -16,6 +16,7 @@ import com.tr1nks.safevault.activities.dialogs.CreatePasswordDialogFragment;
 import com.tr1nks.safevault.activities.dialogs.MessageDialogFragment;
 import com.tr1nks.safevault.util.DBUtil;
 import com.tr1nks.safevault.util.Encoder;
+import com.tr1nks.safevault.util.UserPasswordManager;
 
 import java.util.Arrays;
 
@@ -89,8 +90,8 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
     private boolean testPassword(byte[] password) {
         DBUtil.initWorker(this);
         byte b[] = Encoder.decode(Encoder.preparePassw(password), DBUtil.getCheckData());
-      boolean bw =null !=b && Arrays.equals(b, DBUtil.CHECK_PASSW_STR.getBytes());
-        return null !=b && Arrays.equals(b, DBUtil.CHECK_PASSW_STR.getBytes());
+        boolean bw = null != b && Arrays.equals(b, DBUtil.CHECK_PASSW_STR.getBytes());
+        return null != b && Arrays.equals(b, DBUtil.CHECK_PASSW_STR.getBytes());
     }
 
     /**
@@ -152,8 +153,9 @@ public class LoginActivity extends AppCompatActivity implements AskDialogFragmen
      * @param passwBytes подготовленный пароль
      */
     private void openMainActivity(byte[] passwBytes) {
+        UserPasswordManager.register(this);
+        UserPasswordManager.setPassword(passwBytes);
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("password", passwBytes);
         startActivity(intent);
     }
 }

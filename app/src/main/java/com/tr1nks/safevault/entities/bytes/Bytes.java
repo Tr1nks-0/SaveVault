@@ -5,13 +5,19 @@ import com.tr1nks.safevault.activities.fragments.fields.Field;
 
 public abstract class Bytes {
     int id;
+    byte[] meta;
     transient Field field;
 
     public Bytes() {
     }
 
-    public Bytes(int id) {
+    public Bytes(int id, byte[] meta) {
         this.id = id;
+        this.meta = meta;
+    }
+
+    public Bytes(byte[] meta) {
+        this.meta=meta;
     }
 
     public abstract Object[] toInsertArr();
@@ -23,4 +29,9 @@ public abstract class Bytes {
     public int getId() {
         return id;
     }
+
+    public byte[] getMeta() {
+        return meta;
+    }
+
 }

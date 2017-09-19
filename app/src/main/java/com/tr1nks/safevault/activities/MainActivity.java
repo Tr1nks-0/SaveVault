@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         CardTitleFragment fragment = new CardTitleFragment();
         Bundle bundle = new Bundle();
 //        bundle.putParcelable("titleBytes", tb);
-        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
-        fragment.setArguments(bundle);
+//        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
+//        fragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.selectCardLinearLayout, fragment, String.valueOf(tb.getId()))
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addRecordButtonHandler(View view) {
         Intent intent = new Intent(this, CardActivity.class);
-        intent.putExtra("password", getIntent().getByteArrayExtra("password"));
+//        intent.putExtra("password", getIntent().getByteArrayExtra("password"));
         intent.putExtra("mode", "new");
         startActivity(intent);
     }

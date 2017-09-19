@@ -95,10 +95,10 @@ public class DBUtil {
                 "DROP TABLE IF EXISTS images",
                 "DROP TABLE IF EXISTS user_icons",
                 "CREATE TABLE pass_check (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, val BLOB)",
-                "CREATE TABLE texts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB)",
-                "CREATE TABLE passwords (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB)",
-                "CREATE TABLE images (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB)",
-                "CREATE TABLE user_icons (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, data BLOB NOT NULL)",
+                "CREATE TABLE texts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB,meta BLOB NOT NULL )",
+                "CREATE TABLE passwords (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB,meta BLOB NOT NULL)",
+                "CREATE TABLE images (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, data BLOB,meta BLOB NOT NULL)",
+                "CREATE TABLE user_icons (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, data BLOB NOT NULL,meta BLOB NOT NULL)",
                 "CREATE TABLE titles (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title BLOB NOT NULL, icon BLOB NOT NULL, meta BLOB NOT NULL, text_ids BLOB, password_ids BLOB, image_ids BLOB, icon_ids BLOB)"
         };
 
@@ -112,23 +112,23 @@ public class DBUtil {
         private static final String SELECT_LAST_INSERT_ID_TITLES_SQL = "select last_insert_rowid() as id from titles";
 
         //texts table
-        private static final String SELECT_TEXTS_BY_ID_SQL = "SELECT id,title,data FROM texts WHERE id in (?)";
-        private static final String INSERT_TEXTS_SQL = "INSERT INTO texts (title, data) VALUES (?,?)";
+        private static final String SELECT_TEXTS_BY_ID_SQL = "SELECT id,title,data,meta FROM texts WHERE id in (?)";
+        private static final String INSERT_TEXTS_SQL = "INSERT INTO texts (title, data, meta) VALUES (?,?,?)";
         private static final String SELECT_LAST_INSERT_ID_TEXTS_SQL = "select last_insert_rowid() as id from texts";
 
         //passwords table
-        private static final String SELECT_PASSWORDS_BY_ID_SQL = "SELECT id,title,data FROM passwords WHERE id in (?)";
-        private static final String INSERT_PASSWORDS_SQL = "INSERT INTO passwords (title, data) VALUES (?,?)";
+        private static final String SELECT_PASSWORDS_BY_ID_SQL = "SELECT id,title,data,meta FROM passwords WHERE id in (?)";
+        private static final String INSERT_PASSWORDS_SQL = "INSERT INTO passwords (title, data, meta) VALUES (?,?,?)";
         private static final String SELECT_LAST_INSERT_ID_PASSWORDS_SQL = "select last_insert_rowid() as id from passwords";
 
         //images table
-        private static final String SELECT_IMAGES_BY_ID_SQL = "SELECT id,title,data FROM images WHERE id in (?)";
-        private static final String INSERT_IMAGES_SQL = "INSERT INTO images (title, data) VALUES (?,?)";
+        private static final String SELECT_IMAGES_BY_ID_SQL = "SELECT id,title,data,meta FROM images WHERE id in (?)";
+        private static final String INSERT_IMAGES_SQL = "INSERT INTO images (title, data, meta) VALUES (?,?,?)";
         private static final String SELECT_LAST_INSERT_ID_IMAGES_SQL = "select last_insert_rowid() as id from images";
 
         //user_icons table
-        private static final String SELECT_USER_ICONS_BY_ID_SQL = "SELECT id,data FROM user_icons WHERE id in (?)";
-        private static final String INSERT_USER_ICONS = "INSERT INTO user_icons ( data) VALUES (?)";
+        private static final String SELECT_USER_ICONS_BY_ID_SQL = "SELECT id,data,meta FROM user_icons WHERE id in (?)";
+        private static final String INSERT_USER_ICONS = "INSERT INTO user_icons (data, meta) VALUES (?,?)";
         private static final String SELECT_LAST_INSERT_ID_USER_ICONS_SQL = "select last_insert_rowid() as id from user_icons";
 
 
@@ -191,7 +191,7 @@ public class DBUtil {
                 if (null != cursor && cursor.moveToFirst()) {
                     cursor.moveToPrevious();
                     while (cursor.moveToNext()) {
-                        arr.add(new TextBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                        arr.add(new TextBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data")), cursor.getBlob(cursor.getColumnIndex("meta"))));
                     }
                 }
             }
@@ -204,7 +204,7 @@ public class DBUtil {
                 if (null != cursor && cursor.moveToFirst()) {
                     cursor.moveToPrevious();
                     while (cursor.moveToNext()) {
-                        arr.add(new PasswordBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                        arr.add(new PasswordBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data")), cursor.getBlob(cursor.getColumnIndex("meta"))));
                     }
                 }
             }
@@ -217,7 +217,7 @@ public class DBUtil {
                 if (null != cursor && cursor.moveToFirst()) {
                     cursor.moveToPrevious();
                     while (cursor.moveToNext()) {
-                        arr.add(new ImageBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                        arr.add(new ImageBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("title")), cursor.getBlob(cursor.getColumnIndex("data")), cursor.getBlob(cursor.getColumnIndex("meta"))));
                     }
                 }
             }
@@ -230,7 +230,7 @@ public class DBUtil {
                 if (null != cursor && cursor.moveToFirst()) {
                     cursor.moveToPrevious();
                     while (cursor.moveToNext()) {
-                        arr.add(new UserIconBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("data"))));
+                        arr.add(new UserIconBytes(cursor.getInt(cursor.getColumnIndex("id")), cursor.getBlob(cursor.getColumnIndex("data")), cursor.getBlob(cursor.getColumnIndex("meta"))));
                     }
                 }
             }

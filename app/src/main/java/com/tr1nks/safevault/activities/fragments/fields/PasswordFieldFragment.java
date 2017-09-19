@@ -12,6 +12,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.tr1nks.safevault.R;
+import com.tr1nks.safevault.entities.FieldMeta;
+import com.tr1nks.safevault.entities.bytes.PasswordBytes;
+import com.tr1nks.safevault.util.Encoder;
+import com.tr1nks.safevault.util.UserPasswordManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,9 +29,9 @@ public class PasswordFieldFragment extends Field {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_password_field, container, false);
-//        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
-       super.addFieldDeleteButtonHandler(view.findViewById(R.id.deleteFieldImageButton));
+        super.addFieldDeleteButtonHandler(view.findViewById(R.id.deleteFieldImageButton));
         final EditText editText = view.findViewById(R.id.fragmentPasswEditText);
+        ((TextView) view.findViewById(R.id.fragmentTitleForPasswEditText)).setText(new String(Encoder.decode(UserPasswordManager.getPassword(), ((PasswordBytes) bytes).getTitle())));
         ((CheckBox) view.findViewById(R.id.fragmentShowPasswordCheckBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -40,21 +44,24 @@ public class PasswordFieldFragment extends Field {
                 editText.setSelection(pos);
             }
         });
+        FieldMeta meta = FieldMeta.restore(Encoder.decode(UserPasswordManager.getPassword(), bytes.getMeta()));
         int inpType = 129;
-        int inpTypeId = getArguments().getInt("type");
-        switch (inpTypeId) {
+        switch (meta.getFieldType()) {
+            case R.id.pinFieldMenuItem: {
+                inpType = InputType.TYPE_NUMBER_FLAG_SIGNED|InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                break;
+            }
             case R.id.passwordFieldMenuItem: {
-                inpType = 129 | InputType.TYPE_NUMBER_VARIATION_PASSWORD;
                 break;
             }
             default: {
                 break;
             }
         }
-        ((TextView) view.findViewById(R.id.fragmentTitleForPasswEditText)).setText(getArguments().getString("title"));
         editText.setInputType(inpType);
         return view;
     }
+
     @Override
     public void onParentPauseAction() {
 

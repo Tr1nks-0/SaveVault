@@ -6,14 +6,14 @@ import com.tr1nks.safevault.util.DBUtil;
 public class UserIconBytes extends Bytes {
     private byte[] data;
 
-    public UserIconBytes(int id, byte[] data) {
-        super(id);
+    public UserIconBytes(int id, byte[] data, byte[] meta) {
+        super(id,meta);
         this.data = data;
     }
 
     @Override
     public Object[] toInsertArr() {
-        return new byte[][]{data};
+        return new byte[][]{data,meta};
     }
 
     @Override

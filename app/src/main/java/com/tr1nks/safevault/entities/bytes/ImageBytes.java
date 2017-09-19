@@ -7,15 +7,15 @@ public class ImageBytes extends Bytes {
     private byte[] title;
     private byte[] data;
 
-    public ImageBytes(int id, byte[] title, byte[] data) {
-        super(id);
+    public ImageBytes(int id, byte[] title, byte[] data, byte[] meta) {
+        super(id,meta);
         this.title = title;
         this.data = data;
     }
 
     @Override
     public Object[] toInsertArr() {
-        return new byte[][]{title, data};
+        return new byte[][]{title, data,meta};
     }
 
     @Override

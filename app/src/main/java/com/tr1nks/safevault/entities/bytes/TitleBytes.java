@@ -10,17 +10,15 @@ import java.util.ArrayList;
 public class TitleBytes extends Bytes {
     private byte[] title;
     private byte[] icon;
-    private byte[] meta;
     private byte[] text_ids;
     private byte[] password_ids;
     private byte[] image_ids;
     private byte[] userIcon_ids;
 
     public TitleBytes(int id, byte[] title, byte[] icon, byte[] meta, byte[] text_ids, byte[] password_ids, byte[] image_ids, byte[] userIcon_ids) {
-        super(id);
+        super(id,meta);
         this.title = title;
         this.icon = icon;
-        this.meta = meta;
         this.text_ids = text_ids;
         this.password_ids = password_ids;
         this.image_ids = image_ids;
@@ -83,14 +81,6 @@ public class TitleBytes extends Bytes {
 
     public void setIcon(byte[] icon) {
         this.icon = icon;
-    }
-
-    public byte[] getMeta() {
-        return meta;
-    }
-
-    public void setMeta(byte[] meta) {
-        this.meta = meta;
     }
 
     public ArrayList<Integer> getTextIds(byte[] password) {

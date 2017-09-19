@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.dialogs.AskFieldNameDialogFragment;
@@ -65,79 +64,34 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
     @Override
     public void onAskFieldNameDialogFragmentPositiveClick(DialogFragment dialog, String fieldTitle, int fieldTypeId) {
         switch (fieldTypeId) {
-//            case R.id.multilineTextFieldMenuItem: {
-//                card.createTextField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
-//                break;
-//            }
+            case R.id.pinFieldMenuItem:
             case R.id.passwordFieldMenuItem: {
                 card.createPasswordField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
                 break;
             }
-//            case R.id.dateFieldMenuItem: {
-//                card.createDateField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
-//                break;
-//            }
             default: {
                 card.createTextField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
                 break;
             }
         }
-
-
-        ///////////////////////
-//        Field field;
-//        Bundle bundle = new Bundle();
-//        bundle.putString("title", fieldTitle);
-//        bundle.putInt("type", fieldTypeId);
-//        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
-//        switch (fieldTypeId) {
-//            case R.id.multilineTextFieldMenuItem: {
-//                field = new MultilineTextFieldFragment();
-//                TextBytes textBytes = new TextBytes();
-//                bundle.putParcelable("textBytes", textBytes);
-//                card.addTextBytes(textBytes);
-//                break;
-//            }
-//            case R.id.passwordFieldMenuItem: {
-//                field = new PasswordFieldFragment();
-//                break;
-//            }
-//            case R.id.dateFieldMenuItem: {
-//                field = new DateFieldFragment();
-//                break;
-//            }
-//            default: {
-//                field = new EditTextFieldFragment();
-//                TextBytes textBytes = new TextBytes();
-//                bundle.putParcelable("textBytes", textBytes);
-//                card.addTextBytes(textBytes);
-//                break;
-//            }
-//        }
-//        field.setArguments(bundle);
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.recordContainLinearLayout, field, field.getClass().getName() + "_" + fieldTitle)
-//                .addToBackStack(null)
-//                .commit();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
-        LinearLayout layout = (LinearLayout) findViewById(R.id.recordContainLinearLayout);
-        int childcount = layout.getChildCount();
-        for (int i = 0; i < childcount; i++) {
-            String s = layout.getChildAt(i).getContext().getClass().getName();
-            String s2 = layout.getChildAt(i).getClass().getName();
-
-        }
-
-        if (this.card.getTitleBytes() == null) {
-//            this.card.setTitleBytes(new TitleBytes(Encoder.encode(getIntent().getByteArrayExtra("password"), "NO TITLE".getBytes(),)));
-        }
-        card.save(newCard);
-//        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+//        super.onPause();
+//        LinearLayout layout = (LinearLayout) findViewById(R.id.recordContainLinearLayout);
+//        int childcount = layout.getChildCount();
+//        for (int i = 0; i < childcount; i++) {
+//            String s = layout.getChildAt(i).getContext().getClass().getName();
+//            String s2 = layout.getChildAt(i).getClass().getName();
+//
+//        }
+//
+//        if (this.card.getTitleBytes() == null) {
+////            this.card.setTitleBytes(new TitleBytes(Encoder.encode(getIntent().getByteArrayExtra("password"), "NO TITLE".getBytes(),)));
+//        }
+//        card.save(newCard);
+////        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
     }
 
 

@@ -15,15 +15,24 @@ public class TextBytes extends Bytes {
     public TextBytes() {
     }
 
-    public TextBytes(int id, byte[] title, byte[] data) {
-        super(id);
+    public TextBytes(byte[] meta) {
+        super(meta);
+    }
+
+    public TextBytes(byte[] title, byte[] meta) {
+        super(meta);
+        this.title = title;
+    }
+
+    public TextBytes(int id, byte[] title, byte[] data, byte[] meta) {
+        super(id, meta);
         this.title = title;
         this.data = data;
     }
 
     @Override
     public Object[] toInsertArr() {
-        return new byte[][]{title, data};
+        return new byte[][]{title, data, meta};
     }
 
     @Override
@@ -51,6 +60,10 @@ public class TextBytes extends Bytes {
     //get set
     public void setTitle(byte[] title) {
         this.title = title;
+    }
+
+    public byte[] getTitle() {
+        return title;
     }
 
     public void setData(byte[] data) {

@@ -3,6 +3,8 @@ package com.tr1nks.safevault.entities;
 import android.support.v4.app.FragmentManager;
 import com.tr1nks.safevault.entities.bytes.*;
 import com.tr1nks.safevault.util.DBUtil;
+import com.tr1nks.safevault.util.Encoder;
+import com.tr1nks.safevault.util.UserPasswordManager;
 
 import java.util.ArrayList;
 
@@ -97,19 +99,23 @@ public class Card {
 
     //////////////////////////////////////
     public void createTextField(FragmentManager fragmentManager, String title, int fieldTypeId) {
+        FieldMeta meta = new FieldMeta();
+        meta.setFieldType(fieldTypeId);
         if (null == this.textBytes) {
             this.textBytes = new ArrayList<>();
         }
-        TextBytes tb = new TextBytes();
+        TextBytes tb = new TextBytes(Encoder.encode(UserPasswordManager.getPassword(), title.getBytes()),Encoder.encode(UserPasswordManager.getPassword(), FieldMeta.serialize(meta)));
         this.textBytes.add(tb);
         tb.createFieldFragment(fragmentManager, title, fieldTypeId);
     }
 
     public void createPasswordField(FragmentManager fragmentManager, String title, int fieldTypeId) {
+        FieldMeta meta = new FieldMeta();
+        meta.setFieldType(fieldTypeId);
         if (null == this.passwordBytes) {
             this.passwordBytes = new ArrayList<>();
         }
-        PasswordBytes pb = new PasswordBytes();
+        PasswordBytes pb = new PasswordBytes(Encoder.encode(UserPasswordManager.getPassword(), title.getBytes()),Encoder.encode(UserPasswordManager.getPassword(), FieldMeta.serialize(meta)));
         this.passwordBytes.add(pb);
         pb.createFieldFragment(fragmentManager, title, fieldTypeId);
     }
