@@ -19,7 +19,7 @@ public abstract class Field extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo delete this field from parent
+                getActivity().getSupportFragmentManager().beginTransaction().remove(Field.this).commit();
             }
         });
     }

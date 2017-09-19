@@ -26,6 +26,7 @@ public class PasswordFieldFragment extends Field {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_password_field, container, false);
 //        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
+       super.addFieldDeleteButtonHandler(view.findViewById(R.id.deleteFieldImageButton));
         final EditText editText = view.findViewById(R.id.fragmentPasswEditText);
         ((CheckBox) view.findViewById(R.id.fragmentShowPasswordCheckBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -22,7 +22,8 @@ public class MultilineTextFieldFragment extends Field {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_multiline_text_field, container, false);
-//        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
+        super.addFieldDeleteButtonHandler(view.findViewById(R.id.deleteFieldImageButton));
+        //        view.findViewById(R.id.deleteFieldImageButton).setOnClickListener(super.fieldDeleteButtonHandler(view));
         ((TextView) view.findViewById(R.id.fragmentTitleForTextEditText)).setText(getArguments().getString("title"));
         return view;
     }
