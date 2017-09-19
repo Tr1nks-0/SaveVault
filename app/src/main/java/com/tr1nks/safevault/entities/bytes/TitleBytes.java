@@ -1,14 +1,13 @@
 package com.tr1nks.safevault.entities.bytes;
 
 import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
 import com.tr1nks.safevault.util.Encoder;
 import com.tr1nks.safevault.util.Serializer;
 
 import java.util.ArrayList;
 
-public class TitleBytes implements Parcelable {
-    private int id;
+public class TitleBytes extends Bytes {
     private byte[] title;
     private byte[] icon;
     private byte[] meta;
@@ -18,8 +17,14 @@ public class TitleBytes implements Parcelable {
     private byte[] userIcon_ids;
 
     public TitleBytes(int id, byte[] title, byte[] icon, byte[] meta, byte[] text_ids, byte[] password_ids, byte[] image_ids, byte[] userIcon_ids) {
-        this(title, icon, meta, text_ids, password_ids, image_ids, userIcon_ids);
-        this.id = id;
+        super(id);
+        this.title = title;
+        this.icon = icon;
+        this.meta = meta;
+        this.text_ids = text_ids;
+        this.password_ids = password_ids;
+        this.image_ids = image_ids;
+        this.userIcon_ids = userIcon_ids;
     }
 
     public TitleBytes(byte[] title, byte[] icon, byte[] meta, byte[] text_ids, byte[] password_ids, byte[] image_ids, byte[] userIcon_ids) {
@@ -44,33 +49,20 @@ public class TitleBytes implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeByteArray(title);
-        parcel.writeByteArray(icon);
-        parcel.writeByteArray(meta);
-        parcel.writeByteArray(text_ids);
-        parcel.writeByteArray(password_ids);
-        parcel.writeByteArray(image_ids);
-        parcel.writeByteArray(userIcon_ids);
+    public Object[] toInsertArr() {
+        return new byte[][]{title, icon, meta, text_ids, password_ids, image_ids, icon};
     }
-
-    public static final Creator<TitleBytes> CREATOR = new Creator<TitleBytes>() {
-        @Override
-        public TitleBytes createFromParcel(Parcel in) {
-            return new TitleBytes(in);
-        }
-
-        @Override
-        public TitleBytes[] newArray(int size) {
-            return new TitleBytes[size];
-        }
-    };
 
     @Override
-    public int describeContents() {
-        return 0;
+    public void save() {
+
     }
+
+    @Override
+    public void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId) {
+
+    }
+
     //get set
 
     public int getId() {
@@ -131,11 +123,5 @@ public class TitleBytes implements Parcelable {
 
     public void setUserIcon_ids(byte[] userIcon_ids, byte[] password) {
         this.userIcon_ids = Encoder.encode(password, Serializer.writeInBytes(userIcon_ids));
-    }
-
-
-    public Object[] toInsertArr() {
-//        INSERT INTO titles (title, icon, meta, text_ids, password_ids, image_ids, icon_ids) VALUES (?,?,?,?,?,?,?)
-        return new byte[][]{title, icon, meta, text_ids, password_ids, image_ids, icon};
     }
 }

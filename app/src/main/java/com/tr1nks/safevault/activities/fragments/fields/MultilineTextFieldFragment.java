@@ -17,9 +17,14 @@ import com.tr1nks.safevault.util.Encoder;
  */
 public class MultilineTextFieldFragment extends Field {
 
+    private TextBytes textBytes;
 
     public MultilineTextFieldFragment() {
         // Required empty public constructor
+    }
+
+    public void setTextBytes(TextBytes textBytes) {
+        this.textBytes = textBytes;
     }
 
     @Override
@@ -50,6 +55,7 @@ public class MultilineTextFieldFragment extends Field {
         });
         return view;
     }
+
     @Override
     public void onParentPauseAction() {
 

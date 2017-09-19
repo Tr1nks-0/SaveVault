@@ -47,7 +47,7 @@ public class CardTitleFragment extends Fragment {
         Intent intent = new Intent(getActivity(), CardActivity.class);
         Bundle bundle = new Bundle();
         bundle.putByteArray("password", passwords);
-        bundle.putParcelable("titleBytes", titleBytes);
+//        bundle.putParcelable("titleBytes", titleBytes);
         bundle.putString("mode", "open");
         intent.putExtras(bundle);
         startActivity(intent);

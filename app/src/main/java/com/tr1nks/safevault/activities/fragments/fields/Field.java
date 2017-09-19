@@ -6,8 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.tr1nks.safevault.entities.bytes.Bytes;
 
 public abstract class Field extends Fragment {
+    Bytes bytes;
+
     public Field() {
         // Required empty public constructor
     }
@@ -23,5 +26,10 @@ public abstract class Field extends Fragment {
             }
         });
     }
+
     public abstract void onParentPauseAction();
+
+    public void setBytes(Bytes bytes) {
+        this.bytes = bytes;
+    }
 }

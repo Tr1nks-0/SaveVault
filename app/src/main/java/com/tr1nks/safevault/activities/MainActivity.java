@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private void createCardFieldFragment(TitleBytes tb) {
         CardTitleFragment fragment = new CardTitleFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("titleBytes", tb);
+//        bundle.putParcelable("titleBytes", tb);
         bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
         fragment.setArguments(bundle);
         getSupportFragmentManager()

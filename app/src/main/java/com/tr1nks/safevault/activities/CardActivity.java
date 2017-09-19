@@ -10,15 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.dialogs.AskFieldNameDialogFragment;
-import com.tr1nks.safevault.activities.fragments.fields.*;
 import com.tr1nks.safevault.entities.Card;
-import com.tr1nks.safevault.entities.bytes.TextBytes;
 
 /**
  * карточка
  */
 public class CardActivity extends AppCompatActivity implements AskFieldNameDialogFragment.AskFieldNameDialogFragmentListener {
-    //    private Record record;
     private Card card;
     private boolean newCard;
 
@@ -36,6 +33,12 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         }
     }
 
+    /**
+     * обработчик кнопки добавить поле
+     * вызовет диалог и создание поля переходит в {@link CardActivity#onAskFieldNameDialogFragmentPositiveClick(DialogFragment, String, int)}
+     *
+     * @param view кнопка
+     */
     public void addFieldButtonHandler(View view) {
         PopupMenu popup = new PopupMenu(CardActivity.this, findViewById(R.id.addFieldButton));
         popup.getMenuInflater().inflate(R.menu.menu_field_type, popup.getMenu());
@@ -52,47 +55,71 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         popup.show();
     }
 
+    /**
+     * обработчик диалога создающий новое поле
+     *
+     * @param dialog      диалог
+     * @param fieldTitle  заголовок поля
+     * @param fieldTypeId тип поля
+     */
     @Override
-    public void onAskFieldNameDialogFragmentPositiveClick(DialogFragment dialog, String title, int type) {
-        addNewField(type, title);
-    }
-
-    private void addNewField(int fieldTypeId, String fieldTitle) {
-        Field field;
-        Bundle bundle = new Bundle();
-        bundle.putString("title", fieldTitle);
-        bundle.putInt("type", fieldTypeId);
-        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
+    public void onAskFieldNameDialogFragmentPositiveClick(DialogFragment dialog, String fieldTitle, int fieldTypeId) {
         switch (fieldTypeId) {
-            case R.id.multilineTextFieldMenuItem: {
-                field = new MultilineTextFieldFragment();
-                TextBytes textBytes = new TextBytes();
-                bundle.putParcelable("textBytes", textBytes);
-                card.addTextBytes(textBytes);
-                break;
-            }
+//            case R.id.multilineTextFieldMenuItem: {
+//                card.createTextField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
+//                break;
+//            }
             case R.id.passwordFieldMenuItem: {
-                field = new PasswordFieldFragment();
+                card.createPasswordField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
                 break;
             }
-            case R.id.dateFieldMenuItem: {
-                field = new DateFieldFragment();
-                break;
-            }
+//            case R.id.dateFieldMenuItem: {
+//                card.createDateField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
+//                break;
+//            }
             default: {
-                field = new EditTextFieldFragment();
-                TextBytes textBytes = new TextBytes();
-                bundle.putParcelable("textBytes", textBytes);
-                card.addTextBytes(textBytes);
+                card.createTextField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
                 break;
             }
         }
-        field.setArguments(bundle);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.recordContainLinearLayout, field, field.getClass().getName() + "_" + fieldTitle)
-                .addToBackStack(null)
-                .commit();
+
+
+        ///////////////////////
+//        Field field;
+//        Bundle bundle = new Bundle();
+//        bundle.putString("title", fieldTitle);
+//        bundle.putInt("type", fieldTypeId);
+//        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
+//        switch (fieldTypeId) {
+//            case R.id.multilineTextFieldMenuItem: {
+//                field = new MultilineTextFieldFragment();
+//                TextBytes textBytes = new TextBytes();
+//                bundle.putParcelable("textBytes", textBytes);
+//                card.addTextBytes(textBytes);
+//                break;
+//            }
+//            case R.id.passwordFieldMenuItem: {
+//                field = new PasswordFieldFragment();
+//                break;
+//            }
+//            case R.id.dateFieldMenuItem: {
+//                field = new DateFieldFragment();
+//                break;
+//            }
+//            default: {
+//                field = new EditTextFieldFragment();
+//                TextBytes textBytes = new TextBytes();
+//                bundle.putParcelable("textBytes", textBytes);
+//                card.addTextBytes(textBytes);
+//                break;
+//            }
+//        }
+//        field.setArguments(bundle);
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.recordContainLinearLayout, field, field.getClass().getName() + "_" + fieldTitle)
+//                .addToBackStack(null)
+//                .commit();
     }
 
     @Override
@@ -100,9 +127,9 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         super.onPause();
         LinearLayout layout = (LinearLayout) findViewById(R.id.recordContainLinearLayout);
         int childcount = layout.getChildCount();
-        for (int i=0; i < childcount; i++){
-            String s =layout.getChildAt(i).getContext().getClass().getName();
-            String s2 =layout.getChildAt(i).getClass().getName();
+        for (int i = 0; i < childcount; i++) {
+            String s = layout.getChildAt(i).getContext().getClass().getName();
+            String s2 = layout.getChildAt(i).getClass().getName();
 
         }
 

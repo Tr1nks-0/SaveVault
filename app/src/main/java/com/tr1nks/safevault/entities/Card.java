@@ -1,5 +1,6 @@
 package com.tr1nks.safevault.entities;
 
+import android.support.v4.app.FragmentManager;
 import com.tr1nks.safevault.entities.bytes.*;
 import com.tr1nks.safevault.util.DBUtil;
 
@@ -93,4 +94,29 @@ public class Card {
         this.textBytes.add(tb);
 //        this.titleBytes.
     }
+
+    //////////////////////////////////////
+    public void createTextField(FragmentManager fragmentManager, String title, int fieldTypeId) {
+        if (null == this.textBytes) {
+            this.textBytes = new ArrayList<>();
+        }
+        TextBytes tb = new TextBytes();
+        this.textBytes.add(tb);
+        tb.createFieldFragment(fragmentManager, title, fieldTypeId);
+    }
+
+    public void createPasswordField(FragmentManager fragmentManager, String title, int fieldTypeId) {
+        if (null == this.passwordBytes) {
+            this.passwordBytes = new ArrayList<>();
+        }
+        PasswordBytes pb = new PasswordBytes();
+        this.passwordBytes.add(pb);
+        pb.createFieldFragment(fragmentManager, title, fieldTypeId);
+    }
+
+//    public void createDateField(FragmentManager fragmentManager, String title, int fieldTypeId) {//todo think
+//        TextBytes tb = new TextBytes();
+//        textBytes.add(tb);
+//        tb.createFieldFragment(fragmentManager, title, fieldTypeId);
+//    }
 }
