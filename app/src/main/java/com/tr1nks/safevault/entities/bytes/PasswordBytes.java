@@ -26,19 +26,27 @@ public class PasswordBytes extends Bytes {
         this.title = title;
         this.data = data;
     }
+
     @Override
     public void onParentPauseAction() {
-        //todo
+        field.onParentPauseAction();
+        if (this.id == 0) {
+            this.id = DBUtil.insertPasswordBytes(this);
+        } else {
+            DBUtil.updatePasswordBytes(this);
+        }
     }
+
     @Override
     public Object[] toInsertArr() {
         return new byte[][]{title, data, meta};
     }
 
     @Override
-    public void save() {
-        this.id = DBUtil.insertPasswordBytes(this);
+    public Object[] toUpdateArr() {
+        return new Object[]{title, data, meta, id};
     }
+
 
     @Override
     public void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId) {
@@ -53,5 +61,13 @@ public class PasswordBytes extends Bytes {
 
     public byte[] getTitle() {
         return this.title;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public byte[] getData() {
+        return data;
     }
 }

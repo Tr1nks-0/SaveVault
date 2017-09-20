@@ -58,6 +58,8 @@ public class EditTextFieldFragment extends Field {
 
     @Override
     public void onParentPauseAction() {
-
+        View v = getView();
+        assert v != null;
+        ((TextBytes) this.bytes).setData(Encoder.encode(UserPasswordManager.getPassword(), ((EditText) v.findViewById(R.id.fragmentEditText)).getText().toString().getBytes()));
     }
 }

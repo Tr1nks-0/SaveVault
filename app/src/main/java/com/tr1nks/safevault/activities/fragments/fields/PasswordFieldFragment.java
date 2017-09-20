@@ -64,6 +64,8 @@ public class PasswordFieldFragment extends Field {
 
     @Override
     public void onParentPauseAction() {
-
+        View v = getView();
+        assert v != null;
+        ((PasswordBytes) this.bytes).setData(Encoder.encode(UserPasswordManager.getPassword(), ((EditText) v.findViewById(R.id.fragmentPasswEditText)).getText().toString().getBytes()));
     }
 }

@@ -32,11 +32,11 @@ public class TextBytes extends Bytes {
 
     @Override
     public void onParentPauseAction() {
+        field.onParentPauseAction();
         if (this.id == 0) {
             this.id = DBUtil.insertTextBytes(this);
-
         } else {
-//            DBUtil.updateTextBytes(this);//todo
+            DBUtil.updateTextBytes(this);
         }
     }
 
@@ -46,9 +46,14 @@ public class TextBytes extends Bytes {
     }
 
     @Override
-    public void save() {
-        this.id = DBUtil.insertTextBytes(this);
+    public Object[] toUpdateArr() {
+        return new Object[]{title, data, meta, id};
     }
+
+//    @Override
+//    public void save() {
+//        this.id = DBUtil.insertTextBytes(this);
+//    }
 
     @Override
     public void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId) {
@@ -78,5 +83,9 @@ public class TextBytes extends Bytes {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public byte[] getData() {
+        return data;
     }
 }

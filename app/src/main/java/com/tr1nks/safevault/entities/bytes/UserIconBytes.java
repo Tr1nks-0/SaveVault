@@ -7,19 +7,20 @@ public class UserIconBytes extends Bytes {
     private byte[] data;
 
     public UserIconBytes(int id, byte[] data, byte[] meta) {
-        super(id,meta);
+        super(id, meta);
         this.data = data;
     }
 
     @Override
     public Object[] toInsertArr() {
-        return new byte[][]{data,meta};
+        return new byte[][]{data, meta};
     }
 
     @Override
-    public void save() {
-        this.id = DBUtil.insertUserIconBytes(this);
+    public Object[] toUpdateArr() {
+        return new Object[]{data, meta, id};
     }
+
 
     @Override
     public void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId) {
@@ -28,6 +29,15 @@ public class UserIconBytes extends Bytes {
 
     @Override
     public void onParentPauseAction() {
-        //todo
+        field.onParentPauseAction();//todo in field
+        if (this.id == 0) {
+            this.id = DBUtil.insertUserIconBytes(this);
+        } else {
+            DBUtil.updateUserIconBytes(this);
+        }
+    }
+
+    public byte[] getData() {
+        return data;
     }
 }

@@ -4,7 +4,7 @@ import android.support.v4.app.FragmentManager;
 import com.tr1nks.safevault.activities.fragments.fields.Field;
 
 public abstract class Bytes {
-    int id;
+    long id;
     byte[] meta;
     transient Field field;
 
@@ -22,11 +22,11 @@ public abstract class Bytes {
 
     public abstract Object[] toInsertArr();
 
-    public abstract void save();
+    public abstract Object[] toUpdateArr();
 
     public abstract void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId);
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

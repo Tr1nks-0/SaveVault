@@ -1,14 +1,11 @@
 package com.tr1nks.safevault.util;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.tr1nks.safevault.entities.bytes.PasswordBytes;
-import com.tr1nks.safevault.entities.bytes.TextBytes;
-import com.tr1nks.safevault.entities.bytes.TitleBytes;
-import com.tr1nks.safevault.entities.bytes.UserIconBytes;
-import com.tr1nks.safevault.entities.bytes.ImageBytes;
+import com.tr1nks.safevault.entities.bytes.*;
 
 import java.util.ArrayList;
 
@@ -60,24 +57,44 @@ public class DBUtil {
         return worker.getUserIconsBytesByIds(userIconIds);
     }
 
-    public static void insertTitleBytes(TitleBytes titleBytes) {
-        worker.insertTitleBytes(titleBytes);
+    public static long insertTitleBytes(TitleBytes titleBytes) {
+        return worker.insertUpdateTitleBytes(titleBytes, false);
     }
 
-    public static int insertTextBytes(TextBytes textBytes) {
-        return worker.insertTextBytes(textBytes);
+    public static void updateTitleBytes(TitleBytes titleBytes) {
+        worker.insertUpdateTitleBytes(titleBytes, true);
     }
 
-    public static int insertPasswordBytes(PasswordBytes passwordBytes) {
-        return worker.insertPasswordBytes(passwordBytes);
+    public static long insertTextBytes(TextBytes textBytes) {
+        return worker.insertUpdateTextBytes(textBytes, false);
     }
 
-    public static int insertImageBytes(ImageBytes imageBytes) {
-        return worker.insertImageBytes(imageBytes);
+    public static void updateTextBytes(TextBytes textBytes) {
+        worker.insertUpdateTextBytes(textBytes, true);
     }
 
-    public static int insertUserIconBytes(UserIconBytes userIconBytes) {
-        return worker.insertIconBytes(userIconBytes);
+    public static long insertPasswordBytes(PasswordBytes passwordBytes) {
+        return worker.insertUpdatePasswordBytes(passwordBytes, false);
+    }
+
+    public static void updatePasswordBytes(PasswordBytes passwordBytes) {
+        worker.insertUpdatePasswordBytes(passwordBytes, true);
+    }
+
+    public static long insertImageBytes(ImageBytes imageBytes) {
+        return worker.insertUpdateImageBytes(imageBytes, false);
+    }
+
+    public static void updateImageBytes(ImageBytes imageBytes) {
+        worker.insertUpdateImageBytes(imageBytes, true);
+    }
+
+    public static long insertUserIconBytes(UserIconBytes userIconBytes) {
+        return worker.insertUpdateUserIconBytes(userIconBytes, false);
+    }
+
+    public static void updateUserIconBytes(UserIconBytes userIconBytes) {
+        worker.insertUpdateUserIconBytes(userIconBytes, true);
     }
 
 
@@ -106,30 +123,51 @@ public class DBUtil {
         private static final String INSERT_CHECK_DATA_SQL = "insert INTO pass_check(val) VALUES (?)";
         private static final String SELECT_CHECK_DATA_SQL = "SELECT val from pass_check LIMIT 1";
 
+        //bytes table generic
+        private static final String BYTES_ID = "id";
+
         //titles table
+        private static final String TITLES_TABLENAME = "titles";
+        private static final String TITLES_ID = "id";
+        private static final String TITLES_TITLE = "title";
+        private static final String TITLES_ICON = "icon";
+        private static final String TITLES_META = "meta";
+        private static final String TITLES_TEXT_IDS = "text_ids";
+        private static final String TITLES_PASSWORD_IDS = "password_ids";
+        private static final String TITLES_IMAGE_IDS = "image_ids";
+        private static final String TITLES_USER_ICON_IDS = "icon_ids";
         private static final String SELECT_TITLES_SQL = "SELECT id,title,icon,meta,text_ids,password_ids,image_ids,icon_ids FROM titles";
-        private static final String INSERT_TITLES_SQL = "INSERT INTO titles (title, icon, meta, text_ids, password_ids, image_ids, icon_ids) VALUES (?,?,?,?,?,?,?)";
-        private static final String SELECT_LAST_INSERT_ID_TITLES_SQL = "select last_insert_rowid() as id from titles";
 
         //texts table
+        private static final String TEXTS_TABLENAME = "texts";
+        private static final String TEXTS_ID = "id";
+        private static final String TEXTS_TITLE = "title";
+        private static final String TEXTS_DATA = "data";
+        private static final String TEXTS_META = "meta";
         private static final String SELECT_TEXTS_BY_ID_SQL = "SELECT id,title,data,meta FROM texts WHERE id in (?)";
-        private static final String INSERT_TEXTS_SQL = "INSERT INTO texts (title, data, meta) VALUES (?,?,?)";
-        private static final String SELECT_LAST_INSERT_ID_TEXTS_SQL = "select last_insert_rowid() as id from texts";
 
         //passwords table
+        private static final String PASSWORDS_TABLENAME = "passwords";
+        private static final String PASSWORDS_ID = "id";
+        private static final String PASSWORDS_TITLE = "title";
+        private static final String PASSWORDS_DATA = "data";
+        private static final String PASSWORDS_META = "meta";
         private static final String SELECT_PASSWORDS_BY_ID_SQL = "SELECT id,title,data,meta FROM passwords WHERE id in (?)";
-        private static final String INSERT_PASSWORDS_SQL = "INSERT INTO passwords (title, data, meta) VALUES (?,?,?)";
-        private static final String SELECT_LAST_INSERT_ID_PASSWORDS_SQL = "select last_insert_rowid() as id from passwords";
 
         //images table
+        private static final String IMAGES_TABLENAME = "images";
+        private static final String IMAGES_ID = "id";
+        private static final String IMAGES_TITLE = "title";
+        private static final String IMAGES_DATA = "data";
+        private static final String IMAGES_META = "meta";
         private static final String SELECT_IMAGES_BY_ID_SQL = "SELECT id,title,data,meta FROM images WHERE id in (?)";
-        private static final String INSERT_IMAGES_SQL = "INSERT INTO images (title, data, meta) VALUES (?,?,?)";
-        private static final String SELECT_LAST_INSERT_ID_IMAGES_SQL = "select last_insert_rowid() as id from images";
 
         //user_icons table
+        private static final String USER_ICONS_TABLENAME = "user_icons";
+        private static final String USER_ICONS_ID = "id";
+        private static final String USER_ICONS_DATA = "data";
+        private static final String USER_ICONS_META = "meta";
         private static final String SELECT_USER_ICONS_BY_ID_SQL = "SELECT id,data,meta FROM user_icons WHERE id in (?)";
-        private static final String INSERT_USER_ICONS = "INSERT INTO user_icons (data, meta) VALUES (?,?)";
-        private static final String SELECT_LAST_INSERT_ID_USER_ICONS_SQL = "select last_insert_rowid() as id from user_icons";
 
 
         DBWorker(Context context) {
@@ -237,42 +275,77 @@ public class DBUtil {
             return arr;
         }
 
+        //////////////////////////////
         private String[] prepareIds(ArrayList<Integer> textIds) {
             return new String[]{textIds.toString().replace("[", "").replace("]", "")};
         }
 
-        int insertTitleBytes(TitleBytes titleBytes) {
-            getWritableDatabase().execSQL(INSERT_TITLES_SQL, titleBytes.toInsertArr());
-            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_TITLES_SQL, null)) {
-                return c.getInt(c.getColumnIndex("id"));
+        long insertBytes(String tablename, ContentValues values) {
+            return getWritableDatabase().insert(tablename, null, values);
+        }
+
+        long updateBytes(String tablename, ContentValues values, String[] whereArgs) {
+            return getWritableDatabase().update(tablename, values, TEXTS_ID + "=?", whereArgs);
+        }
+
+        private ContentValues prepareBytesContentValues(String[] valuesTitle, byte[][] valuesVal) {
+            ContentValues values = new ContentValues();
+            for (int i = 0; i < valuesTitle.length; i++) {
+                values.put(valuesTitle[i], valuesVal[i]);
+            }
+            return values;
+        }
+
+        //////////////////////////////////
+        long insertUpdateTitleBytes(TitleBytes titleBytes, boolean update) {
+            ContentValues cv = prepareBytesContentValues(new String[]{TITLES_TITLE, TITLES_ICON, TITLES_META, TITLES_TEXT_IDS, TITLES_PASSWORD_IDS, TITLES_IMAGE_IDS, TITLES_USER_ICON_IDS},
+                    new byte[][]{titleBytes.getTitle(), titleBytes.getIcon(), titleBytes.getMeta(), titleBytes.getTextIds(), titleBytes.getPasswordIds(), titleBytes.getImageIds(), titleBytes.getUserIconIds(),});
+            if (update) {
+                return updateBytes(TITLES_TABLENAME, cv, new String[]{String.valueOf(titleBytes.getId())});
+            } else {
+                return insertBytes(TITLES_TABLENAME, cv);
             }
         }
 
-        int insertTextBytes(TextBytes textBytes) {
-            getWritableDatabase().execSQL(INSERT_TEXTS_SQL, textBytes.toInsertArr());
-            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_TEXTS_SQL, null)) {
-                return c.getInt(c.getColumnIndex("id"));
+        long insertUpdateTextBytes(TextBytes textBytes, boolean update) {
+            ContentValues cv = prepareBytesContentValues(new String[]{TEXTS_TITLE, TEXTS_DATA, TEXTS_META},
+                    new byte[][]{textBytes.getTitle(), textBytes.getData(), textBytes.getMeta()});
+            if (update) {
+                return updateBytes(TEXTS_TABLENAME, cv, new String[]{String.valueOf(textBytes.getId())});
+            } else {
+                return insertBytes(TEXTS_TABLENAME, cv);
             }
         }
 
-        int insertPasswordBytes(PasswordBytes passwordBytes) {
-            getWritableDatabase().execSQL(INSERT_PASSWORDS_SQL, passwordBytes.toInsertArr());
-            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_PASSWORDS_SQL, null)) {
-                return c.getInt(c.getColumnIndex("id"));
+        long insertUpdatePasswordBytes(PasswordBytes passwordBytes, boolean update) {
+            ContentValues cv = prepareBytesContentValues(new String[]{PASSWORDS_TITLE, PASSWORDS_DATA, PASSWORDS_META},
+                    new byte[][]{passwordBytes.getTitle(), passwordBytes.getData(), passwordBytes.getMeta()});
+            if (update) {
+                return updateBytes(PASSWORDS_TABLENAME, cv, new String[]{String.valueOf(passwordBytes.getId())});
+            } else {
+                return insertBytes(PASSWORDS_TABLENAME, cv);
             }
         }
 
-        int insertImageBytes(ImageBytes imageBytes) {
-            getWritableDatabase().execSQL(INSERT_IMAGES_SQL, imageBytes.toInsertArr());
-            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_IMAGES_SQL, null)) {
-                return c.getInt(c.getColumnIndex("id"));
+
+        long insertUpdateImageBytes(ImageBytes imageBytes, boolean update) {
+            ContentValues cv = prepareBytesContentValues(new String[]{IMAGES_TITLE, IMAGES_DATA, IMAGES_META},
+                    new byte[][]{imageBytes.getTitle(), imageBytes.getData(), imageBytes.getMeta()});
+            if (update) {
+                return updateBytes(IMAGES_TABLENAME, cv, new String[]{String.valueOf(imageBytes.getId())});
+            } else {
+                return insertBytes(IMAGES_TABLENAME, cv);
             }
         }
 
-        int insertIconBytes(UserIconBytes userIconBytes) {
-            getWritableDatabase().execSQL(INSERT_USER_ICONS, userIconBytes.toInsertArr());
-            try (Cursor c = getReadableDatabase().rawQuery(SELECT_LAST_INSERT_ID_USER_ICONS_SQL, null)) {
-                return c.getInt(c.getColumnIndex("id"));
+
+        long insertUpdateUserIconBytes(UserIconBytes userIconBytes, boolean update) {
+            ContentValues cv = prepareBytesContentValues(new String[]{USER_ICONS_DATA, USER_ICONS_META},
+                    new byte[][]{userIconBytes.getData(), userIconBytes.getMeta()});
+            if (update) {
+                return updateBytes(USER_ICONS_TABLENAME, cv, new String[]{String.valueOf(userIconBytes.getId())});
+            } else {
+                return insertBytes(USER_ICONS_TABLENAME, cv);
             }
         }
     }

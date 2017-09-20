@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.dialogs.AskFieldNameDialogFragment;
 import com.tr1nks.safevault.entities.Card;
+import com.tr1nks.safevault.util.Encoder;
+import com.tr1nks.safevault.util.UserPasswordManager;
 
 /**
  * карточка
@@ -26,7 +29,7 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         Bundle b = this.getIntent().getExtras();
         if (b.getString("mode").equals("new")) {
             newCard = true;
-            card = new Card();
+            card = new Card(this);
         } else {
             newCard = false;
         }
@@ -97,4 +100,12 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
     }
 
 
+    public byte[] getTitleBytesTitle() {
+        return Encoder.encode(UserPasswordManager.getPassword(), ((EditText) findViewById(R.id.recordTitleEditText)).getText().toString().getBytes());
+    }
+
+    public byte[] getTitleBytesIcon() {
+//        return Encoder.encode(UserPasswordManager.getPassword(), ((EditText) findViewById(R.id.recordIconImageButton)).getText().toString().getBytes());
+        return new byte[0];//fixme
+    }
 }

@@ -1,13 +1,11 @@
 package com.tr1nks.safevault.entities.bytes;
 
-import android.os.Parcel;
 import android.support.v4.app.FragmentManager;
-import com.tr1nks.safevault.util.Encoder;
-import com.tr1nks.safevault.util.Serializer;
-
-import java.util.ArrayList;
+import com.tr1nks.safevault.activities.CardActivity;
+import com.tr1nks.safevault.util.DBUtil;
 
 public class TitleBytes extends Bytes {
+    private CardActivity activity;
     private byte[] title;
     private byte[] icon;
     private byte[] text_ids;
@@ -15,8 +13,12 @@ public class TitleBytes extends Bytes {
     private byte[] image_ids;
     private byte[] userIcon_ids;
 
+    public TitleBytes(CardActivity cardActivity) {
+        this.activity = cardActivity;
+    }
+
     public TitleBytes(int id, byte[] title, byte[] icon, byte[] meta, byte[] text_ids, byte[] password_ids, byte[] image_ids, byte[] userIcon_ids) {
-        super(id,meta);
+        super(id, meta);
         this.title = title;
         this.icon = icon;
         this.text_ids = text_ids;
@@ -35,16 +37,6 @@ public class TitleBytes extends Bytes {
         this.userIcon_ids = userIcon_ids;
     }
 
-    protected TitleBytes(Parcel in) {
-        id = in.readInt();
-        title = in.createByteArray();
-        icon = in.createByteArray();
-        meta = in.createByteArray();
-        text_ids = in.createByteArray();
-        password_ids = in.createByteArray();
-        image_ids = in.createByteArray();
-        userIcon_ids = in.createByteArray();
-    }
 
     @Override
     public Object[] toInsertArr() {
@@ -52,23 +44,28 @@ public class TitleBytes extends Bytes {
     }
 
     @Override
-    public void save() {
-
+    public Object[] toUpdateArr() {
+        return new Object[]{title, icon, meta, text_ids, password_ids, image_ids, userIcon_ids, id};
     }
+
     @Override
     public void onParentPauseAction() {
-        //todo
+        this.title = activity.getTitleBytesTitle();
+        this.icon = activity.getTitleBytesIcon();
+
+        if (this.id == 0) {
+            this.id = DBUtil.insertTitleBytes(this);
+        } else {
+            DBUtil.updateTitleBytes(this);
+        }
     }
+
     @Override
     public void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId) {
 
     }
 
     //get set
-
-    public int getId() {
-        return id;
-    }
 
     public byte[] getTitle() {
         return title;
@@ -86,35 +83,35 @@ public class TitleBytes extends Bytes {
         this.icon = icon;
     }
 
-    public ArrayList<Integer> getTextIds(byte[] password) {
-        return (ArrayList<Integer>) Serializer.readFrBytes(Encoder.decode(password, text_ids));
+    public byte[] getTextIds() {
+        return text_ids;
     }
 
-    public ArrayList<Integer> getPasswordIds(byte[] password) {
-        return (ArrayList<Integer>) Serializer.readFrBytes(Encoder.decode(password, password_ids));
+    public void setText_ids(byte[] text_ids) {
+        this.text_ids = text_ids;
     }
 
-    public ArrayList<Integer> getImageIds(byte[] password) {
-        return (ArrayList<Integer>) Serializer.readFrBytes(Encoder.decode(password, image_ids));
+    public byte[] getPasswordIds() {
+        return password_ids;
     }
 
-    public ArrayList<Integer> getUserIconIds(byte[] password) {
-        return (ArrayList<Integer>) Serializer.readFrBytes(Encoder.decode(password, userIcon_ids));
+    public void setPassword_ids(byte[] password_ids) {
+        this.password_ids = password_ids;
     }
 
-    public void setText_ids(ArrayList<Integer> text_ids, byte[] password) {
-        this.text_ids = Encoder.encode(password, Serializer.writeInBytes(text_ids));
+    public byte[] getImageIds() {
+        return image_ids;
     }
 
-    public void setPassword_ids(byte[] password_ids, byte[] password) {
-        this.password_ids = Encoder.encode(password, Serializer.writeInBytes(password_ids));
+    public void setImage_ids(byte[] image_ids) {
+        this.image_ids = image_ids;
     }
 
-    public void setImage_ids(byte[] image_ids, byte[] password) {
-        this.image_ids = Encoder.encode(password, Serializer.writeInBytes(image_ids));
+    public byte[] getUserIconIds() {
+        return userIcon_ids;
     }
 
-    public void setUserIcon_ids(byte[] userIcon_ids, byte[] password) {
-        this.userIcon_ids = Encoder.encode(password, Serializer.writeInBytes(userIcon_ids));
+    public void setUserIcon_ids(byte[] userIcon_ids) {
+        this.userIcon_ids = userIcon_ids;
     }
 }

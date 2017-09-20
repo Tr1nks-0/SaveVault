@@ -1,8 +1,9 @@
 package com.tr1nks.safevault.entities;
 
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import com.tr1nks.safevault.activities.CardActivity;
 import com.tr1nks.safevault.entities.bytes.*;
-import com.tr1nks.safevault.util.DBUtil;
 import com.tr1nks.safevault.util.Encoder;
 import com.tr1nks.safevault.util.UserPasswordManager;
 
@@ -15,47 +16,42 @@ public class Card {
     private ArrayList<ImageBytes> imageBytes;
     private ArrayList<UserIconBytes> userIconBytes;
 
+    public Card(CardActivity cardActivity) {
+        this.titleBytes=new TitleBytes(cardActivity);
+    }
+
 
     public void onParentPauseAction() {
-
-        titleBytes.onParentPauseAction();
-/*    public void save(boolean newCard) {
-        if (newCard) {
-            ArrayList<Integer> text_ids = new ArrayList<>();
-            ArrayList<Integer> password_ids = new ArrayList<>();
-            ArrayList<Integer> image_ids = new ArrayList<>();
-            ArrayList<Integer> userIcon_ids = new ArrayList<>();
-            if (null != textBytes && !textBytes.isEmpty()) {
-                for (TextBytes tb : textBytes) {
-                    tb.save();
-                    text_ids.add(tb.getId());
-                }
+//        ArrayList<Integer> text_ids = new ArrayList<>();
+//        ArrayList<Integer> password_ids = new ArrayList<>();
+//        ArrayList<Integer> image_ids = new ArrayList<>();
+//        ArrayList<Integer> userIcon_ids = new ArrayList<>();
+        if (null != textBytes && !textBytes.isEmpty()) {
+            for (TextBytes tb : textBytes) {
+                tb.onParentPauseAction();
+                Log.d("","");
+//                text_ids.add(tb.getId());
             }
-            if (null != passwordBytes && !passwordBytes.isEmpty()) {
-                for (PasswordBytes pb : passwordBytes) {
-                    pb.save();
-                    password_ids.add(pb.getId());
-                }
-            }
-            if (null != imageBytes && !imageBytes.isEmpty()) {
-                for (ImageBytes ib : imageBytes) {
-                    ib.save();
-                    image_ids.add(ib.getId());
-                }
-            }
-            if (null != userIconBytes && !userIconBytes.isEmpty()) {
-                for (UserIconBytes ub : userIconBytes) {
-                    ub.save();
-                    userIcon_ids.add(ub.getId());
-                }
-            }
-            //todo add ids in title
-            DBUtil.insertTitleBytes(this.titleBytes);
-        } else {
-
         }
-    }
-*/
+        if (null != passwordBytes && !passwordBytes.isEmpty()) {
+            for (PasswordBytes pb : passwordBytes) {
+                pb.onParentPauseAction();
+//                password_ids.add(pb.getId());
+            }
+        }
+        if (null != imageBytes && !imageBytes.isEmpty()) {
+            for (ImageBytes ib : imageBytes) {
+                ib.onParentPauseAction();
+//                image_ids.add(ib.getId());
+            }
+        }
+        if (null != userIconBytes && !userIconBytes.isEmpty()) {
+            for (UserIconBytes ub : userIconBytes) {
+                ub.onParentPauseAction();
+//                userIcon_ids.add(ub.getId());
+            }
+        }
+        titleBytes.onParentPauseAction();
     }
 
     public void createTextField(FragmentManager fragmentManager, String title, int fieldTypeId) {
@@ -80,39 +76,4 @@ public class Card {
         pb.createFieldFragment(fragmentManager, title, fieldTypeId);
     }
 
-    public TitleBytes getTitleBytes() {
-        return titleBytes;
-    }
-
-    public void setTitleBytes(TitleBytes titleBytes) {
-        this.titleBytes = titleBytes;
-    }
-
-    public ArrayList<TextBytes> getTextBytes(byte[] password) {
-        if (null == textBytes) {
-            textBytes = DBUtil.getTextBytesByIds(titleBytes.getTextIds(password));
-        }
-        return textBytes;
-    }
-
-    public ArrayList<PasswordBytes> getPasswordBytes(byte[] password) {
-        if (null == passwordBytes) {
-            passwordBytes = DBUtil.getPasswordBytesByIds(titleBytes.getPasswordIds(password));
-        }
-        return passwordBytes;
-    }
-
-    public ArrayList<ImageBytes> getImageBytes(byte[] password) {
-        if (null == imageBytes) {
-            imageBytes = DBUtil.getImageBytesByIds(titleBytes.getImageIds(password));
-        }
-        return imageBytes;
-    }
-
-    public ArrayList<UserIconBytes> getUserIconBytes(byte[] password) {
-        if (null == userIconBytes) {
-            userIconBytes = DBUtil.getUserIconsBytesByIds(titleBytes.getUserIconIds(password));
-        }
-        return userIconBytes;
-    }
 }

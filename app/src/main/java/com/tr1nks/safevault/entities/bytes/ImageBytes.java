@@ -8,26 +8,42 @@ public class ImageBytes extends Bytes {
     private byte[] data;
 
     public ImageBytes(int id, byte[] title, byte[] data, byte[] meta) {
-        super(id,meta);
+        super(id, meta);
         this.title = title;
         this.data = data;
     }
+
     @Override
     public void onParentPauseAction() {
-        //todo
-    }
-    @Override
-    public Object[] toInsertArr() {
-        return new byte[][]{title, data,meta};
+        field.onParentPauseAction();//todo in field
+        if (this.id == 0) {
+            this.id = DBUtil.insertImageBytes(this);
+        } else {
+            DBUtil.updateImageBytes(this);
+        }
     }
 
     @Override
-    public void save() {
-        this.id = DBUtil.insertImageBytes(this);
+    public Object[] toInsertArr() {
+        return new byte[][]{title, data, meta};
     }
+
+    @Override
+    public Object[] toUpdateArr() {
+        return new Object[]{title, data, meta, id};
+    }
+
 
     @Override
     public void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId) {
 
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public byte[] getTitle() {
+        return title;
     }
 }
