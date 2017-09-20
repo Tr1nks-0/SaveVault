@@ -4,6 +4,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:id="@+id/mainCardTitleFragmentLinearLayout"
               tools:context="com.tr1nks.safevault.activities.fragments.CardTitleFragment"
         >
 
@@ -18,7 +19,7 @@
             android:textSize="@dimen/main_row_text_view_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/titleTextView"
+            android:id="@+id/mainCardTitleFragmentTitleTextView"
             android:layout_weight="3"
             />
 

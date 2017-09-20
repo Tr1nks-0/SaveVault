@@ -3,6 +3,7 @@ package com.tr1nks.safevault.activities;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,6 +12,7 @@ import android.widget.PopupMenu;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.dialogs.AskFieldNameDialogFragment;
 import com.tr1nks.safevault.entities.Card;
+import com.tr1nks.safevault.entities.bytes.TitleBytes;
 import com.tr1nks.safevault.util.Encoder;
 import com.tr1nks.safevault.util.UserPasswordManager;
 
@@ -27,12 +29,19 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_card);
         Bundle b = this.getIntent().getExtras();
+        TitleBytes tb = b.getParcelable("titleBytes");
         if (b.getString("mode").equals("new")) {
             newCard = true;
-            card = new Card(this);
+            card = new Card(this, tb);
         } else {
             newCard = false;
+//card=//todo
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -82,21 +91,9 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
 
     @Override
     protected void onPause() {
+        super.onPause();
         card.onParentPauseAction();
-//        super.onPause();
-//        LinearLayout layout = (LinearLayout) findViewById(R.id.recordContainLinearLayout);
-//        int childcount = layout.getChildCount();
-//        for (int i = 0; i < childcount; i++) {
-//            String s = layout.getChildAt(i).getContext().getClass().getName();
-//            String s2 = layout.getChildAt(i).getClass().getName();
-//
-//        }
-//
-//        if (this.card.getTitleBytes() == null) {
-////            this.card.setTitleBytes(new TitleBytes(Encoder.encode(getIntent().getByteArrayExtra("password"), "NO TITLE".getBytes(),)));
-//        }
-//        card.save(newCard);
-////        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+        Log.d("", "");
     }
 
 

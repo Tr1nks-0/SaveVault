@@ -1,13 +1,11 @@
 package com.tr1nks.safevault.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.activities.fragments.CardTitleFragment;
 import com.tr1nks.safevault.entities.bytes.TitleBytes;
 import com.tr1nks.safevault.util.DBUtil;
 
@@ -27,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         ArrayList<TitleBytes> rows = DBUtil.getTitleBytes();
         refillRecordLinearLayout(rows);
     }
@@ -35,24 +38,22 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.selectCardLinearLayout);
         layout.removeAllViews();
         for (TitleBytes tb : titleBytes) {
-//            createRecordRowFragment(tb);
-            createCardFieldFragment(tb);
+            tb.createMainActivityFieldFragment(getSupportFragmentManager());
             getLayoutInflater().inflate(R.layout.view_horisontal_line, layout);
         }
     }
 
-    private void createCardFieldFragment(TitleBytes tb) {
-        CardTitleFragment fragment = new CardTitleFragment();
-        Bundle bundle = new Bundle();
+
+//        CardTitleFragment fragment = new CardTitleFragment();
+//        Bundle bundle = new Bundle();
 //        bundle.putParcelable("titleBytes", tb);
 //        bundle.putByteArray("password", getIntent().getByteArrayExtra("password"));
 //        fragment.setArguments(bundle);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.selectCardLinearLayout, fragment, String.valueOf(tb.getId()))
-                .addToBackStack(null)
-                .commit();
-    }
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.selectCardLinearLayout, fragment, String.valueOf(tb.getId()))
+//                .addToBackStack(null)
+//                .commit();
 
 //    private void createRecordRowFragment(TitleBytes titleBytes) {
 //        CardTitleFragment fragment = new CardTitleFragment();
@@ -99,10 +100,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view current view
      */
     public void addRecordButtonHandler(View view) {
-        Intent intent = new Intent(this, CardActivity.class);
-//        intent.putExtra("password", getIntent().getByteArrayExtra("password"));
-        intent.putExtra("mode", "new");
-        startActivity(intent);
+        TitleBytes titleBytes = new TitleBytes();
+        titleBytes.openCard("new",this);
     }
 
 }

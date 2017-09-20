@@ -16,8 +16,9 @@ public class Card {
     private ArrayList<ImageBytes> imageBytes;
     private ArrayList<UserIconBytes> userIconBytes;
 
-    public Card(CardActivity cardActivity) {
-        this.titleBytes=new TitleBytes(cardActivity);
+    public Card(CardActivity cardActivity, TitleBytes tb) {
+        this.titleBytes=tb;
+        tb.setCardActivity(cardActivity);
     }
 
 
@@ -30,25 +31,21 @@ public class Card {
             for (TextBytes tb : textBytes) {
                 tb.onParentPauseAction();
                 Log.d("","");
-//                text_ids.add(tb.getId());
             }
         }
         if (null != passwordBytes && !passwordBytes.isEmpty()) {
             for (PasswordBytes pb : passwordBytes) {
                 pb.onParentPauseAction();
-//                password_ids.add(pb.getId());
             }
         }
         if (null != imageBytes && !imageBytes.isEmpty()) {
             for (ImageBytes ib : imageBytes) {
                 ib.onParentPauseAction();
-//                image_ids.add(ib.getId());
             }
         }
         if (null != userIconBytes && !userIconBytes.isEmpty()) {
             for (UserIconBytes ub : userIconBytes) {
                 ub.onParentPauseAction();
-//                userIcon_ids.add(ub.getId());
             }
         }
         titleBytes.onParentPauseAction();
