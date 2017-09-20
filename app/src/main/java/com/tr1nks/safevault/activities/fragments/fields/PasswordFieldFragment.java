@@ -48,7 +48,7 @@ public class PasswordFieldFragment extends Field {
         int inpType = 129;
         switch (meta.getFieldType()) {
             case R.id.pinFieldMenuItem: {
-                inpType = InputType.TYPE_NUMBER_FLAG_SIGNED|InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                inpType = 129 | InputType.TYPE_CLASS_NUMBER;//fixme pin
                 break;
             }
             case R.id.passwordFieldMenuItem: {

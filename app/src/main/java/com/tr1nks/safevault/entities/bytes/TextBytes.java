@@ -31,6 +31,16 @@ public class TextBytes extends Bytes {
     }
 
     @Override
+    public void onParentPauseAction() {
+        if (this.id == 0) {
+            this.id = DBUtil.insertTextBytes(this);
+
+        } else {
+//            DBUtil.updateTextBytes(this);//todo
+        }
+    }
+
+    @Override
     public Object[] toInsertArr() {
         return new byte[][]{title, data, meta};
     }

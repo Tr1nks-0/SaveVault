@@ -30,6 +30,7 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         } else {
             newCard = false;
         }
+
     }
 
     /**
@@ -78,6 +79,7 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
 
     @Override
     protected void onPause() {
+        card.onParentPauseAction();
 //        super.onPause();
 //        LinearLayout layout = (LinearLayout) findViewById(R.id.recordContainLinearLayout);
 //        int childcount = layout.getChildCount();

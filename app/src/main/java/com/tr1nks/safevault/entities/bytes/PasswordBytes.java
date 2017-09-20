@@ -26,7 +26,10 @@ public class PasswordBytes extends Bytes {
         this.title = title;
         this.data = data;
     }
-
+    @Override
+    public void onParentPauseAction() {
+        //todo
+    }
     @Override
     public Object[] toInsertArr() {
         return new byte[][]{title, data, meta};

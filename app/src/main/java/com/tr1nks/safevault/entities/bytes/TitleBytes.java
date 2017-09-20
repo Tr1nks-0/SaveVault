@@ -55,7 +55,10 @@ public class TitleBytes extends Bytes {
     public void save() {
 
     }
-
+    @Override
+    public void onParentPauseAction() {
+        //todo
+    }
     @Override
     public void createFieldFragment(FragmentManager fragmentManager, String title, int fieldTypeId) {
 

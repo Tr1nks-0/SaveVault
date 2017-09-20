@@ -25,6 +25,7 @@ public abstract class Field extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().remove(Field.this).commit();
             }
         });
+        // todo remove all links to make gc attempt to erase it
     }
 
     public abstract void onParentPauseAction();

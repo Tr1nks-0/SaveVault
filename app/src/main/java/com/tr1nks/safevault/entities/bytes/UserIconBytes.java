@@ -26,4 +26,8 @@ public class UserIconBytes extends Bytes {
 
     }
 
+    @Override
+    public void onParentPauseAction() {
+        //todo
+    }
 }

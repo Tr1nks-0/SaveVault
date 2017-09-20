@@ -34,4 +34,5 @@ public abstract class Bytes {
         return meta;
     }
 
+    public abstract void onParentPauseAction();
 }
