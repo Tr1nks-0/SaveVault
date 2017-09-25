@@ -39,4 +39,15 @@ public class MultilineTextFieldFragment extends Field {
     public void onParentPauseAction() {
 
     }
+
+    @Override
+    public void setEditable(boolean b) {
+//        EditText editText = getView().findViewById(R.id.fragmentPasswEditText);
+//        if (b) {
+//            editText.setTag(editText.getKeyListener());
+//            editText.setKeyListener(null);
+//        } else {
+//            editText.setKeyListener((KeyListener) editText.getTag());
+//        }
+    }
 }

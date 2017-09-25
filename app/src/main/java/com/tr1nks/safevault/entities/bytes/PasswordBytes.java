@@ -4,6 +4,8 @@ import android.support.v4.app.FragmentManager;
 import com.tr1nks.safevault.R;
 import com.tr1nks.safevault.activities.fragments.fields.PasswordFieldFragment;
 import com.tr1nks.safevault.util.DBUtil;
+import com.tr1nks.safevault.util.Encoder;
+import com.tr1nks.safevault.util.UserPasswordManager;
 
 public class PasswordBytes extends Bytes {
     private byte[] title;
@@ -35,6 +37,12 @@ public class PasswordBytes extends Bytes {
         } else {
             DBUtil.updatePasswordBytes(this);
         }
+    }
+
+    @Override
+    public void open(FragmentManager fragmentManager) {
+        createFieldFragment(fragmentManager, new String(Encoder.decode(UserPasswordManager.getPassword(), title)), 0);//0 - stub
+        this.field.setEditable(false);
     }
 
     @Override

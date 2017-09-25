@@ -33,4 +33,6 @@ public abstract class Field extends Fragment {
     public void setBytes(Bytes bytes) {
         this.bytes = bytes;
     }
+
+    public abstract void setEditable(boolean b);
 }

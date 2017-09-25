@@ -93,6 +93,11 @@ public class TitleBytes extends Bytes implements Parcelable {
         }
     }
 
+    @Override
+    public void open(FragmentManager fragmentManager) {
+        //stub
+    }
+
     public void createMainActivityFieldFragment(FragmentManager fragmentManager) {
         CardTitleFragment fragment = new CardTitleFragment();
         fragment.setBytes(this);
@@ -108,7 +113,37 @@ public class TitleBytes extends Bytes implements Parcelable {
 
     }
 
+
+    public void openCard(String mode, Context context) {
+        Intent intent = new Intent(context, CardActivity.class);
+//        intent.putExtra("password", getIntent().getByteArrayExtra("password"));
+//        intent.putExtra("mode", mode);
+        Bundle bundle = new Bundle();
+        bundle.putString("mode", mode);
+        bundle.putParcelable("titleBytes", this);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeByteArray(title);
+        parcel.writeByteArray(icon);
+        parcel.writeByteArray(text_ids);
+        parcel.writeByteArray(password_ids);
+        parcel.writeByteArray(image_ids);
+        parcel.writeByteArray(userIcon_ids);
+    }
+
     //get set
+    public void setCardActivity(CardActivity cardActivity) {
+        this.activity = cardActivity;
+    }
 
     public byte[] getTitle() {
         return title;
@@ -156,35 +191,5 @@ public class TitleBytes extends Bytes implements Parcelable {
 
     public void setUserIcon_ids(byte[] userIcon_ids) {
         this.userIcon_ids = userIcon_ids;
-    }
-
-    public void openCard(String mode, Context context) {
-        Intent intent = new Intent(context, CardActivity.class);
-//        intent.putExtra("password", getIntent().getByteArrayExtra("password"));
-//        intent.putExtra("mode", mode);
-        Bundle bundle = new Bundle();
-        bundle.putString("mode", mode);
-        bundle.putParcelable("titleBytes", this);
-        intent.putExtras(bundle);
-        context.startActivity(intent);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeByteArray(title);
-        parcel.writeByteArray(icon);
-        parcel.writeByteArray(text_ids);
-        parcel.writeByteArray(password_ids);
-        parcel.writeByteArray(image_ids);
-        parcel.writeByteArray(userIcon_ids);
-    }
-
-    public void setCardActivity(CardActivity cardActivity) {
-        this.activity = cardActivity;
     }
 }

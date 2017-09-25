@@ -23,6 +23,7 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
     private Card card;
     private boolean newCard;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +31,25 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         setContentView(R.layout.activity_card);
         Bundle b = this.getIntent().getExtras();
         TitleBytes tb = b.getParcelable("titleBytes");
+        this.card = new Card(this, tb);
         if (b.getString("mode").equals("new")) {
-            newCard = true;
-            card = new Card(this, tb);
+            this.newCard = true;
+            //make edit button invisible
         } else {
-            newCard = false;
-//card=//todo
+            this.newCard = false;
+            //make edit button visible
+            EditText titleEditText = ((EditText) findViewById(R.id.recordTitleEditText));
+            titleEditText.setText(new String(Encoder.decode(UserPasswordManager.getPassword(), tb.getTitle())));
+            titleEditText.setTag(titleEditText.getKeyListener());
+            titleEditText.setKeyListener(null);
+
+            this.card.open(getSupportFragmentManager());
         }
+
+    }
+
+    private void onEditButtonHandler(View view) {//todo
+//titleEditText.setKeyListener((KeyListener) titleEditText.getTag());
     }
 
     @Override
@@ -79,11 +92,11 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
         switch (fieldTypeId) {
             case R.id.pinFieldMenuItem:
             case R.id.passwordFieldMenuItem: {
-                card.createPasswordField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
+                this.card.createPasswordField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
                 break;
             }
             default: {
-                card.createTextField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
+                this.card.createTextField(getSupportFragmentManager(), fieldTitle, fieldTypeId);
                 break;
             }
         }
@@ -92,7 +105,7 @@ public class CardActivity extends AppCompatActivity implements AskFieldNameDialo
     @Override
     protected void onPause() {
         super.onPause();
-        card.onParentPauseAction();
+        this.card.onParentPauseAction();
         Log.d("", "");
     }
 

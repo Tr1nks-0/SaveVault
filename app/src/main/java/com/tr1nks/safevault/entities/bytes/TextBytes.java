@@ -6,6 +6,8 @@ import com.tr1nks.safevault.activities.fragments.fields.DateFieldFragment;
 import com.tr1nks.safevault.activities.fragments.fields.EditTextFieldFragment;
 import com.tr1nks.safevault.activities.fragments.fields.MultilineTextFieldFragment;
 import com.tr1nks.safevault.util.DBUtil;
+import com.tr1nks.safevault.util.Encoder;
+import com.tr1nks.safevault.util.UserPasswordManager;
 
 public class TextBytes extends Bytes {
     private byte[] title;
@@ -38,6 +40,12 @@ public class TextBytes extends Bytes {
         } else {
             DBUtil.updateTextBytes(this);
         }
+    }
+
+    @Override
+    public void open(FragmentManager fragmentManager) {
+        createFieldFragment(fragmentManager, new String(Encoder.decode(UserPasswordManager.getPassword(), title)), 0);//0 - stub
+        this.field.setEditable(false);
     }
 
     @Override

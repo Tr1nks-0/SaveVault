@@ -24,6 +24,11 @@ public class ImageBytes extends Bytes {
     }
 
     @Override
+    public void open(FragmentManager fragmentManager) {
+
+    }
+
+    @Override
     public Object[] toInsertArr() {
         return new byte[][]{title, data, meta};
     }

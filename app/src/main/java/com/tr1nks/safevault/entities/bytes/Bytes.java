@@ -35,4 +35,6 @@ public abstract class Bytes {
     }
 
     public abstract void onParentPauseAction();
+
+    public abstract void open(FragmentManager fragmentManager);
 }

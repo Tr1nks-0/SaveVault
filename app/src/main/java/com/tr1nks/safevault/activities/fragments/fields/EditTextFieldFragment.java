@@ -4,13 +4,14 @@ package com.tr1nks.safevault.activities.fragments.fields;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.entities.FieldMeta;
+import com.tr1nks.safevault.entities.meta.FieldMeta;
 import com.tr1nks.safevault.entities.bytes.TextBytes;
 import com.tr1nks.safevault.util.Encoder;
 import com.tr1nks.safevault.util.UserPasswordManager;
@@ -61,5 +62,16 @@ public class EditTextFieldFragment extends Field {
         View v = getView();
         assert v != null;
         ((TextBytes) this.bytes).setData(Encoder.encode(UserPasswordManager.getPassword(), ((EditText) v.findViewById(R.id.fragmentEditText)).getText().toString().getBytes()));
+    }
+
+    @Override
+    public void setEditable(boolean b) {
+        EditText editText = getView().findViewById(R.id.fragmentEditText);
+        if (b) {
+            editText.setTag(editText.getKeyListener());
+            editText.setKeyListener(null);
+        } else {
+            editText.setKeyListener((KeyListener) editText.getTag());
+        }
     }
 }

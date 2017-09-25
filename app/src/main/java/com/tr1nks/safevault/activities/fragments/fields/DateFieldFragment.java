@@ -2,6 +2,7 @@ package com.tr1nks.safevault.activities.fragments.fields;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,5 +59,16 @@ public class DateFieldFragment extends Field {
     @Override
     public void onParentPauseAction() {
 
+    }
+
+    @Override
+    public void setEditable(boolean b) {
+        EditText editText = getView().findViewById(R.id.fragmentDateText);
+        if (b) {
+            editText.setTag(editText.getKeyListener());
+            editText.setKeyListener(null);
+        } else {
+            editText.setKeyListener((KeyListener) editText.getTag());
+        }
     }
 }

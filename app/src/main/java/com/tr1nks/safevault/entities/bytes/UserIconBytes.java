@@ -37,6 +37,11 @@ public class UserIconBytes extends Bytes {
         }
     }
 
+    @Override
+    public void open(FragmentManager fragmentManager) {
+//        createFieldFragment(fragmentManager, null, 0);
+    }
+
     public byte[] getData() {
         return data;
     }
