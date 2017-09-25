@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/mainCardTitleFragmentLinearLayout"
-              tools:context="com.tr1nks.safevault.activities.fragments.CardTitleFragment"
+              tools:context="com.tr1nks.safevault.activities.fragments.old.CardTitleFragment"
         >
 
     <ImageView

@@ -1,9 +1,9 @@
-package com.tr1nks.safevault.entities;
+package com.tr1nks.safevault.entities.old;
 
 import android.support.v4.app.FragmentManager;
-import com.tr1nks.safevault.activities.CardActivity;
-import com.tr1nks.safevault.entities.bytes.*;
+import com.tr1nks.safevault.activities.fragments.old.CardActivity;
 import com.tr1nks.safevault.entities.meta.FieldMeta;
+import com.tr1nks.safevault.entities.old.bytes.*;
 import com.tr1nks.safevault.util.DBUtil;
 import com.tr1nks.safevault.util.Encoder;
 import com.tr1nks.safevault.util.Serializer;

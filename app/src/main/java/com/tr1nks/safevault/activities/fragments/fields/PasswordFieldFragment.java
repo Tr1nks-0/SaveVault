@@ -1,10 +1,7 @@
 package com.tr1nks.safevault.activities.fragments.fields;
 
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,26 +10,18 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.entities.meta.FieldMeta;
-import com.tr1nks.safevault.entities.bytes.PasswordBytes;
-import com.tr1nks.safevault.util.Encoder;
-import com.tr1nks.safevault.util.UserPasswordManager;
+import com.tr1nks.safevault.entities.fields.PasswordFieldEntity;
+import com.tr1nks.safevault.entities.meta.PasswordEntityMeta;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class PasswordFieldFragment extends Field {
-    public PasswordFieldFragment() {
-        // Required empty public constructor
-    }
-
-
+public class PasswordFieldFragment extends FieldFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_password_field, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_text_field, container, false);
         super.addFieldDeleteButtonHandler(view.findViewById(R.id.deleteFieldImageButton));
+//        ((TextView) view.findViewById(R.id.fragmentTitleForTextEditText)).setText(((TextFieldEntity) entity).getTitleString());
+        ((TextView) view.findViewById(R.id.fragmentTitleForPasswEditText)).setText(((PasswordFieldEntity) entity).getTitleString());
         final EditText editText = view.findViewById(R.id.fragmentPasswEditText);
-        ((TextView) view.findViewById(R.id.fragmentTitleForPasswEditText)).setText(new String(Encoder.decode(UserPasswordManager.getPassword(), ((PasswordBytes) bytes).getTitle())));
+        editText.setInputType(((PasswordEntityMeta) entity.getMetaObj()).getFieldTypeInt());
         ((CheckBox) view.findViewById(R.id.fragmentShowPasswordCheckBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -45,39 +34,6 @@ public class PasswordFieldFragment extends Field {
                 editText.setSelection(pos);
             }
         });
-        FieldMeta meta = FieldMeta.restore(Encoder.decode(UserPasswordManager.getPassword(), bytes.getMeta()));
-        int inpType = 129;
-        switch (meta.getFieldType()) {
-            case R.id.pinFieldMenuItem: {
-                inpType = 129 | InputType.TYPE_CLASS_NUMBER;//fixme pin
-                break;
-            }
-            case R.id.passwordFieldMenuItem: {
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-        editText.setInputType(inpType);
         return view;
-    }
-
-    @Override
-    public void setEditable(boolean b) {
-        EditText editText = getView().findViewById(R.id.fragmentPasswEditText);
-        if (b) {
-            editText.setTag(editText.getKeyListener());
-            editText.setKeyListener(null);
-        } else {
-            editText.setKeyListener((KeyListener) editText.getTag());
-        }
-    }
-
-    @Override
-    public void onParentPauseAction() {
-        View v = getView();
-        assert v != null;
-        ((PasswordBytes) this.bytes).setData(Encoder.encode(UserPasswordManager.getPassword(), ((EditText) v.findViewById(R.id.fragmentPasswEditText)).getText().toString().getBytes()));
     }
 }

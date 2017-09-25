@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.tr1nks.safevault.entities.bytes.*;
+import com.tr1nks.safevault.entities.CardNew;
+import com.tr1nks.safevault.entities.CardTitleNew;
+import com.tr1nks.safevault.entities.old.bytes.*;
+import com.tr1nks.safevault.entities.fields.TextFieldEntity;
 
 import java.util.ArrayList;
 
@@ -95,6 +98,14 @@ public class DBUtil {
 
     public static void updateUserIconBytes(UserIconBytes userIconBytes) {
         worker.insertUpdateUserIconBytes(userIconBytes, true);
+    }
+
+    public static ArrayList<TextFieldEntity> getTextFieldEntitiesById(ArrayList<TextFieldEntity> textIdsList) {
+        return worker.getTextFieldEntitiesById(textIdsList);
+    }
+
+    public static ArrayList<CardNew> getCards() {
+        return worker.getCards();
     }
 
 
@@ -198,6 +209,38 @@ public class DBUtil {
 
         void setCheckData(byte[] checkData) {
             this.getWritableDatabase().execSQL(INSERT_CHECK_DATA_SQL, new Object[]{checkData});
+        }
+
+        public ArrayList<CardNew> getCards() {
+            ArrayList<CardNew> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TITLES_SQL, null)) {
+                if (null != cursor && cursor.moveToFirst()) {
+                    cursor.moveToPrevious();
+                    while (cursor.moveToNext()) {
+                        arr.add(new CardNew(
+                                new CardTitleNew(
+                                        cursor.getInt(cursor.getColumnIndex("id")),
+                                        cursor.getBlob(cursor.getColumnIndex("title")),
+                                        cursor.getBlob(cursor.getColumnIndex("icon")),
+                                        cursor.getBlob(cursor.getColumnIndex("meta")),
+                                        cursor.getBlob(cursor.getColumnIndex("text_ids")),
+                                        cursor.getBlob(cursor.getColumnIndex("password_ids")),
+                                        cursor.getBlob(cursor.getColumnIndex("image_ids")),
+                                        cursor.getBlob(cursor.getColumnIndex("icon_ids"))
+                                )
+                        ));
+                    }
+                }
+            }
+            return arr;
+        }
+
+        ArrayList<TextFieldEntity> getTextFieldEntitiesById(ArrayList<TextFieldEntity> textIdsList) {
+            ArrayList<TextFieldEntity> arr = new ArrayList<>();
+            try (Cursor cursor = this.getReadableDatabase().rawQuery(SELECT_TEXTS_BY_ID_SQL, null)) {
+//todo
+            }
+            return arr;
         }
 
         ArrayList<TitleBytes> getTitleBytes() {
@@ -348,5 +391,7 @@ public class DBUtil {
                 return insertBytes(USER_ICONS_TABLENAME, cv);
             }
         }
+
+
     }
 }

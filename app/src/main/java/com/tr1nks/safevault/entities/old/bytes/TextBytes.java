@@ -1,10 +1,10 @@
-package com.tr1nks.safevault.entities.bytes;
+package com.tr1nks.safevault.entities.old.bytes;
 
 import android.support.v4.app.FragmentManager;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.activities.fragments.fields.DateFieldFragment;
-import com.tr1nks.safevault.activities.fragments.fields.EditTextFieldFragment;
-import com.tr1nks.safevault.activities.fragments.fields.MultilineTextFieldFragment;
+import com.tr1nks.safevault.activities.fragments.old.fields.DateFieldFragment;
+import com.tr1nks.safevault.activities.fragments.old.fields.EditTextFieldFragment;
+import com.tr1nks.safevault.activities.fragments.old.fields.MultilineTextFieldFragment;
 import com.tr1nks.safevault.util.DBUtil;
 import com.tr1nks.safevault.util.Encoder;
 import com.tr1nks.safevault.util.UserPasswordManager;

@@ -1,4 +1,4 @@
-package com.tr1nks.safevault.activities.fragments;
+package com.tr1nks.safevault.activities.fragments.old;
 
 
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.entities.bytes.TitleBytes;
+import com.tr1nks.safevault.entities.old.bytes.TitleBytes;
 import com.tr1nks.safevault.util.Encoder;
 import com.tr1nks.safevault.util.UserPasswordManager;
 

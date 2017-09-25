@@ -1,7 +1,7 @@
-package com.tr1nks.safevault.entities.bytes;
+package com.tr1nks.safevault.entities.old.bytes;
 
 import android.support.v4.app.FragmentManager;
-import com.tr1nks.safevault.activities.fragments.fields.Field;
+import com.tr1nks.safevault.activities.fragments.old.fields.Field;
 
 public abstract class Bytes {
     long id;

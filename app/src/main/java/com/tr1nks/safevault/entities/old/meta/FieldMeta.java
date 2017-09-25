@@ -1,4 +1,6 @@
-package com.tr1nks.safevault.entities.meta;
+package com.tr1nks.safevault.entities.old.meta;
+
+import com.tr1nks.safevault.entities.meta.Meta;
 
 public class FieldMeta extends Meta {
     private int fieldType;

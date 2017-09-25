@@ -1,4 +1,4 @@
-package com.tr1nks.safevault.entities.bytes;
+package com.tr1nks.safevault.entities.old.bytes;
 
 import android.support.v4.app.FragmentManager;
 import com.tr1nks.safevault.util.DBUtil;

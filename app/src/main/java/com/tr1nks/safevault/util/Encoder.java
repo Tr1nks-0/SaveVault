@@ -20,6 +20,17 @@ public class Encoder {
 
     /**
      * расшифровать
+     * Пароль для расшифровки запрашивает у {@link UserPasswordManager}
+     *
+     * @param data данные для расшифровки
+     * @return расшифрованные данные
+     */
+    public static byte[] decode(byte[] data) {
+        return code(UserPasswordManager.getPassword(), data, Cipher.DECRYPT_MODE);
+    }
+
+    /**
+     * расшифровать
      *
      * @param password пароль для расшифровки
      * @param data     данные для расшифровки
@@ -27,6 +38,17 @@ public class Encoder {
      */
     public static byte[] decode(byte[] password, byte[] data) {
         return code(password, data, Cipher.DECRYPT_MODE);
+    }
+
+    /**
+     * зашифровать
+     * Пароль для расшифровки запрашивает у {@link UserPasswordManager}
+     *
+     * @param data данные для зашифровки
+     * @return зашифрованные данные
+     */
+    public static byte[] encode(byte[] data) {
+        return code(UserPasswordManager.getPassword(), data, Cipher.ENCRYPT_MODE);
     }
 
     /**
@@ -62,6 +84,7 @@ public class Encoder {
             return null;
         }
     }
+
     /**
      * подготовить пароль для шифрования
      * дополняет пароль до длинны 256 бит (32 byte * byte.size)

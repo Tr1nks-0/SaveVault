@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import com.tr1nks.safevault.R;
-import com.tr1nks.safevault.entities.bytes.TitleBytes;
+import com.tr1nks.safevault.entities.CardNew;
+import com.tr1nks.safevault.entities.CardTitleNew;
 import com.tr1nks.safevault.util.DBUtil;
 
 import java.util.ArrayList;
@@ -30,18 +30,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ArrayList<TitleBytes> rows = DBUtil.getTitleBytes();
-        refillRecordLinearLayout(rows);
+        ArrayList<CardNew> rows = DBUtil.getCards();
+//        refillRecordLinearLayout(rows);
     }
 
-    private void refillRecordLinearLayout(ArrayList<TitleBytes> titleBytes) {
-        LinearLayout layout = (LinearLayout) findViewById(R.id.selectCardLinearLayout);
-        layout.removeAllViews();
-        for (TitleBytes tb : titleBytes) {
-            tb.createMainActivityFieldFragment(getSupportFragmentManager());
-            getLayoutInflater().inflate(R.layout.view_horisontal_line, layout);
-        }
-    }
+//    private void refillRecordLinearLayout(ArrayList<TitleBytes> titleBytes) {
+//        LinearLayout layout = (LinearLayout) findViewById(R.id.selectCardLinearLayout);
+//        layout.removeAllViews();
+//        for (TitleBytes tb : titleBytes) {
+//            tb.createMainActivityFieldFragment(getSupportFragmentManager());
+//            getLayoutInflater().inflate(R.layout.view_horisontal_line, layout);
+//        }
+//    }
 
 
 //        CardTitleFragment fragment = new CardTitleFragment();
@@ -100,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view current view
      */
     public void addRecordButtonHandler(View view) {
-        TitleBytes titleBytes = new TitleBytes();
-        titleBytes.openCard("new",this);
+//        TitleBytes titleBytes = new TitleBytes();
+//        titleBytes.openCard("new",this);
+        CardNew card = new CardNew(new CardTitleNew());
+        card.createNew(getSupportFragmentManager());
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tr1nks.safevault.entities.bytes;
+package com.tr1nks.safevault.entities.old.bytes;
 
 import android.content.Context;
 import android.content.Intent;
